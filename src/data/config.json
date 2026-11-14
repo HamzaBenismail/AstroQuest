@@ -1,0 +1,35 @@
+{
+  "_note": "All values here are GAME UNITS — simplified for the game, not real engineering values. See CLAUDE.md section 4.",
+  "missionLengthDays": 10,
+  "meterMax": 10,
+  "startingMeters": {
+    "air": 5,
+    "food": 4,
+    "safety": 8
+  },
+  "initialGreenhouseYesterday": 1,
+  "powerBudget": {
+    "sunlitDays": [1, 2, 3, 4],
+    "sunlit": 10,
+    "night": 7
+  },
+  "allocationRanges": {
+    "lifeSupport": [0, 4],
+    "shield": [0, 3],
+    "greenhouse": [0, 3],
+    "science": [0, 3]
+  },
+  "stormDamage": {
+    "0": 0,
+    "1": 2,
+    "2": 4,
+    "3": 7
+  },
+  "airUse": 3,
+  "foodUse": 2,
+  "shieldProtection": 2,
+  "forecastErrorTable": [-1, 0, 0, 1],
+  "stormLevelRange": [0, 3],
+  "successMinMeter": 3,
+  "site": "moon"
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "card-greenhouse-1",
+    "trigger": "greenhouse-low",
+    "title": "TODO(VERIFY)",
+    "text": "TODO(VERIFY): fill in Phase 6 from a real OSDR plant-growth study.",
+    "source": { "type": "OSDR", "studyId": null, "url": null },
+    "verified": false
+  },
+  {
+    "id": "card-storm-severe-1",
+    "trigger": "storm-severe",
+    "title": "TODO(VERIFY)",
+    "text": "TODO(VERIFY): fill in Phase 6 from a real OSDR radiation/dosimetry study.",
+    "source": { "type": "OSDR", "studyId": null, "url": null },
+    "verified": false
+  },
+  {
+    "id": "card-night-1",
+    "trigger": "night",
+    "title": "TODO(VERIFY)",
+    "text": "TODO(VERIFY): fill in Phase 6 from a real OSDR life-support study (e.g. ISS water processor).",
+    "source": { "type": "OSDR", "studyId": null, "url": null },
+    "verified": false
+  }
+]

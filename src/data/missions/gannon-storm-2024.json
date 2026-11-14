@@ -1,0 +1,637 @@
+{
+  "missionId": "gannon-storm-2024",
+  "title": "The May 2024 Storm",
+  "site": "moon",
+  "dataSource": "NASA DONKI (archived data)",
+  "window": {
+    "start": "2024-05-01",
+    "end": "2024-05-10"
+  },
+  "days": [
+    {
+      "day": 1,
+      "date": "2024-05-01",
+      "stormLevel": 2,
+      "events": [
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class C5.3",
+          "sourceId": "2024-05-01T05:53:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.8",
+          "sourceId": "2024-05-01T14:17:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.9",
+          "sourceId": "2024-05-01T14:37:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.8",
+          "sourceId": "2024-05-01T22:26:00-FLR-001"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "date": "2024-05-02",
+      "stormLevel": 2,
+      "events": [
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.0",
+          "sourceId": "2024-05-02T02:07:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.7",
+          "sourceId": "2024-05-02T20:52:00-FLR-001"
+        },
+        {
+          "type": "GST",
+          "label": "Real geomagnetic storm, Kp index 6.67",
+          "sourceId": "2024-05-02T15:00:00-GST-001"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "date": "2024-05-03",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.7",
+          "sourceId": "2024-05-03T00:08:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class X1.6",
+          "sourceId": "2024-05-03T02:11:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M4.4",
+          "sourceId": "2024-05-03T08:05:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.2",
+          "sourceId": "2024-05-03T22:25:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.0",
+          "sourceId": "2024-05-03T23:11:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.4",
+          "sourceId": "2024-05-03T23:24:00-FLR-001"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "date": "2024-05-04",
+      "stormLevel": 2,
+      "events": [
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.6",
+          "sourceId": "2024-05-04T00:26:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M9.1",
+          "sourceId": "2024-05-04T06:02:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.5",
+          "sourceId": "2024-05-04T07:04:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.3",
+          "sourceId": "2024-05-04T18:10:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M3.2",
+          "sourceId": "2024-05-04T22:23:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M9.0",
+          "sourceId": "2024-05-04T23:28:00-FLR-001"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "date": "2024-05-05",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M8.4",
+          "sourceId": "2024-05-05T01:15:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class C8.8",
+          "sourceId": "2024-05-05T03:01:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class X1.3",
+          "sourceId": "2024-05-05T05:47:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.3",
+          "sourceId": "2024-05-05T08:07:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.3",
+          "sourceId": "2024-05-05T09:23:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M7.4",
+          "sourceId": "2024-05-05T09:53:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class X1.2",
+          "sourceId": "2024-05-05T11:41:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.3",
+          "sourceId": "2024-05-05T14:33:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.2",
+          "sourceId": "2024-05-05T15:28:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.3",
+          "sourceId": "2024-05-05T16:55:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.0",
+          "sourceId": "2024-05-05T18:34:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.3",
+          "sourceId": "2024-05-05T19:44:00-FLR-001"
+        }
+      ]
+    },
+    {
+      "day": 6,
+      "date": "2024-05-06",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.6",
+          "sourceId": "2024-05-06T00:47:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.3",
+          "sourceId": "2024-05-06T05:09:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class X4.5",
+          "sourceId": "2024-05-06T05:38:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.5",
+          "sourceId": "2024-05-06T09:49:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.2",
+          "sourceId": "2024-05-06T21:37:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M4.3",
+          "sourceId": "2024-05-06T21:58:00-FLR-001"
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "date": "2024-05-07",
+      "stormLevel": 2,
+      "events": [
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.6",
+          "sourceId": "2024-05-07T00:41:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M5.1",
+          "sourceId": "2024-05-07T05:58:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.3",
+          "sourceId": "2024-05-07T08:18:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.4",
+          "sourceId": "2024-05-07T08:28:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.4",
+          "sourceId": "2024-05-07T11:40:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.5",
+          "sourceId": "2024-05-07T12:43:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.0",
+          "sourceId": "2024-05-07T13:16:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.0",
+          "sourceId": "2024-05-07T13:32:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M8.2",
+          "sourceId": "2024-05-07T16:21:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.1",
+          "sourceId": "2024-05-07T19:58:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.2",
+          "sourceId": "2024-05-07T20:45:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M3.3",
+          "sourceId": "2024-05-07T21:13:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M3.3",
+          "sourceId": "2024-05-07T21:42:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.6",
+          "sourceId": "2024-05-07T22:55:00-FLR-001"
+        }
+      ]
+    },
+    {
+      "day": 8,
+      "date": "2024-05-08",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class X1.0",
+          "sourceId": "2024-05-08T01:33:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M3.4",
+          "sourceId": "2024-05-08T02:16:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.8",
+          "sourceId": "2024-05-08T03:19:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.9",
+          "sourceId": "2024-05-08T03:38:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M3.5",
+          "sourceId": "2024-05-08T04:20:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class X1.0",
+          "sourceId": "2024-05-08T04:37:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M7.1",
+          "sourceId": "2024-05-08T06:44:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M4.5",
+          "sourceId": "2024-05-08T07:29:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.8",
+          "sourceId": "2024-05-08T09:31:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.1",
+          "sourceId": "2024-05-08T09:43:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M4.1",
+          "sourceId": "2024-05-08T11:09:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M8.6",
+          "sourceId": "2024-05-08T11:26:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M7.9",
+          "sourceId": "2024-05-08T17:32:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.9",
+          "sourceId": "2024-05-08T18:14:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.0",
+          "sourceId": "2024-05-08T19:15:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.7",
+          "sourceId": "2024-05-08T20:27:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class X1.0",
+          "sourceId": "2024-05-08T21:08:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M9.8",
+          "sourceId": "2024-05-08T22:05:00-FLR-001"
+        }
+      ]
+    },
+    {
+      "day": 9,
+      "date": "2024-05-09",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.8",
+          "sourceId": "2024-05-09T00:58:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M4.0",
+          "sourceId": "2024-05-09T03:07:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M4.5",
+          "sourceId": "2024-05-09T03:23:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.7",
+          "sourceId": "2024-05-09T04:44:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.2",
+          "sourceId": "2024-05-09T05:35:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.3",
+          "sourceId": "2024-05-09T06:03:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.4",
+          "sourceId": "2024-05-09T06:24:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.2",
+          "sourceId": "2024-05-09T07:54:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.1",
+          "sourceId": "2024-05-09T08:30:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class X2.2",
+          "sourceId": "2024-05-09T08:45:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M3.1",
+          "sourceId": "2024-05-09T11:52:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.9",
+          "sourceId": "2024-05-09T12:05:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M3.7",
+          "sourceId": "2024-05-09T13:16:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.0",
+          "sourceId": "2024-05-09T14:01:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class X1.1",
+          "sourceId": "2024-05-09T17:23:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.0",
+          "sourceId": "2024-05-09T21:15:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.0",
+          "sourceId": "2024-05-09T22:08:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.6",
+          "sourceId": "2024-05-09T22:24:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.2",
+          "sourceId": "2024-05-09T23:04:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.5",
+          "sourceId": "2024-05-09T23:44:00-FLR-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Real solar radiation storm (energetic particle event)",
+          "sourceId": "2024-05-09T13:59:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Real solar radiation storm (energetic particle event)",
+          "sourceId": "2024-05-09T14:25:00-SEP-001"
+        }
+      ]
+    },
+    {
+      "day": 10,
+      "date": "2024-05-10",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.3",
+          "sourceId": "2024-05-10T00:10:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.4",
+          "sourceId": "2024-05-10T03:15:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.3",
+          "sourceId": "2024-05-10T06:14:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class X3.9",
+          "sourceId": "2024-05-10T06:27:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.2",
+          "sourceId": "2024-05-10T10:10:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M5.9",
+          "sourceId": "2024-05-10T13:58:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.2",
+          "sourceId": "2024-05-10T17:14:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.2",
+          "sourceId": "2024-05-10T17:54:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.1",
+          "sourceId": "2024-05-10T18:26:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.7",
+          "sourceId": "2024-05-10T18:38:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.0",
+          "sourceId": "2024-05-10T18:57:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.1",
+          "sourceId": "2024-05-10T19:35:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M1.9",
+          "sourceId": "2024-05-10T19:56:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M3.8",
+          "sourceId": "2024-05-10T20:59:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Real solar flare, class M2.4",
+          "sourceId": "2024-05-10T21:15:00-FLR-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Real solar radiation storm (energetic particle event)",
+          "sourceId": "2024-05-10T12:59:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Real solar radiation storm (energetic particle event)",
+          "sourceId": "2024-05-10T13:02:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Real solar radiation storm (energetic particle event)",
+          "sourceId": "2024-05-10T13:35:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Real solar radiation storm (energetic particle event)",
+          "sourceId": "2024-05-10T14:50:00-SEP-001"
+        },
+        {
+          "type": "GST",
+          "label": "Real geomagnetic storm, Kp index 9",
+          "sourceId": "2024-05-10T15:00:00-GST-001"
+        }
+      ]
+    }
+  ]
+}

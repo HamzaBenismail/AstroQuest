@@ -1,0 +1,14 @@
+[
+  {
+    "id": "fact-comm-delay",
+    "text": "TODO(VERIFY): fill in with a real NASA-sourced Moon communication delay figure.",
+    "sourceUrl": null,
+    "verified": false
+  },
+  {
+    "id": "fact-lunar-night-length",
+    "text": "TODO(VERIFY): fill in with a real NASA-sourced lunar night length figure.",
+    "sourceUrl": null,
+    "verified": false
+  }
+]

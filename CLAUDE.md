@@ -364,7 +364,7 @@ If a request conflicts with a frozen concept (section 2) or the MVP gate (sectio
 - Config-driven: if you type a game number in logic or UI code, move it to `config.json`.
 - No secrets in the repo. No `console.log` left in shipped code.
 - Keep components small; the Scene component only reads state and applies CSS variables or data attributes.
-- Commands: fill these in once the project is scaffolded and **keep them accurate** (do not assume): `install: ___`, `dev: ___`, `test: ___`, `build: ___`, `prefetch: ___`.
+- Commands (scaffolded in Phase 1, keep accurate): `install: npm install`, `dev: npm run dev`, `test: npm test`, `build: npm run build`, `prefetch: npm run prefetch`.
 
 ### Required rule tests (write first or alongside the logic)
 1. An allocation whose sum exceeds the day's budget is rejected.
@@ -410,7 +410,9 @@ If a request conflicts with a frozen concept (section 2) or the MVP gate (sectio
 | 2026-11-14 | Data prefetched and embedded; no NASA calls from the browser | Team |
 | 2026-11-14 | Working assumption: Moon (not frozen) | Team |
 | (next) | Moon vs Mars frozen after RadLab test | to fill |
-| (next) | Storm-level mapping confirmed against real data | to fill |
+| 2026-11-14 | Storm-level mapping confirmed against real DONKI data (Phase 2): per day, `stormLevel = max` of: flare class (C→1 minor, M→2 moderate, X→3 severe), any SEP event that day →3 severe, GST geomagnetic storm by max Kp that day (Kp 5-5.99→1, Kp 6-7.99→2, Kp ≥8→3, using NOAA's standard Kp/G-scale thresholds). CME events are recorded in `scripts/raw/` but not used to drive `stormLevel` (arrival/impact not verified). First mission window: `gannon-storm-2024`, 2024-05-01 to 2024-05-10, built from the real May 2024 "Gannon" storm (GST reached Kp 9 on day 10/2024-05-10) — genuinely severe almost every day (levels 2-3, no calm day in this window); a calmer second window is deferred (nice-to-have N1). | Data developer |
+| 2026-11-14 | §4.1 edge case resolved (Phase 3): if day 10 completes with no meter ever ≤0, but not all three meters are ≥3 (the explicit success bar), the outcome is `status: "failed"` with `reason: "objectives-not-met"` — distinct from a meter-depletion failure, but still a failure, since §4.1 frames Fail/Success as the only two outcomes and the success bar is explicit. The frozen status enum (`running\|failed\|succeeded`, §8.3) is unchanged — no third state was added. | Game logic developer |
+| 2026-11-14 | **Balance finding, flagged for Phase 7 playtest, not acted on now:** under the current `config.json` values, `status: "succeeded"` is mathematically unreachable on the real `gannon-storm-2024` mission. Verified with the engine: the best possible defense (shield maxed at 3, its config ceiling, every day) still only holds final Crew Safety at 2 (needs ≥3), because this real window has zero calm (`stormLevel: 0`) days — so the §4.2 safety-recovery bonus (`level==0 && shield>=1 → +1`) never triggers, and shield's max value cannot fully cancel severe (level-3) damage (`stormDamage[3]=7` vs max absorption `shieldProtection(2)*shield(3)=6`). This is honest real-data behavior, not a bug — Phase 3's rule tests therefore use a synthetic fixture mission (`tests/helpers/fixtures.js`) to prove the engine can reach `succeeded`, while the real mission is left untouched. Phase 7 should decide whether to raise starting Crew Safety, raise the shield cap/`shieldProtection`, or fetch a second calmer window (N1) — per §4.4, start with starting meters / night power. | Game logic developer |
 
 ---
 
