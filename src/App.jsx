@@ -10,6 +10,7 @@ import LunarScene from './scene/LunarScene.jsx';
 import MissionExperience from './ui/v2/MissionExperience.jsx';
 import MissionExperienceC from './ui/v3/MissionExperience.jsx';
 import SourcesScreen from './ui/SourcesScreen.jsx';
+import { IconInfo } from './ui/icons.jsx';
 import './ui/science.css';
 
 // Bundled at BUILD time. The browser never requests NASA data.
@@ -75,6 +76,9 @@ export default function App() {
     {game}
     {showSources
       ? <SourcesScreen onClose={() => setShowSources(false)}/>
-      : <button className="sources-button" type="button" onClick={() => setShowSources(true)}>Data Sources</button>}
+      : <button className="sources-button" type="button" onClick={() => setShowSources(true)}
+          title="Where our data comes from" aria-label="Where our data comes from">
+          <IconInfo size={24}/>
+        </button>}
   </>;
 }

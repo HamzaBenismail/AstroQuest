@@ -1,19 +1,238 @@
-.science-card {border:1px solid #84a6bf; border-radius:14px; background:#122a3d; color:#e6f2fc; padding:16px 18px; margin:15px 0; line-height:1.5;}
-.science-card h2 {font-size:1.1rem;margin:5px 0 9px;}
-.science-card p {margin:7px 0;}
-.science-card__eyebrow {text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;font-weight:800;color:#99dcdb;}
-.science-card__source,.science-card__note,.verified-fact {font-size:.82rem;color:#bfdaea;}
-.science-card a,.sources-screen a,.verified-fact a {color:#9ee9e5;text-decoration:underline;}
-.sources-button {position:fixed;right:14px;bottom:14px;z-index:50;min-height:44px;padding:10px 18px;background:#164355;border:2px solid #91cddc;color:#fff;border-radius:13px;font-weight:700;box-shadow:0 5px 22px #0008;}
-.sources-button:focus-visible,.sources-screen button:focus-visible {outline:3px solid #ffe69d;outline-offset:3px;}
-.sources-screen {position:fixed;inset:0;z-index:100;overflow:auto;background:#07111a;color:#ebf4fe;padding:clamp(15px,3vw,35px);font-family:system-ui,sans-serif;}
-.sources-screen__panel {max-width:1060px;margin:0 auto;background:#132b3e;border:1px solid #5e879c;border-radius:16px;padding:clamp(18px,3vw,38px);}
-.sources-screen__header {display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.sources-screen h1{margin:0 0 12px;font-size:clamp(1.65rem,3vw,2.8rem);}
-.sources-screen h2{font-size:1.2rem;margin-top:26px;}
-.sources-screen button {background:#8bdad4;border:1px solid #abe5de;border-radius:9px;color:#082737;min-height:44px;padding:10px 17px;font-weight:750;}
-.sources-screen__table-wrap{overflow-x:auto;}
-.sources-screen table{border-collapse:collapse;width:100%;min-width:580px;}
-.sources-screen th,.sources-screen td{border-bottom:1px solid #446078;text-align:left;vertical-align:top;padding:12px 10px;}
-.sources-screen th{background:#0d2537;}
-@media(prefers-reduced-motion:reduce){.sources-button,.science-card{transition:none!important;}}
+/**
+ * Real-science material. A green left edge means "a human checked this against a
+ * published study"; game numbers never get that edge. This is the structural
+ * version of the disclaimer, so it cannot be skim-read away.
+ */
+
+.science-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 18px 0;
+  padding: 20px;
+  border: 1px solid var(--seam);
+  border-left: 4px solid var(--ok);
+  border-radius: var(--r-l);
+  background: var(--hull);
+  color: var(--ink);
+  line-height: 1.55;
+}
+
+.science-card h2 { margin: 0; font-family: var(--font-display); font-size: 20px; }
+.science-card p { margin: 0; font-size: 14px; color: var(--ink-2); }
+
+.science-card__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ok);
+}
+
+/* The slot a verified study will fill. Grey edge, never green: it is not
+   claiming to be checked material. */
+.science-card--pending {
+  border-left-color: var(--seam-lit);
+  background: var(--sunk);
+}
+
+.science-card--pending .science-card__eyebrow { color: var(--ink-3); }
+.science-card--pending p { color: var(--ink-3); }
+
+.science-card__source { font-size: 12.5px; color: var(--ink-3) !important; }
+.science-card__note { font-size: 11.5px; color: var(--ink-4) !important; }
+
+.verified-fact {
+  margin: 10px 0 0;
+  padding: 14px 16px;
+  border: 1px solid var(--seam);
+  border-left: 4px solid var(--ok);
+  border-radius: var(--r-m);
+  background: var(--sunk);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.science-card a, .sources-screen a, .verified-fact a { color: var(--cyan); }
+.science-card a:hover, .sources-screen a:hover, .verified-fact a:hover { color: #A6F1FA; }
+
+/* ---------- the floating way in to the sources screen ---------------------- */
+
+/* Icon-only so it never crowds the mission's own controls; the accessible name
+   carries the meaning, and the sticky commit bar reserves room for it. */
+.sources-button {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--seam-lit);
+  border-radius: 50%;
+  background: #101B2EF2;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 0 8px 28px #00000066;
+}
+
+.sources-button:hover { background: var(--deck); }
+.sources-button .icon { color: var(--cyan); }
+
+/* ---------- sources screen ------------------------------------------------- */
+
+.sources-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: auto;
+  padding: clamp(16px, 3vw, 40px);
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+.sources-screen__panel {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.sources-screen__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--seam);
+}
+
+.sources-screen h1 {
+  margin: 8px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.6vw, 46px);
+  letter-spacing: -0.02em;
+}
+
+.sources-screen h2 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+.sources-screen__lede { margin: 0; font-size: 17px; line-height: 1.55; color: var(--ink-2); max-width: 70ch; }
+
+.sources-screen section { display: flex; flex-direction: column; gap: 14px; }
+
+.sources-screen__split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+
+.sources-screen__col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+  border: 1px solid var(--seam-lit);
+  border-radius: var(--r-l);
+  background: var(--hull);
+}
+
+.sources-screen__col--real { border-color: #3A5A42; background: #0C1A16; }
+.sources-screen__col h3 { margin: 0; display: flex; align-items: center; gap: 11px; font-family: var(--font-display); font-size: 21px; }
+.sources-screen__col--real h3 { color: #9FE8BF; }
+.sources-screen__col--game h3 { color: #A9D6E8; }
+.sources-screen__col ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 11px; }
+/* Block, not flex: a flex <li> would make every <strong> its own flex item and
+   break the sentence onto separate lines. The marker is positioned instead. */
+.sources-screen__col li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.sources-screen__col--real li { color: #D6EFE2; }
+
+.sources-screen__col li::before {
+  content: '·';
+  position: absolute;
+  left: 4px;
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+.sources-screen__col--real li::before { color: var(--ok); }
+
+.sources-screen__table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--seam);
+  border-radius: var(--r-l);
+  background: var(--hull);
+}
+
+.sources-screen table { border-collapse: collapse; width: 100%; min-width: 620px; }
+
+.sources-screen th, .sources-screen td {
+  border-bottom: 1px solid #1E2C46;
+  text-align: left;
+  vertical-align: top;
+  padding: 14px;
+  font-size: 13.5px;
+}
+
+.sources-screen th {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+.sources-screen td { color: var(--ink-2); }
+.sources-screen td small { display: block; color: var(--ink-3); }
+.sources-screen tr:last-child :is(th, td) { border-bottom: 0; }
+
+.sources-screen__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.sources-screen__block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px;
+  border: 1px solid var(--seam);
+  border-radius: var(--r-l);
+  background: var(--hull);
+}
+
+.sources-screen__block p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--ink-2); }
+.sources-screen__block ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.sources-screen__block li { display: flex; align-items: baseline; gap: 10px; font-size: 13.5px; color: var(--ink-2); }
+
+.sources-screen__quote {
+  padding: 14px 16px;
+  border: 1px solid var(--seam-lit);
+  border-radius: var(--r-m);
+  background: var(--sunk);
+}
+
+.sources-screen footer { padding-top: 4px; font-size: 12px; color: var(--ink-4); }
+
+@media (max-width: 760px) {
+  .sources-screen__split, .sources-screen__cards { grid-template-columns: 1fr; }
+}
