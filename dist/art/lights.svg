@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" aria-hidden="true">
-<defs><radialGradient id="glow"><stop stop-color="#e6eed8" stop-opacity=".7"/><stop offset="1" stop-color="#b9dde4" stop-opacity="0"/></radialGradient></defs>
-<ellipse cx="652" cy="685" rx="182" ry="130" fill="url(#glow)"/>
-<rect x="559" y="648" width="191" height="55" rx="11" fill="#e6f1e8" fill-opacity=".48"/>
-<ellipse cx="1313" cy="680" rx="158" ry="86" fill="url(#glow)"/>
-<ellipse cx="1038" cy="651" rx="70" ry="64" fill="url(#glow)"/>
-
-</svg>
