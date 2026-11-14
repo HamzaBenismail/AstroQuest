@@ -14,7 +14,8 @@ function createEmptyAllocation() {
 
 export function createInitialUiState() {
   return {
-    screen: 'briefing', // 'briefing' | 'day' | 'debrief'
+    screen: 'briefing', // 'briefing' | 'day' | 'debrief' | 'dataSources'
+    returnScreen: null, // where 'dataSources' returns to
     gameState: null,
     forecasts: [],
     allocation: createEmptyAllocation(),
@@ -33,6 +34,7 @@ function startMission(config, mission, seed) {
   const forecasts = mission.days.map((d) => makeForecast(d.day, mission, rng, config))
   return {
     screen: 'day',
+    returnScreen: null,
     gameState,
     forecasts,
     allocation: createEmptyAllocation(),
@@ -99,6 +101,13 @@ export function gameReducer(config, mission, state, action) {
 
     case 'RESTART':
       return startMission(config, mission, action.seed)
+
+    case 'OPEN_DATA_SOURCES':
+      // Remember where we came from so Back returns to the same screen.
+      return { ...state, screen: 'dataSources', returnScreen: state.screen }
+
+    case 'CLOSE_DATA_SOURCES':
+      return { ...state, screen: state.returnScreen ?? 'briefing', returnScreen: null }
 
     default:
       return state

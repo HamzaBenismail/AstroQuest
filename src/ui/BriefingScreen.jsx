@@ -3,7 +3,7 @@ import { TermHint } from './TermHint.jsx'
 
 // F1: a 30-second briefing a 7-12 year old can understand without help. Short sentences
 // (<=15 words, §7.4).
-export function BriefingScreen({ config, onStart }) {
+export function BriefingScreen({ config, onStart, onOpenDataSources }) {
   return (
     <section className="briefing-screen">
       <h1>Junior Astronaut Mission Trainer</h1>
@@ -27,6 +27,9 @@ export function BriefingScreen({ config, onStart }) {
       <p>Nothing is free — power spent on one thing is power you don't have for another.</p>
       <button type="button" className="primary-button" onClick={onStart} autoFocus>
         Start Mission
+      </button>
+      <button type="button" className="link-button" onClick={onOpenDataSources}>
+        Data Sources
       </button>
     </section>
   )

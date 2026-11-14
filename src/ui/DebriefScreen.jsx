@@ -1,7 +1,7 @@
 import { Meter } from './Meter.jsx'
 import { describeOutcome } from './debriefText.js'
 
-export function DebriefScreen({ config, debrief, onTryAgain }) {
+export function DebriefScreen({ config, debrief, onTryAgain, onOpenDataSources }) {
   const { title, message } = describeOutcome(debrief, config)
 
   return (
@@ -22,6 +22,9 @@ export function DebriefScreen({ config, debrief, onTryAgain }) {
 
       <button type="button" className="primary-button" onClick={onTryAgain} autoFocus>
         Try Again
+      </button>
+      <button type="button" className="link-button" onClick={onOpenDataSources}>
+        Data Sources
       </button>
     </section>
   )

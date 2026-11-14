@@ -60,6 +60,96 @@ summary:focus-visible {
   background: #3a8761;
 }
 
+.link-button {
+  display: block;
+  width: 100%;
+  margin-top: 0.75rem;
+  background: transparent;
+  border: 1px solid #555;
+  color: #8ab4ff;
+}
+
+/* F6: Real NASA Science card */
+.science-card {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  background: #16202c;
+  border: 1px solid #2f4a63;
+  border-radius: 8px;
+}
+
+.science-card-tag {
+  margin: 0;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #7fc6ff;
+}
+
+.science-card-title {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+}
+
+.science-card-text {
+  margin: 0.25rem 0;
+}
+
+.science-card-source {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.science-card-source a,
+.data-source-link a {
+  color: #8ab4ff;
+}
+
+/* F8: Data Sources screen */
+.data-sources-list {
+  list-style: none;
+  padding: 0;
+}
+
+.data-source {
+  background: #1c1e27;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.data-source-full {
+  font-weight: normal;
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.data-source-status {
+  font-size: 0.85rem;
+}
+
+.data-source-status-archived strong {
+  color: #ffd27a;
+}
+
+.data-source-status-live strong {
+  color: #7fe0a0;
+}
+
+.data-source-link {
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.data-sources-note,
+.data-sources-ack {
+  font-size: 0.85rem;
+  color: #bbb;
+  border-left: 3px solid #2f4a63;
+  padding-left: 0.75rem;
+}
+
 .meters {
   display: flex;
   flex-direction: column;

@@ -4,6 +4,7 @@ import { AllocationControl } from './AllocationControl.jsx'
 import { TermHint } from './TermHint.jsx'
 import { glossary } from './glossary.js'
 import { stormLevelLabel } from './stormLevelLabel.js'
+import { ScienceCard } from './ScienceCard.jsx'
 
 const CONSUMERS = [
   { key: 'lifeSupport', label: 'Life Support', hint: glossary.lifeSupport },
@@ -12,7 +13,7 @@ const CONSUMERS = [
   { key: 'science', label: 'Science', hint: glossary.science },
 ]
 
-export function DayScreen({ config, uiState, dispatch }) {
+export function DayScreen({ config, uiState, dispatch, card }) {
   const { gameState, forecasts, allocation, awaitingAdvance, revealResult } = uiState
 
   if (awaitingAdvance && revealResult) {
@@ -20,6 +21,7 @@ export function DayScreen({ config, uiState, dispatch }) {
       <RevealPanel
         revealResult={revealResult}
         meterMax={config.meterMax}
+        card={card}
         onAdvance={() => dispatch({ type: 'ADVANCE' })}
       />
     )
@@ -84,7 +86,7 @@ export function DayScreen({ config, uiState, dispatch }) {
   )
 }
 
-function RevealPanel({ revealResult, meterMax, onAdvance }) {
+function RevealPanel({ revealResult, meterMax, card, onAdvance }) {
   const { day, level, events, meters } = revealResult
   return (
     <section className="reveal-panel">
@@ -109,6 +111,7 @@ function RevealPanel({ revealResult, meterMax, onAdvance }) {
         <Meter icon="🍽️" label="Food" value={meters.food} max={meterMax} />
         <Meter icon="🛡️" label="Crew Safety" value={meters.safety} max={meterMax} />
       </div>
+      <ScienceCard card={card} />
       <button type="button" className="primary-button" onClick={onAdvance} autoFocus>
         Continue
       </button>

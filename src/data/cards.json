@@ -1,26 +1,74 @@
 [
   {
-    "id": "card-greenhouse-1",
+    "id": "card-greenhouse-lettuce",
     "trigger": "greenhouse-low",
-    "title": "TODO(VERIFY)",
-    "text": "TODO(VERIFY): fill in Phase 6 from a real OSDR plant-growth study.",
-    "source": { "type": "OSDR", "studyId": null, "url": null },
+    "title": "Growing lettuce in space",
+    "text": "Astronauts grew lettuce on the Space Station. Scientists checked whether it was safe and healthy to eat.",
+    "source": {
+      "type": "OSDR",
+      "studyId": "OSD-269",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-269"
+    },
     "verified": false
   },
   {
-    "id": "card-storm-severe-1",
+    "id": "card-greenhouse-xroots",
+    "trigger": "greenhouse-low",
+    "title": "Plants with roots in the air",
+    "text": "On the Space Station, scientists tested growing plants without soil, using only water and mist on the roots.",
+    "source": {
+      "type": "OSDR",
+      "studyId": "OSD-773",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-773"
+    },
+    "verified": false
+  },
+  {
+    "id": "card-storm-radiation-brain",
     "trigger": "storm-severe",
-    "title": "TODO(VERIFY)",
-    "text": "TODO(VERIFY): fill in Phase 6 from a real OSDR radiation/dosimetry study.",
-    "source": { "type": "OSDR", "studyId": null, "url": null },
+    "title": "Why radiation is dangerous",
+    "text": "Scientists on Earth studied how space radiation affects the brain cells of mice, to understand the risk to astronauts.",
+    "source": {
+      "type": "OSDR",
+      "studyId": "OSD-611",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-611"
+    },
     "verified": false
   },
   {
-    "id": "card-night-1",
+    "id": "card-storm-radiation-cells",
+    "trigger": "storm-severe",
+    "title": "Space radiation and the body",
+    "text": "Using special particle beams on Earth, scientists studied how space radiation can harm the body's cells.",
+    "source": {
+      "type": "OSDR",
+      "studyId": "OSD-74",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-74"
+    },
+    "verified": false
+  },
+  {
+    "id": "card-night-water",
     "trigger": "night",
-    "title": "TODO(VERIFY)",
-    "text": "TODO(VERIFY): fill in Phase 6 from a real OSDR life-support study (e.g. ISS water processor).",
-    "source": { "type": "OSDR", "studyId": null, "url": null },
+    "title": "Recycling water in space",
+    "text": "The Space Station cleans and reuses its water. Scientists studied the tiny microbes that can grow in the water system.",
+    "source": {
+      "type": "OSDR",
+      "studyId": "OSD-729",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-729"
+    },
+    "verified": false
+  },
+  {
+    "id": "card-night-microbes",
+    "trigger": "night",
+    "title": "Keeping the station clean",
+    "text": "Scientists regularly check the surfaces and air inside the Space Station for bacteria, to keep the crew healthy.",
+    "source": {
+      "type": "OSDR",
+      "studyId": "OSD-82",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-82"
+    },
     "verified": false
   }
 ]
