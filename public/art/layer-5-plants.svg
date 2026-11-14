@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Sprouts inside the greenhouse dome footprint (see layer-4-outpost.svg).
+       Opacity and scale are driven by CSS (--greenhouse-level). -->
+  <g fill="#6fd17a">
+    <path d="M1265,900 q6,-30 0,-46 q-6,16 0,46 Z"/>
+    <path d="M1265,886 q-16,-10 -24,-4 q10,0 24,4 Z"/>
+    <path d="M1265,878 q16,-8 22,-2 q-10,-2 -22,2 Z"/>
+    <path d="M1300,900 q6,-24 0,-38 q-6,14 0,38 Z"/>
+    <path d="M1300,888 q-14,-8 -20,-2 q8,-1 20,2 Z"/>
+    <path d="M1335,900 q6,-28 0,-42 q-6,14 0,42 Z"/>
+    <path d="M1335,884 q14,-9 20,-3 q-8,-1 -20,3 Z"/>
+  </g>
+</svg>

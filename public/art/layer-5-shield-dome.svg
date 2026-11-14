@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <radialGradient id="domeGrad" cx="50%" cy="100%" r="100%">
+      <stop offset="0%" stop-color="#8fd6ff" stop-opacity="0.45"/>
+      <stop offset="70%" stop-color="#4aa3e0" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#4aa3e0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Protective dome over the outpost cluster (centered roughly on layer-4-outpost.svg) -->
+  <path d="M600,920 A380,380 0 0 1 1360,920 Z" fill="url(#domeGrad)"/>
+  <path d="M600,920 A380,380 0 0 1 1360,920" fill="none" stroke="#bfe9ff" stroke-width="4" opacity="0.8"/>
+  <path d="M640,920 A340,340 0 0 1 1320,920" fill="none" stroke="#bfe9ff" stroke-width="2" opacity="0.4"/>
+</svg>

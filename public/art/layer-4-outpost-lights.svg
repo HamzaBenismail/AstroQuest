@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Same window positions as layer-4-outpost.svg, bright. Opacity is driven by CSS
+       (--light-level) so this overlay fades in/out with life-support power. -->
+  <g fill="#ffd27a">
+    <rect x="765" y="825" width="30" height="24" rx="3"/>
+    <rect x="815" y="825" width="30" height="24" rx="3"/>
+    <rect x="865" y="825" width="30" height="24" rx="3"/>
+    <rect x="1015" y="810" width="34" height="28" rx="3"/>
+    <rect x="1075" y="810" width="34" height="28" rx="3"/>
+    <rect x="1135" y="810" width="34" height="28" rx="3"/>
+  </g>
+</svg>
