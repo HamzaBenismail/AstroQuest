@@ -1,0 +1,37 @@
+[
+  {
+    "id": "donki",
+    "name": "NASA CCMC DONKI",
+    "role": "Original FLR, SEP, CME and GST space-weather records; used to build the 10-day mission.",
+    "status": "Archived NASA data",
+    "url": "https://ccmc.gsfc.nasa.gov/tools/DONKI/"
+  },
+  {
+    "id": "osdr",
+    "name": "NASA Open Science Data Repository (OSDR)",
+    "role": "Referenced space biology and health studies for learning cards.",
+    "status": "Published research reference",
+    "url": "https://osdr.nasa.gov/bio/repo/"
+  },
+  {
+    "id": "nasa-api",
+    "name": "NASA Open APIs",
+    "role": "Developer-only route for obtaining DONKI records before packaging the game.",
+    "status": "Development-only retrieval",
+    "url": "https://api.nasa.gov/"
+  },
+  {
+    "id": "nasa-moon",
+    "name": "NASA Moon science and communications resources",
+    "role": "Scientific descriptions of lunar lighting, radiation shielding and communication time.",
+    "status": "Published reference",
+    "url": "https://science.nasa.gov/moon/moonlight/"
+  },
+  {
+    "id": "csa-food",
+    "name": "Canadian Space Agency food production toolkit",
+    "role": "Optional reading on growing food in space; not a gameplay dataset.",
+    "status": "Reference only",
+    "url": "https://www.asc-csa.gc.ca/eng/youth-educators/toolkits/food-production/"
+  }
+]

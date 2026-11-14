@@ -1,0 +1,227 @@
+{
+  "dataSource": "NASA DONKI (archived data)",
+  "window": {
+    "start": "2024-05-08",
+    "end": "2024-05-17"
+  },
+  "fetchedAtUtc": "2026-11-14T12:38:07.760Z",
+  "endpoints": {
+    "FLR": {
+      "file": "2024-05-08_2024-05-17-FLR.json",
+      "sourceEndpoint": "https://ccmc.gsfc.nasa.gov/DONKI-API/get/FLR",
+      "count": 100,
+      "shape": {
+        "count": 100,
+        "fields": [
+          {
+            "name": "activeRegionNum",
+            "kind": "number"
+          },
+          {
+            "name": "beginTime",
+            "kind": "string"
+          },
+          {
+            "name": "catalog",
+            "kind": "string"
+          },
+          {
+            "name": "classType",
+            "kind": "string"
+          },
+          {
+            "name": "endTime",
+            "kind": "string"
+          },
+          {
+            "name": "flrID",
+            "kind": "string"
+          },
+          {
+            "name": "instruments",
+            "kind": "array"
+          },
+          {
+            "name": "link",
+            "kind": "string"
+          },
+          {
+            "name": "linkedEvents",
+            "kind": "null"
+          },
+          {
+            "name": "note",
+            "kind": "string"
+          },
+          {
+            "name": "peakTime",
+            "kind": "string"
+          },
+          {
+            "name": "sentNotifications",
+            "kind": "array"
+          },
+          {
+            "name": "sourceLocation",
+            "kind": "string"
+          },
+          {
+            "name": "submissionTime",
+            "kind": "string"
+          },
+          {
+            "name": "versionId",
+            "kind": "number"
+          }
+        ]
+      }
+    },
+    "SEP": {
+      "file": "2024-05-08_2024-05-17-SEP.json",
+      "sourceEndpoint": "https://api.nasa.gov/DONKI/SEP",
+      "count": 14,
+      "shape": {
+        "count": 14,
+        "fields": [
+          {
+            "name": "eventTime",
+            "kind": "string"
+          },
+          {
+            "name": "instruments",
+            "kind": "array"
+          },
+          {
+            "name": "link",
+            "kind": "string"
+          },
+          {
+            "name": "linkedEvents",
+            "kind": "array"
+          },
+          {
+            "name": "sentNotifications",
+            "kind": "array"
+          },
+          {
+            "name": "sepID",
+            "kind": "string"
+          },
+          {
+            "name": "submissionTime",
+            "kind": "string"
+          },
+          {
+            "name": "versionId",
+            "kind": "number"
+          }
+        ]
+      }
+    },
+    "CME": {
+      "file": "2024-05-08_2024-05-17-CME.json",
+      "sourceEndpoint": "https://api.nasa.gov/DONKI/CME",
+      "count": 53,
+      "shape": {
+        "count": 53,
+        "fields": [
+          {
+            "name": "activeRegionNum",
+            "kind": "number"
+          },
+          {
+            "name": "activityID",
+            "kind": "string"
+          },
+          {
+            "name": "catalog",
+            "kind": "string"
+          },
+          {
+            "name": "cmeAnalyses",
+            "kind": "array"
+          },
+          {
+            "name": "instruments",
+            "kind": "array"
+          },
+          {
+            "name": "link",
+            "kind": "string"
+          },
+          {
+            "name": "linkedEvents",
+            "kind": "array"
+          },
+          {
+            "name": "note",
+            "kind": "string"
+          },
+          {
+            "name": "sentNotifications",
+            "kind": "array"
+          },
+          {
+            "name": "sourceLocation",
+            "kind": "string"
+          },
+          {
+            "name": "startTime",
+            "kind": "string"
+          },
+          {
+            "name": "submissionTime",
+            "kind": "string"
+          },
+          {
+            "name": "versionId",
+            "kind": "number"
+          }
+        ]
+      }
+    },
+    "GST": {
+      "file": "2024-05-08_2024-05-17-GST.json",
+      "sourceEndpoint": "https://api.nasa.gov/DONKI/GST",
+      "count": 4,
+      "shape": {
+        "count": 4,
+        "fields": [
+          {
+            "name": "allKpIndex",
+            "kind": "array"
+          },
+          {
+            "name": "gstID",
+            "kind": "string"
+          },
+          {
+            "name": "link",
+            "kind": "string"
+          },
+          {
+            "name": "linkedEvents",
+            "kind": "array"
+          },
+          {
+            "name": "sentNotifications",
+            "kind": "array"
+          },
+          {
+            "name": "startTime",
+            "kind": "string"
+          },
+          {
+            "name": "submissionTime",
+            "kind": "string"
+          },
+          {
+            "name": "versionId",
+            "kind": "number"
+          }
+        ]
+      }
+    }
+  },
+  "note": "Original API arrays are preserved; the shape listing is for human inspection. No API key is saved."
+}

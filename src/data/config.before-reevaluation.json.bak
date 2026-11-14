@@ -1,0 +1,82 @@
+{
+  "_comment": "game units — simplified, not real engineering values. Moon is a working assumption, not frozen.",
+  "site": "moon",
+  "missionLengthDays": 10,
+  "startingMeters": {
+    "air": 5,
+    "food": 4,
+    "safety": 8
+  },
+  "meterMin": 0,
+  "meterMax": 10,
+  "initialGreenhouseYesterday": 1,
+  "powerBudget": {
+    "sunlitDays": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "sunlit": 10,
+    "night": 7
+  },
+  "allocationRanges": {
+    "lifeSupport": [
+      0,
+      4
+    ],
+    "shield": [
+      0,
+      3
+    ],
+    "greenhouse": [
+      0,
+      3
+    ],
+    "science": [
+      0,
+      3
+    ]
+  },
+  "stormDamage": {
+    "0": 0,
+    "1": 2,
+    "2": 4,
+    "3": 7
+  },
+  "airUse": 3,
+  "foodUse": 2,
+  "shieldProtection": 2,
+  "zeroShieldSafetyPenalty": 1,
+  "calmShieldRecovery": 1,
+  "calmShieldRecoveryMinAllocation": 1,
+  "forecastErrorTable": [
+    -1,
+    0,
+    0,
+    1
+  ],
+  "stormLevelRange": [
+    0,
+    3
+  ],
+  "successMinMeter": 3,
+  "failureMeterThreshold": 0,
+  "scienceScorePerAllocation": 1,
+  "stormMapping": {
+    "_comment": "PROPOSAL ONLY. Team must inspect original DONKI samples, approve scientific simplification and append CLAUDE.md §15 decision before using a shipping mission.",
+    "status": "approved",
+    "flareClassLevels": {
+      "A": 0,
+      "B": 0,
+      "C": 1,
+      "M": 2,
+      "X": 3
+    },
+    "otherEventLevels": {
+      "SEP": 3,
+      "CME": 0,
+      "GST": 0
+    }
+  }
+}

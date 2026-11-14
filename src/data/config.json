@@ -1,0 +1,197 @@
+{
+  "_comment": "game units — simplified, not real engineering values. Moon is a working assumption, not frozen.",
+  "site": "moon",
+  "missionLengthDays": 10,
+  "startingMeters": {
+    "air": 5,
+    "food": 4,
+    "safety": 8
+  },
+  "meterMin": 0,
+  "meterMax": 10,
+  "initialGreenhouseYesterday": 1,
+  "powerBudget": {
+    "sunlitDays": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "sunlit": 10,
+    "night": 7
+  },
+  "allocationRanges": {
+    "lifeSupport": [
+      0,
+      4
+    ],
+    "shield": [
+      0,
+      3
+    ],
+    "greenhouse": [
+      0,
+      3
+    ],
+    "science": [
+      0,
+      3
+    ]
+  },
+  "stormDamage": {
+    "0": 0,
+    "1": 2,
+    "2": 4,
+    "3": 7
+  },
+  "airUse": 3,
+  "foodUse": 2,
+  "shieldProtection": 2,
+  "zeroShieldSafetyPenalty": 1,
+  "calmShieldRecovery": 1,
+  "calmShieldRecoveryMinAllocation": 1,
+  "forecastErrorTable": [
+    -1,
+    0,
+    0,
+    1
+  ],
+  "stormLevelRange": [
+    0,
+    3
+  ],
+  "successMinMeter": 3,
+  "failureMeterThreshold": 0,
+  "scienceScorePerAllocation": 1,
+  "stormMapping": {
+    "_comment": "PROPOSAL ONLY. Team must inspect original DONKI samples, approve scientific simplification and append CLAUDE.md §15 decision before using a shipping mission.",
+    "status": "approved",
+    "flareClassLevels": {
+      "A": 0,
+      "B": 0,
+      "C": 1,
+      "M": 2,
+      "X": 3
+    },
+    "otherEventLevels": {
+      "SEP": 3,
+      "CME": 0,
+      "GST": 0
+    }
+  },
+  "reevaluation": {
+    "_note": "Phase Reevaluation B candidate GAME UNITS, not real engineering values. Preserve archived NASA mission data. Team approval/documentation required before shipping.",
+    "version": 3,
+    "startingSafety": 10,
+    "reducedDayEnergy": 9,
+    "research": {
+      "unlockThreshold": 4,
+      "pointsPerPower": 1,
+      "airUseReduction": 1,
+      "airUseMin": 1,
+      "improvedForecastErrorTable": [
+        -1,
+        0,
+        0,
+        0
+      ]
+    },
+    "comms": {
+      "sendEnergyCost": 1,
+      "baseResponseTurns": 1,
+      "interferenceExtraTurns": 1,
+      "interferenceStormLevel": 3
+    },
+    "c3": {
+      "_note": "Reevaluation C candidate GAME UNITS; no lunar engineering/dose claim. Pending team balance playtest and Decision Log approval.",
+      "upgrades": {
+        "initialLevel": 1,
+        "maxLevel": 3,
+        "researchCostByNextLevel": {
+          "2": 3,
+          "3": 7
+        },
+        "energyCost": 1,
+        "effects": {
+          "lifeSupport": {
+            "airUseReductionPerLevel": 1,
+            "airUseFloor": 1
+          },
+          "greenhouse": {
+            "extraSuppliesPerLevel": 1
+          },
+          "power": {
+            "extraGenerationPerLevel": 1
+          },
+          "science": {
+            "bonusPointsPerLevel": 1
+          },
+          "shield": {
+            "extraProtectionPerLevel": 1
+          },
+          "comms": {
+            "note": "Level 2 shortens processing; Level 3 avoids a simulated single interference delay."
+          }
+        }
+      },
+      "battery": {
+        "initialCharge": 0,
+        "baseCapacity": 2,
+        "capacityPerPowerLevel": 2,
+        "maxChargePerDay": 2
+      },
+      "care": {
+        "energyCost": 1,
+        "suppliesCost": 1,
+        "safetyGain": 2,
+        "cooldownDays": 1
+      },
+      "comms": {
+        "sendEnergyCost": 1,
+        "baseResponseTurns": 2,
+        "minResponseTurns": 1,
+        "turnReductionPerLevel": 1,
+        "interferenceExtraTurns": 1,
+        "interferenceStormLevel": 3,
+        "interferenceImmuneLevel": 3
+      },
+      "expeditions": {
+        "supply-retrieval": {
+          "label": "Supply retrieval",
+          "duration": 2,
+          "energyCost": 1,
+          "airCost": 1,
+          "suppliesCost": 1,
+          "reward": {
+            "supplies": 4
+          }
+        },
+        "science-sampling": {
+          "label": "Science sampling",
+          "duration": 2,
+          "energyCost": 1,
+          "airCost": 1,
+          "suppliesCost": 1,
+          "reward": {
+            "research": 4
+          }
+        },
+        "equipment-maintenance": {
+          "label": "Outpost maintenance",
+          "duration": 1,
+          "energyCost": 1,
+          "airCost": 1,
+          "suppliesCost": 1,
+          "reward": {
+            "safety": 2
+          }
+        }
+      },
+      "advisor": {
+        "lowMeterThreshold": 4,
+        "lowBatteryThreshold": 0,
+        "severeWarningLevel": 3
+      }
+    }
+  }
+}

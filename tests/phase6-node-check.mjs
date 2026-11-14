@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { verifiedCards, verifiedFacts, chooseScienceCard, scienceCardForHistory } from '../src/ui/science-content.js';
+const parse = path => JSON.parse(fs.readFileSync(new URL(path, import.meta.url), 'utf8'));
+const cards = parse('../src/data/cards.json');
+const facts = parse('../src/data/facts.json');
+const sources = parse('../src/data/sources.json');
+assert.equal(cards.length, 6);
+assert.equal(facts.length, 5);
+assert.ok(sources.some(s => s.id === 'donki' && s.status === 'Archived NASA data'));
+assert.ok(verifiedCards(cards).every(c => c.verified));
+assert.ok(verifiedFacts(facts).every(f => f.verified));
+assert.equal(chooseScienceCard([{...cards[0],verified:false}], {stage:'briefing'}),null);
+const approved = cards.map(c => ({...c,verified:true})); // TEST FIXTURE ONLY, never saved to game data
+const opening = chooseScienceCard(approved,{stage:'briefing'});
+assert.equal(opening.trigger,'mission-start');
+const history = [{day:1,stormLevel:3,allocation:{greenhouse:0},meters:{safety:7}}];
+const conf = {powerBudget:{sunlitDays:[1,2,3,4]},stormLevelRange:[0,3],successMinMeter:3};
+assert.equal(scienceCardForHistory(approved,history,conf).trigger,'storm-severe');
+console.log('Phase 6 Node checks: schema, verified-only guard, scene triggers and sources PASS');

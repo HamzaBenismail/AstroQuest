@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" aria-hidden="true">
+<defs>
+ <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b9c2c7"/><stop offset=".53" stop-color="#778997"/><stop offset="1" stop-color="#4d6475"/></linearGradient>
+ <linearGradient id="dark" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#617b8c"/><stop offset="1" stop-color="#30495b"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b8cbd0" stop-opacity=".7"/><stop offset="1" stop-color="#486476" stop-opacity=".85"/></linearGradient>
+</defs>
+<!-- Space platform and pylons -->
+<path d="M375 797H1616L1565 817H419Z" fill="#2d3c4a" stroke="#9faeb5" stroke-width="6"/>
+<path d="M540 812v72h55v-72m387 0v85h58v-85m440 0v80h56v-80" fill="#485763" stroke="#95a0a8" stroke-width="5"/>
+<!-- left solar bank -->
+<path d="M256 758h245M1500 758h230" stroke="#9ea9b3" stroke-width="11"/>
+<path d="M267 718l200-14 16 85-203 7zM1506 708l207 5-11 82-204-11z" fill="#263e51" stroke="#9aabb7" stroke-width="7"/>
+<path d="M342 713l10 80m70-84 14 85m-162-49 203-6m1095-27-5 84m69-82-4 82m-137-53 211 8" stroke="#7290a3" stroke-width="4" opacity=".85"/>
+<!-- habitat -->
+<rect x="489" y="573" width="389" height="201" rx="58" fill="url(#metal)" stroke="#d3d8d7" stroke-width="8"/>
+<path d="M494 652h380M560 577v194M800 576v196" stroke="#455e70" stroke-width="11" opacity=".8"/>
+<rect x="549" y="639" width="210" height="75" rx="18" fill="#253e50" stroke="#b4c7ce" stroke-width="8"/>
+<path d="M573 673h162M642 646v64" stroke="#6c899c" stroke-width="7"/>
+<rect x="799" y="635" width="43" height="83" rx="12" fill="#203a4c" stroke="#c7d6d7" stroke-width="6"/>
+<!-- central equipment module -->
+<path d="M878 663h66m196 0h45" stroke="#b8c7cb" stroke-width="27"/>
+<rect x="928" y="552" width="224" height="226" rx="34" fill="url(#dark)" stroke="#c0cdd1" stroke-width="9"/>
+<path d="M945 585h191M943 725h191" stroke="#3b5366" stroke-width="17"/>
+<circle cx="1038" cy="652" r="55" fill="#263f53" stroke="#c1d4d8" stroke-width="13"/>
+<circle cx="1038" cy="652" r="25" fill="#6b899b" stroke="#dce7e3" stroke-width="5"/>
+<path d="M1038 622v60M1008 652h60" stroke="#dbe9ec" stroke-width="6"/>
+<!-- greenhouse greenhouse dome -->
+<path d="M1172 773V679Q1172 580 1308 579Q1443 580 1443 679V773Z" fill="url(#glass)" stroke="#c3d7d6" stroke-width="9"/>
+<path d="M1177 680h258M1245 600v169M1374 601v169" stroke="#93aab7" stroke-width="10"/>
+<path d="M1190 761H1436" stroke="#3c5564" stroke-width="29"/>
+<rect x="1196" y="739" width="215" height="15" rx="6" fill="#a4b6be"/>
+<!-- antenna -->
+<path d="M1498 757V479" stroke="#9aabb6" stroke-width="18"/>
+<path d="M1488 498L1393 428 1476 414 1544 481Z" fill="#8297a5" stroke="#e1e6e7" stroke-width="8"/>
+<path d="M1439 416l-27-39M1471 392l-59 54" stroke="#cdd9dd" stroke-width="6"/>
+<circle cx="1497" cy="487" r="16" fill="#bacdd3"/>
+<!-- utility pipe -->
+<path d="M773 770h398" stroke="#374d5c" stroke-width="20"/>
+<path d="M873 768h55M1152 767h29" stroke="#bbc6cd" stroke-width="11"/>
+
+</svg>

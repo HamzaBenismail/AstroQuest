@@ -1,0 +1,937 @@
+{
+  "missionId": "storm-window-2024-05-08",
+  "title": "Ten Days at the Lunar Outpost",
+  "site": "moon",
+  "dataSource": "NASA DONKI (archived data)",
+  "window": {
+    "start": "2024-05-08",
+    "end": "2024-05-17"
+  },
+  "days": [
+    {
+      "day": 1,
+      "date": "2024-05-08",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-08T05:36:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-08T12:24:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-08T19:12:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-08T22:24:00-CME-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X1.0",
+          "sourceId": "2024-05-08T01:33:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M3.4",
+          "sourceId": "2024-05-08T02:16:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.8",
+          "sourceId": "2024-05-08T03:19:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.9",
+          "sourceId": "2024-05-08T03:38:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M3.5",
+          "sourceId": "2024-05-08T04:20:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X1.0",
+          "sourceId": "2024-05-08T04:37:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M7.1",
+          "sourceId": "2024-05-08T06:44:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M4.5",
+          "sourceId": "2024-05-08T07:29:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.8",
+          "sourceId": "2024-05-08T09:31:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.1",
+          "sourceId": "2024-05-08T09:43:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M4.1",
+          "sourceId": "2024-05-08T11:09:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M8.6",
+          "sourceId": "2024-05-08T11:26:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M7.9",
+          "sourceId": "2024-05-08T17:32:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.9",
+          "sourceId": "2024-05-08T18:14:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.0",
+          "sourceId": "2024-05-08T19:15:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.7",
+          "sourceId": "2024-05-08T20:27:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X1.0",
+          "sourceId": "2024-05-08T21:08:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M9.8",
+          "sourceId": "2024-05-08T22:05:00-FLR-001"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "date": "2024-05-09",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-09T09:24:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-09T18:23:00-CME-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.8",
+          "sourceId": "2024-05-09T00:58:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M4.0",
+          "sourceId": "2024-05-09T03:07:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M4.5",
+          "sourceId": "2024-05-09T03:23:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.7",
+          "sourceId": "2024-05-09T04:44:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.2",
+          "sourceId": "2024-05-09T05:35:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.3",
+          "sourceId": "2024-05-09T06:03:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.4",
+          "sourceId": "2024-05-09T06:24:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.2",
+          "sourceId": "2024-05-09T07:54:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.1",
+          "sourceId": "2024-05-09T08:30:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X2.2",
+          "sourceId": "2024-05-09T08:45:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M3.1",
+          "sourceId": "2024-05-09T11:52:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.9",
+          "sourceId": "2024-05-09T12:05:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M3.7",
+          "sourceId": "2024-05-09T13:16:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.0",
+          "sourceId": "2024-05-09T14:01:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X1.1",
+          "sourceId": "2024-05-09T17:23:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.0",
+          "sourceId": "2024-05-09T21:15:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.0",
+          "sourceId": "2024-05-09T22:08:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.6",
+          "sourceId": "2024-05-09T22:24:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.2",
+          "sourceId": "2024-05-09T23:04:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.5",
+          "sourceId": "2024-05-09T23:44:00-FLR-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-09T13:59:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-09T14:25:00-SEP-001"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "date": "2024-05-10",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-10T02:12:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-10T07:12:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-10T16:36:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-10T21:17:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-10T21:28:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-10T23:13:00-CME-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.3",
+          "sourceId": "2024-05-10T00:10:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.4",
+          "sourceId": "2024-05-10T03:15:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.3",
+          "sourceId": "2024-05-10T06:14:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X3.9",
+          "sourceId": "2024-05-10T06:27:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.2",
+          "sourceId": "2024-05-10T10:10:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M5.9",
+          "sourceId": "2024-05-10T13:58:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.2",
+          "sourceId": "2024-05-10T17:14:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.2",
+          "sourceId": "2024-05-10T17:54:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.1",
+          "sourceId": "2024-05-10T18:26:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.7",
+          "sourceId": "2024-05-10T18:38:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.0",
+          "sourceId": "2024-05-10T18:57:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.1",
+          "sourceId": "2024-05-10T19:35:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.9",
+          "sourceId": "2024-05-10T19:56:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M3.8",
+          "sourceId": "2024-05-10T20:59:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.4",
+          "sourceId": "2024-05-10T21:15:00-FLR-001"
+        },
+        {
+          "type": "GST",
+          "label": "Geomagnetic storm observed near Earth",
+          "sourceId": "2024-05-10T15:00:00-GST-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-10T12:59:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-10T13:02:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-10T13:35:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-10T14:50:00-SEP-001"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "date": "2024-05-11",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-11T01:36:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-11T02:36:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-11T03:12:00-CME-002"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-11T16:24:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-11T18:00:00-CME-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X5.8",
+          "sourceId": "2024-05-11T01:10:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.3",
+          "sourceId": "2024-05-11T04:28:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.2",
+          "sourceId": "2024-05-11T07:26:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.3",
+          "sourceId": "2024-05-11T08:14:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.4",
+          "sourceId": "2024-05-11T08:45:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.7",
+          "sourceId": "2024-05-11T09:05:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M3.1",
+          "sourceId": "2024-05-11T10:03:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.6",
+          "sourceId": "2024-05-11T10:53:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X1.5",
+          "sourceId": "2024-05-11T11:15:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.7",
+          "sourceId": "2024-05-11T13:45:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M8.8",
+          "sourceId": "2024-05-11T14:46:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.9",
+          "sourceId": "2024-05-11T16:27:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.2",
+          "sourceId": "2024-05-11T20:32:00-FLR-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-11T02:10:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-11T04:07:00-SEP-001"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "date": "2024-05-12",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-12T02:00:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-12T03:48:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-12T13:00:00-CME-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M3.2",
+          "sourceId": "2024-05-12T00:41:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.4",
+          "sourceId": "2024-05-12T05:37:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.6",
+          "sourceId": "2024-05-12T12:27:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.0",
+          "sourceId": "2024-05-12T13:40:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.5",
+          "sourceId": "2024-05-12T13:49:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X1.0",
+          "sourceId": "2024-05-12T16:11:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M4.8",
+          "sourceId": "2024-05-12T20:17:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.1",
+          "sourceId": "2024-05-12T22:01:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.1",
+          "sourceId": "2024-05-12T22:14:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.0",
+          "sourceId": "2024-05-12T23:00:00-FLR-001"
+        },
+        {
+          "type": "GST",
+          "label": "Geomagnetic storm observed near Earth",
+          "sourceId": "2024-05-12T21:00:00-GST-001"
+        }
+      ]
+    },
+    {
+      "day": 6,
+      "date": "2024-05-13",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-13T09:12:00-CME-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.2",
+          "sourceId": "2024-05-13T01:23:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.2",
+          "sourceId": "2024-05-13T08:06:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.4",
+          "sourceId": "2024-05-13T08:23:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M4.9",
+          "sourceId": "2024-05-13T08:47:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M6.6",
+          "sourceId": "2024-05-13T09:36:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M3.7",
+          "sourceId": "2024-05-13T12:56:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.4",
+          "sourceId": "2024-05-13T14:02:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.5",
+          "sourceId": "2024-05-13T14:12:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.0",
+          "sourceId": "2024-05-13T17:32:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.0",
+          "sourceId": "2024-05-13T18:38:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.5",
+          "sourceId": "2024-05-13T21:48:00-FLR-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-13T12:44:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-13T13:10:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-13T14:00:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-13T16:19:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-13T18:07:00-SEP-001"
+        },
+        {
+          "type": "SEP",
+          "label": "Solar energetic particle event",
+          "sourceId": "2024-05-13T18:07:00-SEP-002"
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "date": "2024-05-14",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-14T02:24:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-14T04:48:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-14T10:09:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-14T10:36:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-14T13:12:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-14T17:00:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-14T17:30:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-14T17:48:00-CME-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.5",
+          "sourceId": "2024-05-14T01:23:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X1.7",
+          "sourceId": "2024-05-14T02:03:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class C6.5",
+          "sourceId": "2024-05-14T04:05:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X1.2",
+          "sourceId": "2024-05-14T12:40:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X8.7",
+          "sourceId": "2024-05-14T16:46:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M4.4",
+          "sourceId": "2024-05-14T17:25:00-FLR-001"
+        }
+      ]
+    },
+    {
+      "day": 8,
+      "date": "2024-05-15",
+      "stormLevel": 3,
+      "events": [
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-15T08:36:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-15T08:48:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-15T10:00:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-15T10:36:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-15T10:48:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-15T14:53:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-15T17:36:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-15T21:12:00-CME-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X3.4",
+          "sourceId": "2024-05-15T08:18:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M3.5",
+          "sourceId": "2024-05-15T09:50:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M2.9",
+          "sourceId": "2024-05-15T13:56:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M3.2",
+          "sourceId": "2024-05-15T14:10:00-FLR-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class X2.9",
+          "sourceId": "2024-05-15T14:20:00-FLR-001"
+        }
+      ]
+    },
+    {
+      "day": 9,
+      "date": "2024-05-16",
+      "stormLevel": 2,
+      "events": [
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-16T01:25:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-16T04:36:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-16T06:48:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-16T08:12:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-16T09:09:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-16T13:38:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-16T18:00:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-16T23:12:00-CME-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M1.0",
+          "sourceId": "2024-05-16T07:50:00-FLR-001"
+        },
+        {
+          "type": "GST",
+          "label": "Geomagnetic storm observed near Earth",
+          "sourceId": "2024-05-16T06:00:00-GST-001"
+        }
+      ]
+    },
+    {
+      "day": 10,
+      "date": "2024-05-17",
+      "stormLevel": 2,
+      "events": [
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-17T00:12:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-17T03:12:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-17T04:17:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-17T04:28:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-17T12:48:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-17T13:25:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-17T18:48:00-CME-001"
+        },
+        {
+          "type": "CME",
+          "label": "Coronal mass ejection observed",
+          "sourceId": "2024-05-17T21:24:00-CME-001"
+        },
+        {
+          "type": "FLR",
+          "label": "Solar flare, class M7.2",
+          "sourceId": "2024-05-17T20:33:00-FLR-001"
+        },
+        {
+          "type": "GST",
+          "label": "Geomagnetic storm observed near Earth",
+          "sourceId": "2024-05-17T18:00:00-GST-001"
+        }
+      ]
+    }
+  ]
+}
