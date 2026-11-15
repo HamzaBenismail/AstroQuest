@@ -1,3 +1,6 @@
+<img width="1600" height="400" alt="Apollo-Gists" src="https://github.com/user-attachments/assets/97110689-a163-4c35-ad99-1c0860581a69" />
+
+
 # AstroQuest — Junior Astronaut Mission Trainer
 
 **Build your spacecraft. Lead your crew. Explore beyond Earth.**
