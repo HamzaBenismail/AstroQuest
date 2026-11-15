@@ -1,0 +1,14 @@
+import { readFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const css=await readFile(new URL('../src/ui/v4/normal-pics.css', import.meta.url),'utf8');
+const main=await readFile(new URL('../src/main.jsx', import.meta.url),'utf8');
+const credits=await readFile(new URL('../public/art/NORMAL-PICS-SOURCES.md', import.meta.url),'utf8');
+const script=await readFile(new URL('../scripts/cache-normal-pics.mjs',import.meta.url),'utf8');
+assert.ok(main.includes("import './ui/v4/normal-pics.css';"));
+assert.equal([...new Set(css.match(/https:\/\/[^')\s]+/g)??[])].length,5,'Exactly five NASA photo candidates');
+for (const name of ['earth-globe','mars-globe','saturn','moon-panorama','mars-panorama']) assert.ok(credits.includes(name));
+for (const label of ['.crew-landing__stage','.smp-cine__surface','.crew-planet','.aq-title-screen__planet']) assert.ok(css.includes(label));
+for (const label of ['var(--planet-image)','var(--surface-art)','var(--cinematic-art)']) assert.ok(css.includes(label),'CSS must retain local fallback');
+assert.ok(script.includes('new URL(url).hostname.match'));
+assert.ok(credits.includes('not') && credits.includes('NASA'));
+console.log('PASS: five NASA-source images, usage ledger, original-art fallback, download script');

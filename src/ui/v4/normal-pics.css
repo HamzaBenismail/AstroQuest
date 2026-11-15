@@ -1,0 +1,97 @@
+/*
+ * SMP-NormalPics: photo-backed alternative for scenery, not astronaut/ship geometry.
+ * NASA-sourced photo URLs are documented individually in public/art/NORMAL-PICS-SOURCES.md.
+ * Browsers request the photo URLs at runtime; the original SVG/CSS is kept as fallback.
+ * Run `node scripts/cache-normal-pics.mjs` to download and install local copies instead.
+ */
+
+/* Actual orbital imagery replaces the three painted CSS planets on the welcome screen. */
+.aq-title-screen .aq-title-screen__planet--earth {
+  background-image:
+    url('https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/imagerecords/1000/1133/AS17-148-22727_lrg.jpg?crop=faces%2Cfocalpoint&fit=clip&h=1881&w=1881'),
+    radial-gradient(circle at 40% 35%,#90dcf8,#327eb7 44%,#12385e 75%,#08182c);
+  background-size:cover;
+  background-position:center;
+}
+.aq-title-screen .aq-title-screen__planet--mars {
+  background-image:
+    url('https://assets.science.nasa.gov/dynamicimage/assets/science/psd/mars/downloadable_items/3/7/37983_mars-globe-valles-marineris-enhanced.jpg?crop=faces%2Cfocalpoint&fit=clip&h=4798&w=4798'),
+    radial-gradient(circle at 31% 24%,#ffd7b5,#b75e55 65%,#54243c 95%);
+  background-size:cover;
+  background-position:center;
+}
+.aq-title-screen .aq-title-screen__planet--ringed {
+  width:clamp(115px,14vw,205px);
+  aspect-ratio:16/9;
+  border-radius:8px;
+  box-shadow:0 0 48px #c8a1c322;
+  background-image:
+    url('https://science.nasa.gov/wp-content/uploads/2023/05/pia05380-saturn-with-rings-16x9-1.jpg'),
+    radial-gradient(circle at 35% 28%,#f9d9ac,#bc94b3 55%,#56375c 90%);
+  background-color:#030817;
+  background-position:center;
+  background-size:cover;
+}
+.aq-title-screen .aq-title-screen__ring { display:none; }
+
+/* The authentic Apollo lunar panorama and Perseverance Mars vista underpin the
+ * existing interactive room geometry; dark overlays keep labels legible. */
+.crew-prep .crew-planet:first-child {
+  background-image:
+    linear-gradient(0deg,#061321f5 0%,#06132155 65%,#06132122 100%),
+    url('https://svs.gsfc.nasa.gov/vis/a000000/a004300/a004302/panorama_print.jpg'),
+    var(--planet-image);
+  background-position:center;
+  background-size:cover;
+}
+.crew-prep .crew-planet:nth-child(2) {
+  background-image:
+    linear-gradient(0deg,#061321f5 0%,#06132155 65%,#06132122 100%),
+    url('https://assets.science.nasa.gov/dynamicimage/assets/science/psd/mars/resources/detail_files/2/6/26064_PIA24744-web.jpg?crop=faces%2Cfocalpoint&fit=clip&h=636&w=1600'),
+    var(--planet-image);
+  background-position:center;
+  background-size:cover;
+}
+.crew-play--moon .crew-landing__stage,
+.crew-report--moon .smp-report-ship {
+  background-image:
+    linear-gradient(180deg,#07142555,#0b1c315e),
+    url('https://svs.gsfc.nasa.gov/vis/a000000/a004300/a004302/panorama_print.jpg'),
+    var(--surface-art);
+  background-size:cover;
+  background-position:center;
+}
+.crew-play--mars .crew-landing__stage,
+.crew-report--mars .smp-report-ship {
+  background-image:
+    linear-gradient(180deg,#07142544,#0b1c3155),
+    url('https://assets.science.nasa.gov/dynamicimage/assets/science/psd/mars/resources/detail_files/2/6/26064_PIA24744-web.jpg?crop=faces%2Cfocalpoint&fit=clip&h=636&w=1600'),
+    var(--surface-art);
+  background-size:cover;
+  background-position:center;
+}
+.crew-debrief--moon {
+  background-image:linear-gradient(#061222b0,#071523e8),
+    url('https://svs.gsfc.nasa.gov/vis/a000000/a004300/a004302/panorama_print.jpg'),var(--surface-art);
+}
+.crew-debrief--mars {
+  background-image:linear-gradient(#061222b0,#071523e8),
+    url('https://assets.science.nasa.gov/dynamicimage/assets/science/psd/mars/resources/detail_files/2/6/26064_PIA24744-web.jpg?crop=faces%2Cfocalpoint&fit=clip&h=636&w=1600'),var(--surface-art);
+}
+.smp-cine--launch[data-destination="moon"] .smp-cine__surface,
+.smp-cine--day[data-destination="moon"] .smp-cine__day-landscape {
+  background-image:linear-gradient(180deg,#06142672,#0614262a),
+    url('https://svs.gsfc.nasa.gov/vis/a000000/a004300/a004302/panorama_print.jpg'),var(--cinematic-art);
+  background-size:cover;
+  background-position:center;
+}
+.smp-cine--launch[data-destination="mars"] .smp-cine__surface,
+.smp-cine--day[data-destination="mars"] .smp-cine__day-landscape {
+  background-image:linear-gradient(180deg,#06142672,#0614262a),
+    url('https://assets.science.nasa.gov/dynamicimage/assets/science/psd/mars/resources/detail_files/2/6/26064_PIA24744-web.jpg?crop=faces%2Cfocalpoint&fit=clip&h=636&w=1600'),var(--cinematic-art);
+  background-size:cover;
+  background-position:center;
+}
+
+/* The ship cutaways, room hatches, resource bars, and storm overlays stay as
+ * programmatic shapes: photographs cannot represent these imaginary mechanics. */
