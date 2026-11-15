@@ -10,7 +10,7 @@ import VerifiedFact from '../VerifiedFact.jsx';
 import cards from '../../data/cards.json';
 import { chooseScienceCard, scienceCardForHistory } from '../science-content.js';
 import {
-  IconAir, IconArrowDown, IconArrowRight, IconArrowUp, IconBattery, IconBolt,
+  IconAir, IconAlert, IconArrowDown, IconArrowRight, IconArrowUp, IconBattery, IconBolt,
   IconCheck, IconClock, IconEva, IconInfo, IconPatch, IconReplay, IconScience, IconShield,
   IconSupplies, IconWarning, METER_ICONS, ROOM_ICONS,
 } from '../icons.jsx';
@@ -340,8 +340,9 @@ function CommsBlock({ session, config, dispatch }) {
   );
 }
 
-function RoomPanel({ session, config, preview, dispatch, crew }) {
+function RoomPanel({ session, config, preview, dispatch, crew, isStaffed }) {
   const room = session.selectedRoom;
+  const staffed = isStaffed(room);
   const Icon = ROOM_ICONS[room];
   const allocatable = Object.hasOwn(session.plan.allocation, room);
   const remaining = (preview.available ?? 0) - (preview.used ?? 0);
@@ -362,40 +363,59 @@ function RoomPanel({ session, config, preview, dispatch, crew }) {
         )}
       </div>
 
-      {allocatable && (
-        <Stepper label={`${ROOM_NAMES[room]} Energy`} value={session.plan.allocation[room]}
-          range={config.allocationRanges[room]} note={BENEFITS[room]} canAdd={remaining >= 1}
-          onDelta={delta => dispatch({ type: 'ALLOCATE', consumer: room, delta })}/>
-      )}
-
-      {room === 'lifeSupport' && <CrewCare session={session} config={config} dispatch={dispatch}/>}
-      {room === 'power' && <PowerBlock session={session} config={config} preview={preview} dispatch={dispatch}/>}
-      {room === 'science' && (
+      {staffed ? (
         <>
-          <div className="c3-block">
-            <div className="c3-block__head">
-              <h3>Research</h3>
-              <small>score {session.game.research.earned}</small>
-            </div>
-            <p>Left to spend: <strong>{session.game.research.available} Points</strong></p>
-            <p className="c3-help">Spending Points on upgrades never lowers your lifetime research score.</p>
-          </div>
-          <ExpeditionBlock session={session} config={config} dispatch={dispatch}/>
-        </>
-      )}
-      {room === 'shield' && <VerifiedFact factId="fact-shielding"/>}
-      {room === 'comms' && <CommsBlock session={session} config={config} dispatch={dispatch}/>}
+          {allocatable && (
+            <Stepper label={`${ROOM_NAMES[room]} Energy`} value={session.plan.allocation[room]}
+              range={config.allocationRanges[room]} note={BENEFITS[room]} canAdd={remaining >= 1}
+              onDelta={delta => dispatch({ type: 'ALLOCATE', consumer: room, delta })}/>
+          )}
 
-      <UpgradeBlock room={room} session={session} config={config} dispatch={dispatch}/>
+          {room === 'lifeSupport' && <CrewCare session={session} config={config} dispatch={dispatch}/>}
+          {room === 'power' && <PowerBlock session={session} config={config} preview={preview} dispatch={dispatch}/>}
+          {room === 'science' && (
+            <>
+              <div className="c3-block">
+                <div className="c3-block__head">
+                  <h3>Research</h3>
+                  <small>score {session.game.research.earned}</small>
+                </div>
+                <p>Left to spend: <strong>{session.game.research.available} Points</strong></p>
+                <p className="c3-help">Spending Points on upgrades never lowers your lifetime research score.</p>
+              </div>
+              <ExpeditionBlock session={session} config={config} dispatch={dispatch}/>
+            </>
+          )}
+          {room === 'shield' && <VerifiedFact factId="fact-shielding"/>}
+          {room === 'comms' && <CommsBlock session={session} config={config} dispatch={dispatch}/>}
+
+          <UpgradeBlock room={room} session={session} config={config} dispatch={dispatch}/>
+        </>
+      ) : (
+        <div className="c3-block c3-block--locked">
+          <h3><IconAlert size={19}/>Nobody works here</h3>
+          <p>
+            {ROOM_NAMES[room]} is dark. A department only runs when one of your four astronauts is
+            posted to it, so this room cannot take Energy today.
+          </p>
+          <p className="c3-help">
+            You chose where everyone works before launch. Finish this mission, or restart it, to move your crew.
+          </p>
+        </div>
+      )}
 
       <nav className="c3-rooms-list" aria-label="Jump to another room">
         {ROOMS_C3.map(key => {
           const RoomIcon = ROOM_ICONS[key];
+          const open = isStaffed(key);
           return (
-            <button type="button" key={key} aria-pressed={key === room}
+            <button type="button" key={key} aria-pressed={key === room} data-staffed={open ? 'true' : 'false'}
               onClick={() => dispatch({ type: 'SELECT_ROOM', room: key })}>
               <RoomIcon size={18}/>
-              <span>{ROOM_NAMES[key]}<small>Level {session.game.roomLevels[key]}</small></span>
+              <span>
+                {ROOM_NAMES[key]}
+                <small>{open ? `Level ${session.game.roomLevels[key]}` : 'Needs an astronaut'}</small>
+              </span>
             </button>
           );
         })}
@@ -515,7 +535,7 @@ function Briefing({ config, mission, ship, prep, onStart }) {
           <section aria-labelledby="c3-loop">
             <h2 id="c3-loop" className="c3-h2">How one day works</h2>
             <ol className="c3-steps">
-              <li><b>1</b><strong>Pick a room</strong><span>Tap any of the six rooms in your outpost.</span></li>
+              <li><b>1</b><strong>Pick a room</strong><span>Tap a department one of your astronauts is working in.</span></li>
               <li><b>2</b><strong>Give it Energy</strong><span>You have one shared Energy budget each day.</span></li>
               <li><b>3</b><strong>Run the day</strong><span>Space weather arrives. Your plan meets reality.</span></li>
               <li><b>4</b><strong>Read the report</strong><span>Learn what worked, then plan a smarter tomorrow.</span></li>
@@ -524,6 +544,7 @@ function Briefing({ config, mission, ship, prep, onStart }) {
               The Science Lab also earns <strong>Research Points</strong>. Spend them to upgrade any room up to
               Level {config.reevaluation.c3.upgrades.maxLevel}, store spare Energy in the battery, or send the
               crew outside on an EVA task.
+              {ship && ' A department with no astronaut posted to it stays closed and cannot take Energy.'}
             </p>
           </section>
 
@@ -921,6 +942,13 @@ export default function MissionExperienceC({ config, mission, prep, onReconfigur
   const ship = prep ? shipById(prep.shipId) : null;
   const assignments = prep?.assignments ?? {};
 
+  // Mission prep decides who works where, and a department only runs with an
+  // astronaut posted to it. This gates which PLANS the UI will let a player
+  // build; it never changes how the engine resolves a plan it is given. When
+  // prep did not run, nothing is gated and the game behaves as it always did.
+  const crewRequired = Boolean(prep);
+  const isStaffed = room => !crewRequired || Boolean(assignments[room]);
+
   if (session.screen === 'briefing') {
     return <Briefing config={config} mission={mission} ship={ship} prep={prep}
       onStart={() => dispatch({ type: 'START' })}/>;
@@ -969,9 +997,10 @@ export default function MissionExperienceC({ config, mission, prep, onReconfigur
 
       <div className="c3-main-grid">
         <CutawaySceneC config={config} session={session} ship={ship} assignments={assignments}
+          crewRequired={crewRequired}
           onSelectRoom={room => dispatch({ type: 'SELECT_ROOM', room })}/>
         <RoomPanel config={config} session={session} preview={preview} dispatch={dispatch}
-          crew={crewById(assignments[session.selectedRoom])}/>
+          crew={crewById(assignments[session.selectedRoom])} isStaffed={isStaffed}/>
       </div>
 
       <footer className="c3-footer">

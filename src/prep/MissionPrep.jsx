@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { ROOMS_C3 } from '../logic/v3/engine.js';
 import { ROOM_NAMES, ROOM_TAGLINES } from '../ui/rooms.js';
-import { ROOM_ICONS, IconAir, IconArrowLeft, IconArrowRight, IconBattery, IconCheck, IconInfo, IconSupplies } from '../ui/icons.jsx';
+import { ROOM_ICONS, IconAir, IconArrowLeft, IconArrowRight, IconBattery, IconCheck, IconInfo, IconSupplies, IconWarning } from '../ui/icons.jsx';
 import { SHIPS, shipById } from './fleet.jsx';
 import { CREW, CrewArt, crewById } from './crew.jsx';
 import './prep.css';
@@ -245,8 +245,19 @@ function CrewStep({ shipId, assignments, setAssignments, picked, setPicked, onBa
             mouse-and-keyboard affordance and does nothing under a finger. */}
         <span className="prep-hint-drag">Drag an astronaut onto a department — or tap one, then tap the room.</span>
         <span className="prep-hint-tap">Tap an astronaut, then tap the department you want them in.</span>
-        {' '}Four astronauts, six departments, so two rooms run on their own.
+        {' '}You have four astronauts and six departments. <strong>A department with nobody in it stays
+        closed for the whole mission</strong>, so choose the four you need most.
       </p>
+
+      {!assignments.lifeSupport && placedIds.length > 0 && (
+        <p className="notice notice--warn">
+          <IconWarning size={18}/>
+          <span>
+            <strong>Nobody is in Life Support.</strong> That is the department that makes your Air,
+            and a closed department cannot be given Energy. Your crew would last about two days.
+          </span>
+        </p>
+      )}
 
       <div className="prep-crew-layout">
         <section className="prep-tray" aria-labelledby="tray-title">

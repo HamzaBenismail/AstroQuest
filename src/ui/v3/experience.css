@@ -204,6 +204,14 @@
 
 .c3-help { font-size: 12px !important; line-height: 1.5; color: var(--ink-4) !important; }
 
+/* a room with no astronaut posted to it */
+.c3-block--locked { border-style: dashed; border-color: var(--seam-lit); }
+.c3-block--locked h3 { display: flex; align-items: center; gap: 9px; color: var(--ink-2); }
+.c3-block--locked h3 .icon { color: var(--amber-lit); }
+
+.c3-rooms-list button[data-staffed='false'] { border-style: dashed; }
+.c3-rooms-list button[data-staffed='false'] :is(.icon, small) { color: var(--ink-4); }
+
 .c3-option-list { display: flex; flex-direction: column; gap: 9px; }
 
 /* battery cells */

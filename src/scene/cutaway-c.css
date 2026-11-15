@@ -211,6 +211,28 @@
 
 .c3-scene__crew small { font-size: 11px; font-weight: 700; color: var(--crew-accent); }
 
+/* a department with nobody posted to it — closed, and visibly so */
+.c3-scene__room[data-dark='true'] {
+  border-style: dashed;
+  border-color: #243352;
+  background: #080F1C;
+}
+
+.c3-scene__room[data-dark='true'] :is(.c3-scene__name, .c3-scene__level) { color: var(--ink-4); }
+.c3-scene__room[data-dark='true'] .icon { color: var(--ink-4); }
+.c3-scene__room[data-dark='true']:hover { border-color: var(--seam-lit); }
+
+.c3-scene__empty {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-4);
+}
+
+.c3-scene__empty .icon { color: var(--ink-4); }
+
 .c3-scene__room--lifeSupport .icon, .c3-scene__room--lifeSupport .c3-scene__readout { color: var(--air); }
 .c3-scene__room--greenhouse .icon, .c3-scene__room--greenhouse .c3-scene__readout { color: var(--ok); }
 .c3-scene__room--power .icon, .c3-scene__room--power .c3-scene__readout { color: var(--supplies); }

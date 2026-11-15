@@ -12,11 +12,11 @@
  */
 import { ROOMS_C3 } from '../logic/v3/engine.js';
 import { ROOM_NAMES, ROOM_TAGLINES } from '../ui/rooms.js';
-import { IconBattery, IconBolt, IconClock, IconWarning, ROOM_ICONS } from '../ui/icons.jsx';
+import { IconAlert, IconBattery, IconBolt, IconClock, IconWarning, ROOM_ICONS } from '../ui/icons.jsx';
 import { CrewArt, crewById } from '../prep/crew.jsx';
 import './cutaway-c.css';
 
-export default function CutawaySceneC({ config, session, ship, assignments = {}, onSelectRoom }) {
+export default function CutawaySceneC({ config, session, ship, assignments = {}, crewRequired = false, onSelectRoom }) {
   const { game, plan, selectedRoom } = session;
   const limited = !config.powerBudget.sunlitDays.includes(game.day);
   const lowAir = game.meters.air <= config.successMinMeter;
@@ -72,21 +72,27 @@ export default function CutawaySceneC({ config, session, ship, assignments = {},
             const selected = selectedRoom === room;
             const lit = isLit(room);
             const member = crewById(assignments[room]);
+            const dark = crewRequired && !member;
             return (
               <button type="button" key={room}
                 className={`c3-scene__room c3-scene__room--${room}`}
                 data-lit={lit ? 'true' : 'false'}
+                data-dark={dark ? 'true' : 'false'}
                 aria-pressed={selected}
-                aria-label={`${ROOM_NAMES[room]}, level ${game.roomLevels[room]}, ${text}${member ? `, ${member.name} on duty` : ''}`}
+                aria-label={dark
+                  ? `${ROOM_NAMES[room]}, level ${game.roomLevels[room]}, closed — no astronaut is posted here`
+                  : `${ROOM_NAMES[room]}, level ${game.roomLevels[room]}, ${text}${member ? `, ${member.name} on duty` : ''}`}
                 onClick={() => onSelectRoom(room)}>
                 <span className="c3-scene__row">
                   <Icon size={26}/>
                   <small className="c3-scene__level">Lv {game.roomLevels[room]}</small>
                 </span>
                 <strong className="c3-scene__name">{ROOM_NAMES[room]}</strong>
-                <span className="c3-scene__tag">{ROOM_TAGLINES[room]}</span>
+                <span className="c3-scene__tag">{dark ? 'Closed today' : ROOM_TAGLINES[room]}</span>
                 <span className="c3-scene__foot-row">
-                  <span className="c3-scene__readout"><Readout size={14}/>{text}</span>
+                  {dark
+                    ? <span className="c3-scene__empty"><IconAlert size={14}/>No astronaut</span>
+                    : <span className="c3-scene__readout"><Readout size={14}/>{text}</span>}
                   {member && (
                     <span className="c3-scene__crew" style={{ '--crew-accent': member.accent }}>
                       <CrewArt member={member} size={30}/>
