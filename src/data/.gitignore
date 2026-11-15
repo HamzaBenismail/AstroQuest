@@ -1,0 +1,6 @@
+# Local saved configurations and staging outputs; never deploy backups.
+*.bak
+*.backup
+*.old
+*.tmp
+*.temp

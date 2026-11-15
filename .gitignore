@@ -1,0 +1,49 @@
+# Dependencies and production output
+node_modules/
+dist/
+build/
+coverage/
+.vite/
+*.tsbuildinfo
+
+# Keys, local configuration and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.pfx
+*.key
+*.crt
+
+# Backups, caches and local editor state
+*.bak
+*.backup
+*.old
+*.tmp
+*.temp
+*.swp
+*~
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.cache/
+.npm/
+*.log
+npm-debug.log*
+
+# Generated local reviews and downloaded research intermediates
+scripts/review/*.json
+scripts/review/*.csv
+scripts/review/*.html
+scripts/review/*.log
+scripts/raw/*.tmp
+
+# Local visual experiments and test preview artifacts
+preview-*.html
+*-preview.html
+*-preview.png
+SMP-menu-style-experiment.html
+playwright-report/
+test-results/

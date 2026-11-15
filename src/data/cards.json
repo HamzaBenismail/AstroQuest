@@ -1,0 +1,74 @@
+[
+  {
+    "id": "card-mission-start",
+    "trigger": "mission-start",
+    "title": "Keeping muscles strong",
+    "text": "Scientists studied the muscles and bones of mice after spaceflight. They looked for ways to protect muscle strength.",
+    "source": {
+      "type": "OSDR",
+      "studyId": "OSD-654",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-654"
+    },
+    "verified": false
+  },
+  {
+    "id": "card-greenhouse-low",
+    "trigger": "greenhouse-low",
+    "title": "Lettuce in space",
+    "text": "NASA grew red lettuce on the space station. Researchers checked whether it was safe to eat.",
+    "source": {
+      "type": "OSDR",
+      "studyId": "OSD-267",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-267"
+    },
+    "verified": false
+  },
+  {
+    "id": "card-greenhouse-active",
+    "trigger": "greenhouse-active",
+    "title": "Plants need light",
+    "text": "Scientists grew mizuna greens on the space station. They studied how different lights affected the crop.",
+    "source": {
+      "type": "OSDR",
+      "studyId": "OSD-655",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-655"
+    },
+    "verified": false
+  },
+  {
+    "id": "card-storm-severe",
+    "trigger": "storm-severe",
+    "title": "Studying radiation",
+    "text": "Researchers exposed mice to low radiation in a ground experiment. They examined how radiation and simulated low gravity affected the animals.",
+    "source": {
+      "type": "OSDR",
+      "studyId": "OSD-202",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-202"
+    },
+    "verified": false
+  },
+  {
+    "id": "card-crew-safety-low",
+    "trigger": "crew-safety-low",
+    "title": "Mice and immune health",
+    "text": "Scientists studied mouse brains after a stay on the space station. They measured signals linked to inflammation.",
+    "source": {
+      "type": "OSDR",
+      "studyId": "OSD-751",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-751"
+    },
+    "verified": false
+  },
+  {
+    "id": "card-energy-limited",
+    "trigger": "energy-limited",
+    "title": "Light helps seedlings",
+    "text": "Scientists studied small plants growing in space. They tested how red light changed the plants’ response to weak gravity.",
+    "source": {
+      "type": "OSDR",
+      "studyId": "OSD-314",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-314"
+    },
+    "verified": false
+  }
+]

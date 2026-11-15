@@ -1,0 +1,46 @@
+{
+  "explorer": {
+    "pattern": "Dual columns · three decks",
+    "rooms": {
+      "lifeSupport": {"x": 242, "y": 217, "w": 329, "h": 123},
+      "greenhouse": {"x": 633, "y": 217, "w": 329, "h": 123},
+      "science": {"x": 242, "y": 363, "w": 329, "h": 123},
+      "power": {"x": 633, "y": 363, "w": 329, "h": 123},
+      "shield": {"x": 242, "y": 509, "w": 329, "h": 123},
+      "comms": {"x": 633, "y": 509, "w": 329, "h": 123}
+    }
+  },
+  "titan": {
+    "pattern": "Command bridge · cargo tiers",
+    "rooms": {
+      "comms": {"x": 295, "y": 207, "w": 610, "h": 112},
+      "lifeSupport": {"x": 206, "y": 344, "w": 365, "h": 129},
+      "greenhouse": {"x": 629, "y": 344, "w": 365, "h": 129},
+      "power": {"x": 195, "y": 499, "w": 263, "h": 118},
+      "science": {"x": 470, "y": 499, "w": 263, "h": 118},
+      "shield": {"x": 745, "y": 499, "w": 263, "h": 118}
+    }
+  },
+  "horizon": {
+    "pattern": "Ring pods · central hub",
+    "rooms": {
+      "greenhouse": {"x": 277, "y": 230, "w": 248, "h": 112},
+      "science": {"x": 677, "y": 230, "w": 248, "h": 112},
+      "lifeSupport": {"x": 450, "y": 355, "w": 300, "h": 103},
+      "shield": {"x": 450, "y": 476, "w": 300, "h": 103},
+      "power": {"x": 279, "y": 590, "w": 250, "h": 92},
+      "comms": {"x": 673, "y": 590, "w": 250, "h": 92}
+    }
+  },
+  "nova": {
+    "pattern": "Pointed nose · arrow decks",
+    "rooms": {
+      "comms": {"x": 491, "y": 173, "w": 218, "h": 94},
+      "science": {"x": 312, "y": 301, "w": 260, "h": 116},
+      "power": {"x": 628, "y": 301, "w": 260, "h": 116},
+      "lifeSupport": {"x": 241, "y": 448, "w": 290, "h": 121},
+      "greenhouse": {"x": 669, "y": 448, "w": 290, "h": 121},
+      "shield": {"x": 492, "y": 592, "w": 218, "h": 93}
+    }
+  }
+}

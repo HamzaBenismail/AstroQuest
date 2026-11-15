@@ -1,0 +1,33 @@
+.cutaway{--parallax-x:0px;--parallax-y:0px;position:relative;isolation:isolate;aspect-ratio:16/9;width:100%;min-height:310px;overflow:hidden;border:1px solid #547087;border-radius:16px;background:#080e1a;box-shadow:0 28px 60px #03091199}
+.cutaway__art{width:101%;height:101%;position:absolute;inset:-.5%;object-fit:cover;pointer-events:none;user-select:none;transform:translate3d(var(--parallax-x),var(--parallax-y),0);transition:transform .2s ease-out}
+.cutaway__room-grid{position:absolute;inset:0;z-index:4}
+.cutaway__room{position:absolute;display:flex;justify-content:space-between;align-items:flex-start;flex-direction:column;min-height:0;min-width:0;padding:9px;border:2px solid transparent;border-radius:12px;background:transparent;color:#deedfb;text-shadow:0 2px 5px #000e;font-weight:800;font-size:clamp(.59rem,.94vw,.88rem);transition:background-color .14s ease,border-color .14s ease}
+.cutaway__room:hover,.cutaway__room[aria-pressed="true"]{border-color:#a2e8f5;background:#42c4e21a}
+.cutaway__room[aria-pressed="true"]{box-shadow:inset 0 0 0 2px #62bcce52}
+.cutaway__room:focus-visible{outline:4px solid #ffdc9b;outline-offset:1px}
+.cutaway__room-label{background:#0a1529e6;padding:5px 9px;border:1px solid #6c8ba5;max-width:100%;border-radius:7px;line-height:1.2}
+.cutaway__room-dot{width:9px;height:9px;border-radius:50%;border:2px solid #9da8bc;background:#273a53;align-self:flex-end;transition:opacity .2s ease}
+.cutaway__room[data-active="true"] .cutaway__room-dot{border-color:#acffde;background:#54d7ae;box-shadow:0 0 9px #54d7ae}
+.cutaway__room--lifeSupport{left:13.9%;top:26.2%;width:22.5%;height:23.9%}
+.cutaway__room--greenhouse{left:37.6%;top:26.2%;width:22.4%;height:23.9%}
+.cutaway__room--science{left:61.2%;top:26.2%;width:23.2%;height:23.9%}
+.cutaway__room--power{left:13.9%;top:52.4%;width:22.5%;height:23.6%}
+.cutaway__room--shield{left:37.6%;top:52.4%;width:22.4%;height:23.6%}
+.cutaway__room--comms{left:61.2%;top:52.4%;width:23.2%;height:23.6%}
+.cutaway__storm-glow{position:absolute;inset:0;pointer-events:none;z-index:2;opacity:0;background:radial-gradient(ellipse at 90% 12%,#ed644044 0%,transparent 48%)}
+.cutaway__storm-glow[data-forecast="warning"]{opacity:1}
+.cutaway[data-low-air="true"] .cutaway__room--lifeSupport{box-shadow:inset 0 0 18px 3px #e66d59bb}
+.cutaway[data-greenhouse="active"] .cutaway__room--greenhouse{background:#1ce7a61f}
+.cutaway[data-shelter="active"] .cutaway__room--shield{background:#a1cfff21}
+.cutaway[data-science="active"] .cutaway__room--science{background:#dad1ff1c}
+.cutaway[data-comms="pending"] .cutaway__room--comms{background:#a7d5ff1c}
+.cutaway[data-power="reduced"]{filter:brightness(.83)}
+.cutaway__overlay-label{position:absolute;top:2.4%;left:3%;z-index:5;pointer-events:none;background:#0d2137db;border:1px solid #6892ac;color:#cfeaf3;font:800 clamp(.55rem,.8vw,.83rem)/1.3 system-ui;padding:7px 11px;border-radius:25px;letter-spacing:.06em}
+.cutaway__signal{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:#5fe0b6}
+.cutaway__caption{position:absolute;bottom:2%;left:4%;right:4%;pointer-events:none;z-index:5;color:#d4e9f7;font:600 clamp(.5rem,.8vw,.71rem)/1.3 system-ui;text-shadow:0 2px 5px #030710}
+.cutaway__alert{position:absolute;top:2.4%;right:2%;z-index:6;background:#683331;border:1px solid #ffbf9a;color:#fff1d9;font:800 clamp(.6rem,.88vw,.82rem)/1.2 system-ui;padding:8px 12px;border-radius:8px;animation:cutaway-warning 1.3s ease-in-out infinite alternate}
+@keyframes cutaway-warning{from{opacity:.6}to{opacity:1}}
+@media(max-width:900px){.cutaway__room{padding:4px;border-radius:8px}.cutaway__room-label{padding:4px 5px}.cutaway__overlay-label{font-size:.57rem;padding:5px 7px}.cutaway__alert{top:auto;bottom:8%;right:3%}}
+@media(max-width:650px){.cutaway{min-height:210px}.cutaway__room{font-size:.55rem;border-width:1px;padding:2px}.cutaway__room-dot{width:6px;height:6px}.cutaway__caption{font-size:.54rem}.cutaway__overlay-label{letter-spacing:0}}
+@media(hover:none),(pointer:coarse){.cutaway__art{transform:none!important;transition:none}}
+@media(prefers-reduced-motion:reduce){.cutaway__art{transform:none!important;transition:none!important}.cutaway__alert{animation:none!important}.cutaway__room,.cutaway__room-dot{transition:none!important}}

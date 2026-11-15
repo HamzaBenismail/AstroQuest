@@ -1,0 +1,120 @@
+/* Phase D.11 — accessible visual-only mission cinematics; no simulation code. */
+.smp-cine{position:relative;isolation:isolate;min-height:100vh;width:100%;overflow:hidden;color:#eff8ff;background:#06101e;font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+.smp-cine *{box-sizing:border-box}
+.smp-cine__skip{position:absolute;right:clamp(15px,3vw,50px);top:clamp(14px,3vw,45px);z-index:20;min-height:46px;padding:10px 18px;border:2px solid #addbfa;border-radius:12px;background:#0d3049ee;color:white;font-weight:800;cursor:pointer}
+.smp-cine__skip:focus-visible{outline:3px solid #ffda83;outline-offset:3px}
+.smp-cine--launch{position:fixed;z-index:5000;inset:0;min-height:100dvh;background:radial-gradient(circle at 70% 40%,#213e6a,#0a162e 50%,#020713 100%)}
+.smp-cine__stars,.smp-ending-scene__starfield{position:absolute;inset:0;pointer-events:none;background: url('/art/classic-scattered-stars.svg') center/cover no-repeat;opacity:.9}
+.smp-cine__surface{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,#06142655,#06142627),var(--cinematic-art) center/cover no-repeat;opacity:0;transition:opacity .8s ease-out}
+.smp-cine[data-phase="landing"] .smp-cine__surface{opacity:1}
+.smp-cine__target{position:absolute;top:10%;right:2%;width:min(36vw,360px);aspect-ratio:1;border-radius:50%;box-shadow:0 0 85px #8ac4e34d,inset -22px -24px 45px #041c3ad5;transition:opacity .4s,transform 1.2s;opacity:1}
+.smp-cine__target--moon{background:radial-gradient(circle at 35% 26%,#dbe4e2,#90a4ae 58%,#2d5068);background-image:radial-gradient(circle at 25% 33%,#99a6aa 0 7%,transparent 7.5%),radial-gradient(circle at 66% 57%,#708894 0 11%,transparent 11.5%),radial-gradient(circle at 53% 25%,#96a4aa 0 5%,transparent 5.5%),radial-gradient(circle at 35% 26%,#dbe4e2,#90a4ae 58%,#2d5068)}
+.smp-cine__target--mars{background:radial-gradient(circle at 35% 30%,#f5bc91,#b55f43 60%,#4d2732);background-image:linear-gradient(162deg,transparent 32%,#89443570 35%,transparent 38%,transparent 60%,#efb47c66 64%,transparent 67%),radial-gradient(circle at 35% 30%,#f5bc91,#b55f43 60%,#4d2732)}
+.smp-cine[data-phase="smoke"] .smp-cine__target{transform:scale(1.32)}
+.smp-cine[data-phase="landing"] .smp-cine__target{opacity:0;transform:scale(1.8)}
+.smp-cine__flight-ship{position:absolute;z-index:3;right:10%;bottom:8%;width:min(56vw,760px);aspect-ratio:1200/760;margin:0;filter:drop-shadow(0 28px 20px #000b);animation:smp-flight 1.45s cubic-bezier(.22,.55,.28,.96) both;transform-origin:center center}
+.smp-cine__flight-ship img{width:100%;height:100%;object-fit:contain}
+.smp-cine[data-phase="smoke"] .smp-cine__flight-ship{opacity:.35;transform:translate3d(0,-12vh,0) scale(.75);transition:opacity .5s}
+.smp-cine[data-phase="landing"] .smp-cine__flight-ship{animation:smp-landing-ship 1.15s ease-out both;right:3%;bottom:7%;width:min(61vw,790px);opacity:1}
+.smp-cine__exhaust{position:absolute;left:25%;bottom:0;width:35%;height:25%;opacity:.8;transform:rotate(-13deg);background:radial-gradient(ellipse at 40% 100%,#fff6d1aa,transparent 65%);pointer-events:none}
+.smp-cine[data-phase="landing"] .smp-cine__exhaust{opacity:0;transition:opacity .3s}
+.smp-cine__smoke{position:absolute;z-index:8;inset:0;pointer-events:none;opacity:.25;transition:opacity .28s ease-in-out;overflow:hidden}
+.smp-cine__smoke::before{content:"";position:absolute;inset:-2%;z-index:1;pointer-events:none;
+  background:radial-gradient(ellipse at 22% 58%,#f3f6f3f5,transparent 65%),radial-gradient(ellipse at 75% 30%,#ced7dfee,transparent 66%),linear-gradient(110deg,#adb8c8ee,#e9edf0f2);
+  opacity:0;transition:opacity .27s ease-in-out}
+.smp-cine[data-phase="smoke"] .smp-cine__smoke{opacity:1}
+.smp-cine[data-phase="smoke"] .smp-cine__smoke::before{opacity:.94}
+.smp-cine[data-phase="landing"] .smp-cine__smoke::before{opacity:0;transition:opacity 1.25s ease-out}
+.smp-cine[data-phase="landing"] .smp-cine__smoke{opacity:0;transition:opacity 1.25s ease-out}
+.smp-cine__cloud{position:absolute;left:var(--cloud-x);top:var(--cloud-y);display:block;width:clamp(230px,40vw,730px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#f4f7f6fa 0%,#bdc5d4e8 42%,#7d8fabe6 62%,transparent 75%);filter:blur(13px);transform:translate3d(-26px,40px,0) scale(var(--cloud-scale));animation:smp-smoke-drift 2.1s ease-in-out var(--cloud-delay) infinite alternate}
+.smp-cine__label{position:absolute;z-index:12;left:clamp(22px,5vw,85px);bottom:clamp(24px,7vh,75px);max-width:65%;display:flex;flex-direction:column;gap:10px;text-shadow:0 3px 12px #000d}
+.smp-cine__label small{letter-spacing:.22em;font-size:.82rem;font-weight:900;color:#b8e4f0}
+.smp-cine__label strong{font-size:clamp(1.35rem,3vw,3.1rem);line-height:1.08}
+.smp-cine[data-phase="landing"] .smp-cine__label{animation:smp-fade-out .85s ease-out .7s both}
+@keyframes smp-flight{from{transform:translate3d(-56vw,24vh,0) scale(.28) rotate(-9deg);opacity:.05}to{transform:translate3d(0,-8vh,0) scale(.9) rotate(0);opacity:1}}
+@keyframes smp-landing-ship{from{transform:translate3d(0,-29vh,0) scale(.68)}to{transform:translate3d(0,0,0) scale(1)}}
+@keyframes smp-smoke-drift{from{transform:translate3d(-26px,42px,0) scale(var(--cloud-scale))}to{transform:translate3d(28px,-26px,0) scale(var(--cloud-scale))}}
+@keyframes smp-fade-out{from{opacity:1}to{opacity:0}}
+.crew-play--cinematic-arrival{animation:smp-ui-arrival 1.1s ease-out 2.7s backwards}
+@keyframes smp-ui-arrival{from{opacity:0;transform:translate3d(0,18px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+/* Day passage: ship is stationary on the right in roughly its normal landing position. */
+.smp-cine--day{display:grid;grid-template-columns: minmax(270px,.39fr) minmax(0,.61fr);align-items:center;min-height:100dvh;background:#081525}
+.smp-cine__day-landscape{position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,#081425ec,#08142577 58%,#07142466),var(--cinematic-art) center/cover no-repeat}
+.smp-cine__day-log{position:relative;z-index:4;grid-column:1;margin:clamp(30px,5vw,80px);padding:25px;border:1px solid #88bed0;border-radius:18px;background:#09233ae9;box-shadow:0 18px 50px #0007;animation:smp-log-enter .65s ease-out both}
+.smp-cine__day-log small{font-weight:850;letter-spacing:.15em;color:#9cdeeb}
+.smp-cine__day-log h1{font-size:clamp(1.45rem,3vw,2.2rem);margin:10px 0}
+.smp-cine__day-log p{line-height:1.4}
+.smp-cine__caption{color:#c2dbe7;font-size:.78rem}
+.smp-cine__loadbar{width:100%;height:9px;border-radius:20px;background:#31516b;overflow:hidden;margin-top:24px}
+.smp-cine__loadbar span{display:block;width:100%;height:100%;background:#9adfcf;transform-origin:left;animation:smp-progress 2.8s linear both}
+.smp-cine__day-ship{grid-column:2;position:relative;z-index:2;width:min(90%,800px);aspect-ratio:1200/760;justify-self:end;margin:5vw 4% 0 0;filter:drop-shadow(0 17px 20px #000b);transform-origin:center 80%}
+.smp-cine__day-ship img{width:100%;height:100%;object-fit:contain}
+.smp-cine--day[data-weather="moderate"] .smp-cine__day-ship{animation:smp-shake-small .7s linear infinite}
+.smp-cine--day[data-weather="severe"] .smp-cine__day-ship{animation:smp-shake-big .48s linear infinite}
+.smp-cine__distant-storm{position:absolute;z-index:-1;left:0;top:8%;width:46%;height:57%;opacity:0;pointer-events:none;background:radial-gradient(ellipse at 30% 43%,#e8a0a35e,transparent 60%),linear-gradient(130deg,transparent 38%,#e8a5c8a1 39%,transparent 40%,transparent 51%,#a7b9f29c 52%,transparent 53%);transform:translate3d(-30px,0,0)}
+.smp-cine--day[data-weather="minor"] .smp-cine__distant-storm{opacity:.42;animation:smp-distant-storm 2s ease-in-out infinite alternate}
+.smp-cine--day[data-weather="moderate"] .smp-cine__distant-storm{opacity:.65;animation:smp-distant-storm 1.6s ease-in-out infinite alternate}
+.smp-cine--day[data-weather="severe"] .smp-cine__distant-storm{opacity:.85;animation:smp-distant-storm 1.2s ease-in-out infinite alternate}
+.smp-cine__storm-dust{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:3;opacity:0}
+.smp-cine__storm-dust i{position:absolute;display:block;width:clamp(28px,8vw,100px);height:7px;left:calc(16% * var(--dust-index,1));top:30%;background:#c1d2dd77;border-radius:50%;filter:blur(6px);animation:smp-dust-fly 1s ease-in-out infinite alternate}
+.smp-cine__storm-dust i:nth-child(1){left:13%;top:32%;--dust-delay:-.1s}.smp-cine__storm-dust i:nth-child(2){left:39%;top:48%;--dust-delay:-.4s}.smp-cine__storm-dust i:nth-child(3){left:52%;top:29%;--dust-delay:-.9s}.smp-cine__storm-dust i:nth-child(4){left:72%;top:52%;--dust-delay:-.7s}.smp-cine__storm-dust i:nth-child(5){left:33%;top:68%;--dust-delay:-.3s}.smp-cine__storm-dust i:nth-child(6){left:86%;top:26%;--dust-delay:-.6s}
+.smp-cine__storm-dust i{animation-delay:var(--dust-delay)}
+.smp-cine--day[data-weather="moderate"] .smp-cine__storm-dust{opacity:.34}.smp-cine--day[data-weather="severe"] .smp-cine__storm-dust{opacity:.7}
+@keyframes smp-log-enter{from{opacity:0;transform:translate3d(-55px,0,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes smp-log-leave{from{opacity:1;transform:translate3d(0,0,0)}to{opacity:0;transform:translate3d(-55px,0,0)}}
+@keyframes smp-progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes smp-shake-small{0%,100%{transform:translate3d(0,0,0)}25%{transform:translate3d(2px,-1px,0)}50%{transform:translate3d(-2px,1px,0)}75%{transform:translate3d(1px,2px,0)}}
+@keyframes smp-shake-big{0%,100%{transform:translate3d(0,0,0)}20%{transform:translate3d(9px,-6px,0)}40%{transform:translate3d(-8px,5px,0)}60%{transform:translate3d(7px,6px,0)}80%{transform:translate3d(-6px,-4px,0)}}
+@keyframes smp-distant-storm{from{transform:translate3d(-30px,0,0);opacity:.3}to{transform:translate3d(0,0,0);opacity:.85}}
+@keyframes smp-dust-fly{from{transform:translate3d(-60px,15px,0);opacity:.1}to{transform:translate3d(44px,-15px,0);opacity:.8}}
+/* Day report stays on the left; selected ship and landing background remain visible on the right. */
+.crew-report.smp-report-layout{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:8px;min-height:100dvh}
+.smp-report-layout__grid{display:grid;grid-template-columns:minmax(335px,.85fr) minmax(0,1.15fr);align-items:center;gap:16px;flex:1;max-width:1650px;width:100%;margin:0 auto}
+.crew-report.smp-report-layout .crew-report__card{position:relative;z-index:4;width:100%;max-width:710px;max-height:calc(100dvh - 90px);min-height:unset;overflow:auto;justify-self:start;animation:smp-log-enter .65s cubic-bezier(.18,.67,.2,1) both}
+.crew-report.smp-report-layout.is-exiting .crew-report__card{animation:smp-log-leave .58s ease-in both;pointer-events:none}
+.smp-report-ship{position:relative;min-height:360px;align-self:stretch;display:grid;place-items:center;background:linear-gradient(180deg,#07152525,#0815242a),var(--surface-art) center/cover no-repeat;border:1px solid #5a83986d;border-radius:18px;overflow:hidden}
+.smp-report-ship figure{margin:0;width:min(95%,800px);aspect-ratio:1200/760;filter:drop-shadow(0 16px 24px #000b);animation:smp-report-ship-settle .9s ease-out both}
+.smp-report-ship img{display:block;width:100%;height:100%;object-fit:contain}
+@keyframes smp-report-ship-settle{from{opacity:.7;transform:translate3d(0,-12px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+.crew-report.smp-report-layout.is-exiting .smp-report-ship{animation:smp-fade-out .58s ease-in both}
+/* Final screen: Earth return on victory; symbolic ship fragments on loss. */
+.crew-debrief.smp-debrief-layout{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:8px;min-height:100dvh;background:#071326}
+.smp-debrief-layout__grid{display:grid;grid-template-columns:minmax(335px,.86fr) minmax(0,1.14fr);align-items:center;gap:16px;flex:1;width:100%;max-width:1600px;margin:0 auto}
+.crew-debrief.smp-debrief-layout .crew-debrief__card{width:100%;max-width:720px;max-height:calc(100dvh - 90px);overflow:auto;text-align:left;animation:smp-log-enter .85s ease-out .18s both}
+.crew-debrief.smp-debrief-layout .crew-debrief__icon{margin:0 0 12px}
+.crew-debrief.smp-debrief-layout .crew-debrief__buttons,.crew-debrief.smp-debrief-layout .crew-debrief__score{justify-content:flex-start}
+.smp-ending-scene{position:relative;isolation:isolate;overflow:hidden;min-height:clamp(360px,68vh,720px);height:100%;border-radius:19px;background:radial-gradient(ellipse at 75% 45%,#1c3d65,#0b1e35 45%,#040b1d);border:1px solid #466d8a}
+.smp-ending-scene__earth{position:absolute;right:-11%;top:8%;width:min(62%,450px);aspect-ratio:1;border-radius:50%;background:radial-gradient(ellipse at 33% 28%,#e5ffff90,transparent 20%),radial-gradient(ellipse at 38% 42%,#58b26b 0 15%,transparent 15.5%),radial-gradient(ellipse at 64% 57%,#3a966b 0 18%,transparent 18.5%),radial-gradient(ellipse at 48% 82%,#67b4e6 0 20%,transparent 20.5%),radial-gradient(circle at 38% 36%,#80cbea,#10598d 70%,#0b2d65 98%);box-shadow:0 0 70px #65bce375,inset -26px -23px 42px #061f4a}
+.smp-ending-scene__return-ship{position:absolute;left:2%;top:35%;width:72%;aspect-ratio:1200/760;margin:0;filter:drop-shadow(0 15px 12px #000b);animation:smp-return-home 4.7s cubic-bezier(.1,.4,.3,.98) both}
+.smp-ending-scene__return-ship img{width:100%;height:100%;object-fit:contain}
+.smp-ending-scene__approach{position:absolute;bottom:-12%;right:16%;width:70%;height:10%;background:radial-gradient(ellipse,#9cddff40,transparent 72%);filter:blur(12px)}
+@keyframes smp-return-home{from{opacity:.25;transform:translate3d(-55%,40%,0) scale(.3) rotate(-9deg)}to{opacity:1;transform:translate3d(28%,-20%,0) scale(.82) rotate(2deg)}}
+.smp-ending-scene__wreck{position:absolute;left:12%;top:25%;width:75%;aspect-ratio:1200/760;filter:drop-shadow(0 8px 17px #000b)}
+.smp-ending-scene__wreck img{display:block;width:100%;height:100%;object-fit:contain}
+.smp-ending-scene__wreck--front{clip-path:polygon(0 0,55% 0,48% 100%,0 100%);animation:smp-wreck-left 7s ease-in-out infinite alternate}
+.smp-ending-scene__wreck--back{clip-path:polygon(55% 0,100% 0,100% 100%,48% 100%);animation:smp-wreck-right 8s ease-in-out infinite alternate}
+.smp-ending-scene__debris i{position:absolute;left:50%;top:50%;width:8px;height:5px;background:#b4dbde;border-radius:3px;box-shadow:0 0 11px #83c6d8aa;animation:smp-debris-drift 5s ease-in-out infinite alternate}
+.smp-ending-scene__debris i:nth-child(2){left:64%;top:36%;animation-delay:-1s}.smp-ending-scene__debris i:nth-child(3){left:30%;top:61%;animation-delay:-2.6s}.smp-ending-scene__debris i:nth-child(4){left:69%;top:64%;animation-delay:-3.1s}.smp-ending-scene__debris i:nth-child(5){left:24%;top:41%;animation-delay:-.8s}.smp-ending-scene__debris i:nth-child(6){left:76%;top:29%;animation-delay:-2s}
+.smp-ending-scene__clarifier{position:absolute;bottom:12px;left:16px;right:16px;color:#d3e1ed;font-size:.78rem;background:#0c263bc9;padding:8px 10px;border-radius:8px}
+@keyframes smp-wreck-left{from{transform:translate3d(-10px,0,0) rotate(-4deg)}to{transform:translate3d(-38px,-24px,0) rotate(-12deg)}}
+@keyframes smp-wreck-right{from{transform:translate3d(6px,2px,0) rotate(4deg)}to{transform:translate3d(32px,20px,0) rotate(12deg)}}
+@keyframes smp-debris-drift{from{transform:translate3d(-15px,12px,0);opacity:.3}to{transform:translate3d(34px,-24px,0);opacity:.9}}
+@media(max-width:800px){
+  .smp-cine--day{grid-template-columns:1fr;align-items:end;min-height:100dvh}
+  .smp-cine__day-ship{grid-column:1;grid-row:1;width:80%;margin:15vh 3% 0 auto}
+  .smp-cine__day-log{grid-column:1;grid-row:2;margin:0 12px 24px;max-width:95%;padding:17px}
+  .smp-report-layout__grid,.smp-debrief-layout__grid{grid-template-columns:1fr;gap:10px}
+  .smp-report-ship{grid-row:1;min-height:225px;height:32vh}
+  .crew-report.smp-report-layout .crew-report__card{grid-row:2;max-height:none}
+  .smp-ending-scene{min-height:270px;height:33vh;grid-row:1}
+  .crew-debrief.smp-debrief-layout .crew-debrief__card{grid-row:2;max-height:none}
+  .smp-cine__flight-ship{right:0;bottom:25%;width:85vw}
+  .smp-cine__label{max-width:78%;bottom:26px}
+  .smp-cine__skip{top:12px;right:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  .smp-cine *, .smp-cine *::before,.smp-cine *::after,
+  .smp-report-layout .crew-report__card,.smp-debrief-layout .crew-debrief__card,
+  .smp-ending-scene *,.crew-play--cinematic-arrival{animation:none!important;transition:none!important;transform:none!important}
+  .smp-cine__smoke,.smp-cine__distant-storm,.smp-cine__storm-dust{opacity:0!important}
+}

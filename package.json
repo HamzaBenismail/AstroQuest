@@ -1,0 +1,26 @@
+{
+  "name": "junior-astronaut-mission-trainer",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "prefetch": "node scripts/prefetch.js",
+    "clean": "node scripts/clean.js",
+    "check:data": "node scripts/check-data.js",
+    "reevaluate:config": "node scripts/apply-reevaluation-config.mjs",
+    "reevaluate:c": "node scripts/apply-reevaluation-c.mjs"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "vite": "^7.1.0",
+    "vitest": "^3.2.4"
+  }
+}

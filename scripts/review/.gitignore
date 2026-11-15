@@ -1,0 +1,7 @@
+# Review outputs generated locally by `npm run clean -- --review`.
+# Only commit reviewed, approved source fixtures outside this folder.
+*.json
+*.csv
+*.html
+*.log
+!.gitignore

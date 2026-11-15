@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import { readFileSync, existsSync } from 'node:fs';
+import catalog from '../src/data/discoveries.js';
+import { discoveryPresentation, validateDiscoveryCatalog } from '../src/logic/v4/discoveries.js';
+const ui=readFileSync('src/ui/v4/DiscoveryUI.jsx','utf8');
+const app=readFileSync('src/ui/v4/CrewMissionExperience.jsx','utf8');
+const credits=readFileSync('public/art/DISCOVERY-PHOTO-CREDITS.md','utf8');
+assert.equal(validateDiscoveryCatalog(catalog),true);
+assert.equal(catalog.length,32);
+for (const entry of catalog) {
+  assert.ok(entry.image.source.startsWith('https://'));
+  assert.ok(entry.image.url.startsWith('https://'));
+  assert.ok(credits.includes(entry.image.url));
+  assert.ok(credits.includes(entry.image.source));
+  assert.ok(entry.image.credit);
+  assert.ok(entry.image.alt);
+  assert.equal(entry.verified,false);
+  assert.equal(discoveryPresentation(entry).description,entry.publicSummary);
+  assert.notEqual(discoveryPresentation(entry).description,entry.summary);
+}
+assert.ok(!/<a\b|href=|import\.meta\.env\.DEV/.test(ui));
+assert.ok(!/DRAFT|pending team review|pending scientific|NOT YET VERIFIED|provisional descriptions|preview/i.test(ui));
+assert.ok(!/visual training preview|interior preview open|training preview/i.test(app));
+assert.ok(ui.includes('<DiscoveryPhoto image={display.image}')); 
+assert.ok(ui.includes('<figcaption>'));
+assert.ok(ui.includes('src={src}'));
+assert.ok(ui.includes('setSrc(image.url)'));
+assert.ok(existsSync('scripts/prefetch-discovery-photos.mjs'));
+assert.ok(credits.includes('Image courtesy of Brookhaven National Laboratory'));
+process.stdout.write('D8 clean discovery UI and six credited real-photo mappings PASS.\n');

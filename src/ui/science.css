@@ -1,0 +1,19 @@
+.science-card {border:1px solid #84a6bf; border-radius:14px; background:#122a3d; color:#e6f2fc; padding:16px 18px; margin:15px 0; line-height:1.5;}
+.science-card h2 {font-size:1.1rem;margin:5px 0 9px;}
+.science-card p {margin:7px 0;}
+.science-card__eyebrow {text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;font-weight:800;color:#99dcdb;}
+.science-card__source,.science-card__note,.verified-fact {font-size:.82rem;color:#bfdaea;}
+.science-card a,.sources-screen a,.verified-fact a {color:#9ee9e5;text-decoration:underline;}
+.sources-button {position:fixed;right:14px;bottom:14px;z-index:50;min-height:44px;padding:10px 18px;background:#164355;border:2px solid #91cddc;color:#fff;border-radius:13px;font-weight:700;box-shadow:0 5px 22px #0008;}
+.sources-button:focus-visible,.sources-screen button:focus-visible {outline:3px solid #ffe69d;outline-offset:3px;}
+.sources-screen {position:fixed;inset:0;z-index:100;overflow:auto;background:#07111a;color:#ebf4fe;padding:clamp(15px,3vw,35px);font-family:system-ui,sans-serif;}
+.sources-screen__panel {max-width:1060px;margin:0 auto;background:#132b3e;border:1px solid #5e879c;border-radius:16px;padding:clamp(18px,3vw,38px);}
+.sources-screen__header {display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.sources-screen h1{margin:0 0 12px;font-size:clamp(1.65rem,3vw,2.8rem);}
+.sources-screen h2{font-size:1.2rem;margin-top:26px;}
+.sources-screen button {background:#8bdad4;border:1px solid #abe5de;border-radius:9px;color:#082737;min-height:44px;padding:10px 17px;font-weight:750;}
+.sources-screen__table-wrap{overflow-x:auto;}
+.sources-screen table{border-collapse:collapse;width:100%;min-width:580px;}
+.sources-screen th,.sources-screen td{border-bottom:1px solid #446078;text-align:left;vertical-align:top;padding:12px 10px;}
+.sources-screen th{background:#0d2537;}
+@media(prefers-reduced-motion:reduce){.sources-button,.science-card{transition:none!important;}}

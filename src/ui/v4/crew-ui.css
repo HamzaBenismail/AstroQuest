@@ -1,0 +1,571 @@
+/* Crew-first interface over the Reevaluation C engine: no renderer or animation dependency. */
+.crew-menu,.crew-prep,.crew-play,.crew-report,.crew-debrief{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#ecf6ff;min-height:100vh;box-sizing:border-box;background:#0b1426}
+.crew-menu *, .crew-prep *, .crew-play *,.crew-report *, .crew-debrief *{box-sizing:border-box}
+.crew-icon{flex:none;vertical-align:middle}
+.crew-primary,.crew-secondary,.crew-back{cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:50px;border-radius:13px;padding:12px 20px;font-size:1rem;font-weight:800}
+.crew-primary{color:#06283a;border:2px solid #baf8fa;background:linear-gradient(135deg,#92f3e8,#b8e0ff);box-shadow:0 10px 30px #072c4080}
+.crew-primary:hover{filter:brightness(1.07)}.crew-primary:disabled{opacity:.38;cursor:not-allowed}
+.crew-secondary{background:#182f44;border:1px solid #90b1ca;color:#e6f5ff}
+.crew-back{background:#132e44;border:1px solid #6286a3;color:#e5f5ff;padding:10px 17px}
+.crew-menu button:focus-visible,.crew-prep button:focus-visible,.crew-play button:focus-visible,.crew-report button:focus-visible,.crew-debrief button:focus-visible{outline:3px solid #ffe29d;outline-offset:3px}
+.crew-eyebrow{font-size:.72rem;letter-spacing:.15em;font-weight:900;color:#a2d8e6;display:inline-flex;align-items:center;gap:8px}
+.crew-muted{color:#afc6d7;font-size:.82rem;line-height:1.5}.crew-error,.crew-play__error{color:#ffe2bb;padding:10px 13px;border-radius:10px;border:1px solid #dfad8d;background:#613b3c;font-weight:700;line-height:1.3}
+/* Main menu */
+.crew-menu{position:relative;isolation:isolate;padding:35px clamp(18px,5vw,72px) 52px;background:radial-gradient(ellipse at 48% -14%,#29465c 0%,#0e2038 46%,#050b18 100%);overflow:hidden}
+.crew-menu__halo{pointer-events:none;position:absolute;z-index:-1;inset:0;background:radial-gradient(circle at 83% 18%,#c4deff1e,transparent 27%),radial-gradient(circle at 18% 80%,#6bcddd1c,transparent 22%)}
+.crew-menu__header{text-align:center;margin:20px auto 36px}.crew-menu__header h1{font-size:clamp(2.2rem,5vw,4.15rem);margin:15px 0 9px;letter-spacing:-.03em}.crew-menu__header p{color:#c5d9e8;font-size:1.08rem;margin:0}
+.crew-ship-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;max-width:1500px;margin:auto}
+.crew-ship-card{position:relative;display:flex;flex-direction:column;text-align:left;cursor:pointer;background:linear-gradient(160deg,#203c52,#0b1e31);border:2px solid #476b82;border-radius:20px;min-width:0;overflow:hidden;color:#ebf5ff;transition:transform .2s,border-color .2s,box-shadow .2s}
+.crew-ship-card:hover{transform:translateY(-6px);border-color:#9dc7de}.crew-ship-card.is-selected{border-color:#9bf3dd;box-shadow:0 0 0 3px #65c9b43d,0 15px 40px #00152d}
+.crew-ship-card__image{display:grid;place-items:center;aspect-ratio:4/3;padding:8px;background:radial-gradient(ellipse at 50% 75%,#556b82bb,#1b2a43 61%,#0d1d32)}
+.crew-ship-card__image img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 12px 13px #0008)}
+.crew-ship-card__footer{display:flex;flex-direction:column;gap:6px;padding:13px 17px 17px}.crew-ship-card__footer strong{font-size:1.21rem}.crew-ship-card__footer small{font-size:.79rem;color:#adc8da}
+.crew-ship-card__check{position:absolute;top:12px;right:12px;display:grid;place-items:center;border-radius:50%;width:32px;height:32px;color:#071c28;font-weight:900;background:#9bf3dd;opacity:0}.crew-ship-card.is-selected .crew-ship-card__check{opacity:1}
+.crew-menu__note{display:flex;align-items:center;justify-content:center;gap:8px;color:#b5ccda;font-size:.87rem;margin:25px auto}.crew-menu__continue{margin:15px auto 0;display:flex;width:min(100%,270px)}
+/* Mission preparation */
+.crew-prep{padding:25px clamp(16px,4vw,70px) 45px;background:linear-gradient(145deg,#091726,#152a41 58%,#071523)}
+.crew-prep__header{display:flex;align-items:center;gap:26px;margin-bottom:22px}.crew-prep__header h1{font-size:clamp(1.8rem,4vw,3rem);margin:8px 0}
+.crew-prep__destinations{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;margin:0 auto 18px;max-width:1300px}
+.crew-planet{position:relative;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:3px;min-height:195px;padding:25px;overflow:hidden;border:2px solid #5f839d;border-radius:19px;color:#fff;text-align:left;background-image:linear-gradient(0deg,#061321ee,#06132118 84%),var(--planet-image);background-position:center;background-size:cover;cursor:pointer;transition:border-color .18s,transform .18s}
+.crew-planet:hover{transform:translateY(-3px)}.crew-planet.is-selected{border-color:#9ef3e2;box-shadow:inset 0 0 0 2px #82d5c750}
+.crew-planet__orb{position:absolute;right:11%;top:13%;width:83px;height:83px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#f3f5ff,var(--orb-color) 65%,#42516a);box-shadow:0 0 40px #f1e0c842}
+.crew-planet strong{z-index:1;font-size:1.7rem}.crew-planet small{z-index:1;font-size:.86rem;color:#def0f6}.crew-check{position:absolute;top:13px;left:16px;background:#103447e5;padding:5px 10px;border-radius:50px;font-weight:800;font-size:.76rem}
+.crew-prep__warning{padding:12px 18px;background:#4b3c36;border:1px solid #d6a474;color:#ffe5ce;border-radius:11px;margin:0 auto 17px;max-width:1300px;font-size:.88rem}
+.crew-prep__loadout{display:grid;grid-template-columns:minmax(230px,.7fr) minmax(0,1.3fr);gap:17px;margin:auto;max-width:1300px}
+.crew-prep__ship{border:1px solid #507792;border-radius:20px;padding:16px;background:radial-gradient(ellipse at 55% 90%,#35546e,#102336 72%);display:flex;align-items:center;justify-content:center;flex-direction:column}
+.crew-prep__ship img{max-height:250px;width:100%;object-fit:contain}.crew-prep__ship strong{font-size:1.4rem}.crew-prep__ship small{color:#bbcedd}
+.crew-prep__cargo{background:#162e43;border:1px solid #507792;border-radius:19px;padding:22px}.crew-prep__capacity{display:flex;justify-content:space-between;align-items:center;gap:12px}.crew-prep__capacity h2{font-size:1.45rem;margin:5px 0 12px}.crew-prep__capacity>strong{font-size:1.75rem;color:#b5f0e6}
+.crew-prep__capacity-track{height:11px;background:#0a1e31;border-radius:30px;overflow:hidden;border:1px solid #54758d}.crew-prep__capacity-track>span{display:block;height:100%;border-radius:30px;background:#79d6ca}
+.crew-cargo__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}.crew-cargo__item{background:#0e2235;border:1px solid #4f708c;padding:13px;border-radius:13px;min-width:0}.crew-cargo__label{display:grid;grid-template-columns:auto 1fr;gap:7px;align-items:center;font-weight:750;font-size:.9rem}.crew-cargo__label strong{grid-column:1/-1;font-size:1.5rem}.crew-cargo__label small{font-size:.8rem;color:#a1becf}.crew-cargo__bar{height:7px;border-radius:20px;background:#263c4f;overflow:hidden;margin-top:7px}.crew-cargo__bar span{display:block;background:#8fd9e6;height:100%}.crew-cargo__stepper{display:flex;gap:9px;margin-top:12px}.crew-cargo__stepper button{flex:1;min-height:39px;background:#2c536a;color:#fff;border:1px solid #8ab9cd;border-radius:8px;font-size:1.4rem;cursor:pointer}.crew-prep__launch{display:flex;margin:24px auto 0;width:min(100%,300px)}
+/* Landed spacecraft screen */
+.crew-play{padding:12px clamp(8px,1.6vw,25px) 25px;background:#0b1625}
+.crew-hud{display:flex;align-items:center;gap:12px;padding:12px 18px;min-height:94px;background:#102a3de8;border:1px solid #4a7791;border-radius:17px;margin-bottom:12px}
+.crew-hud__day{display:flex;flex-direction:column;min-width:80px}.crew-hud__day small{font-size:.7rem;font-weight:850;letter-spacing:.1em;color:#a7cad9}.crew-hud__day strong{font-size:2rem}.crew-hud__day strong span{font-size:.98rem;color:#b7cbd7}
+.crew-hud__meters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;flex:1;min-width:0}.crew-stat{min-width:0}.crew-stat__label{display:flex;align-items:center;gap:6px;font-size:.83rem;font-weight:800}.crew-stat__label strong{margin-left:auto;white-space:nowrap}.crew-stat__label small{font-size:.7rem;color:#a8c5d6}.crew-stat__bar{display:block;background:#294a60;height:8px;border-radius:100px;overflow:hidden;margin-top:8px}.crew-stat__bar span{display:block;height:100%;background:#7dc6dc;border-radius:100px}.crew-stat--safety .crew-icon{color:#75e6aa}.crew-stat--safety .crew-stat__bar span{background:#73d5a3}
+.crew-hud__extras{display:flex;flex-direction:column;gap:6px;border-left:1px solid #587a8c;padding-left:14px;white-space:nowrap}.crew-hud__extras>span{display:flex;align-items:center;gap:7px}.crew-hud__extras strong{font-size:.99rem}
+.crew-landing{border:1px solid #4a6584;border-radius:20px;overflow:hidden;position:relative;background:#16263b}
+.crew-landing__stage{position:relative;display:grid;grid-template-columns:minmax(145px,.23fr) minmax(0,.77fr);align-items:end;gap:5px;min-height:460px;isolation:isolate;background:linear-gradient(180deg,#07142566,#0b1c3159),var(--surface-art);background-size:cover;background-position:center center}
+.crew-landing__stage::after{content:'';position:absolute;inset:auto 0 0;height:22%;z-index:-1;pointer-events:none;background:linear-gradient(0deg,#0b172bb0,transparent)}
+.crew-landing__heading{position:absolute;left:18px;right:18px;top:12px;z-index:6;display:flex;gap:12px;align-items:center;flex-wrap:wrap;pointer-events:none}.crew-landing__heading span,.crew-landing__heading small{background:#102438e0;border:1px solid #77a3b8;border-radius:20px;padding:6px 12px;font-size:.68rem;color:#e0edf6;font-weight:850;letter-spacing:.09em}.crew-landing__heading small{border-color:#e1b58f;color:#ffe2cb}
+.crew-dock{position:relative;z-index:5;align-self:stretch;margin:72px 8px 16px 12px;padding:12px;background:#0b1e30dd;border:1px solid #6894ab;border-radius:15px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.crew-dock header{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.crew-dock header strong{font-size:.8rem;letter-spacing:.06em}.crew-dock header small{width:100%;color:#aecad8;font-size:.7rem}.crew-dock__roster{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;align-items:start}.crew-dock__member{display:flex;flex-direction:column;align-items:center}.crew-dock__member>small{font-size:.65rem;color:#f7dca4}.crew-dock__empty{font-size:.78rem;color:#b5d2df}.crew-dock>p{font-size:.73rem;color:#a8c4d4;line-height:1.4;display:flex;gap:7px;align-items:flex-start;margin-top:auto}.crew-dock__return{padding:7px 5px;font-size:.73rem;border-radius:9px;border:1px solid #91d9de;background:#214e58;color:#e9ffff;cursor:pointer}
+.crew-token{border:2px solid transparent;background:transparent;display:flex;align-items:center;flex-direction:column;gap:0;padding:3px;cursor:grab;touch-action:none;border-radius:13px;min-width:0;color:#e8f6ff;user-select:none}.crew-token:active{cursor:grabbing}.crew-token.is-picked{border-color:#a8f7e6;background:#6ed5c61c;box-shadow:0 0 17px #83eac878}.crew-token:focus-visible{outline:3px solid #ffe5ae;outline-offset:2px}.crew-token.is-away{opacity:.5;cursor:not-allowed}.crew-token__name{font-size:.66rem;font-weight:800;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;margin-top:-3px}.crew-astronaut{width:min(100%,85px);height:auto;filter:drop-shadow(0 5px 5px #07121a99)}.crew-astronaut--small{width:38px}.crew-astronaut__arm{transform-box:fill-box;transform-origin:50% 12%}.crew-token.is-picked .crew-astronaut__arm--left,.crew-astronaut.is-reacting .crew-astronaut__arm--left{animation:crew-wave-left .33s ease-in-out infinite alternate}.crew-token.is-picked .crew-astronaut__arm--right,.crew-astronaut.is-reacting .crew-astronaut__arm--right{animation:crew-wave-right .37s ease-in-out infinite alternate}
+@keyframes crew-wave-left{to{transform:rotate(27deg)}}@keyframes crew-wave-right{to{transform:rotate(-25deg)}}
+.crew-ship{position:relative;align-self:center;width:100%;aspect-ratio:1200/760;min-width:0;max-height:750px}.crew-ship__illustration{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none;filter:drop-shadow(0 22px 22px #0009)}.crew-ship__rooms{position:absolute;inset:0}
+.crew-ship__room{position:absolute;min-width:0;min-height:0;border:2px solid transparent;border-radius:10px;transition:opacity .16s;z-index:2}.crew-ship__room.is-focused,.crew-ship__room.is-hovered{border-color:#9bf8f0;background:#67dce925;box-shadow:inset 0 0 27px #58e1bf26}.crew-ship__room.is-hovered{border-color:#ffe9a4;box-shadow:inset 0 0 35px #ffe4a23f}.crew-ship__room.has-crew{background:#72d8ca18}
+/* Each ship has its own compartment geometry from ship-layouts.json; no fixed 3×2 grid. */
+.crew-ship__room-select{position:absolute;top:5%;left:5%;display:flex;align-items:center;gap:4px;background:#071c32d9;color:#b6f1fb;border:1px solid #77a2ba;border-radius:8px;padding:4px;cursor:pointer}.crew-ship__room-select:focus-visible{outline:3px solid #ffda8f;outline-offset:2px}.crew-ship__level{font-size:.65rem;color:#bce2f4;font-weight:900}.crew-ship__worker{position:absolute;left:50%;top:36%;transform:translateX(-50%)}.crew-ship__worker .crew-token{padding:0}.crew-ship__worker .crew-token--small{min-width:30px}.crew-ship__power{display:flex;align-items:center;justify-content:center;gap:1px;position:absolute;left:1%;right:1%;bottom:2%;z-index:5}.crew-ship__power button{padding:1px;display:grid;place-items:center;flex:1;max-width:26px;min-height:24px;border-radius:5px;border:1px solid #84a9be;background:#1b2938dc;color:#66879c;cursor:pointer}.crew-ship__power button.is-on{color:#ffe59a;background:#765e31d9;border-color:#ffd278}.crew-ship__power button:focus-visible{outline:3px solid #fff2b4}.crew-ship__zero-energy{position:absolute;right:6%;bottom:4%;font-size:.7rem;color:#93adbd;background:#07192edd;padding:2px 3px;border-radius:4px;font-weight:900}
+.crew-room-preview{position:absolute;top:14%;right:8%;z-index:12;width:min(42%,310px);border:3px solid #a8f4dc;background:#0a2339;box-shadow:0 15px 40px #000b;border-radius:15px;padding:5px;pointer-events:none}.crew-room-preview img{width:100%;height:auto;aspect-ratio:8/5;object-fit:cover;border-radius:9px}.crew-room-preview div{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:6px}.crew-room-preview strong{font-size:.8rem}.crew-room-preview small{font-size:.68rem;color:#b3d3dd}.crew-drag-ghost{position:fixed;top:0;left:0;z-index:500;pointer-events:none;opacity:0;width:75px;height:100px;transition:opacity .1s}.crew-drag-ghost .crew-astronaut{width:77px}
+/* Compact tools rather than a permanent text-heavy side panel */
+.crew-play__bottom{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(235px,.7fr);gap:12px;margin-top:12px}.crew-room-actions,.crew-command{background:#12283b;border:1px solid #507791;border-radius:17px;padding:13px 18px;min-width:0}
+.crew-room-actions__head{display:flex;align-items:center;gap:10px;margin-bottom:10px}.crew-room-actions__head>div{display:grid;gap:2px}.crew-room-actions__head strong{font-size:1.05rem}.crew-room-actions__head small{font-size:.76rem;color:#abcbde}.crew-room-actions__icon{display:grid;place-items:center;width:42px;height:42px;background:#25475d;border:1px solid #6899b1;border-radius:11px}
+.crew-room-actions__buttons{display:flex;flex-wrap:wrap;gap:7px}.crew-room-actions__buttons button{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;min-height:40px;padding:8px 10px;border-radius:10px;border:1px solid #688fa9;background:#1c3b53;color:#e6f6ff;font-weight:750;font-size:.79rem;cursor:pointer}.crew-room-actions__buttons button small{font-size:.7rem;color:#b4d1de}.crew-room-actions__buttons button.is-active{border-color:#a3f0cc;background:#285f55}.crew-room-actions__notice{background:#174756;border-radius:8px;padding:8px;font-size:.83rem;color:#d7f6fa}.crew-room-actions__hint{font-size:.78rem;color:#a9cad9;display:flex;align-items:center;gap:7px;margin:10px 0 0}
+.crew-command{display:flex;flex-direction:column;justify-content:space-between;gap:10px}.crew-command__summary>div{display:inline-flex;align-items:center;gap:6px;margin:6px 8px 0 0;color:#ade6e8}.crew-command__summary>div strong{color:#f1fbff}.crew-command__summary>div small{font-size:.69rem;color:#9dbacf}.crew-command__summary>small{display:flex;gap:6px;align-items:center;color:#b3d5e1;margin-top:6px}.crew-command__run{width:100%}.crew-command__note{font-size:.68rem;color:#9cb6c8}
+/* Day report and finale */
+.crew-report,.crew-debrief{display:grid;place-items:center;padding:24px;background-image:linear-gradient(#061222a9,#071523dd),var(--surface-art);background-size:cover;background-position:center}.crew-report__card,.crew-debrief__card{width:min(100%,800px);max-height:none;background:#10263cf2;border:1px solid #63849d;border-radius:22px;padding:clamp(18px,4vw,36px);box-shadow:0 25px 85px #030b1899}.crew-report h1,.crew-debrief h1{font-size:clamp(1.9rem,4vw,3rem);margin:10px 0 20px}.crew-report__deltas{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.crew-report__deltas>div{display:flex;align-items:center;flex-direction:column;gap:6px;padding:12px 8px;background:#1c3b52;border:1px solid #5a869a;border-radius:12px}.crew-report__deltas strong{font-size:2rem;color:#a9f2d8}.crew-report__deltas small{font-size:.72rem;color:#b4d2e0}.crew-report__progress,.crew-debrief__score{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:16px 0}.crew-report__progress span,.crew-debrief__score span{display:inline-flex;align-items:center;gap:7px;color:#b7e9e9;font-weight:800}.crew-report__events,.crew-report__nasa{background:#0c2136;border:1px solid #365d77;border-radius:12px;padding:12px 17px;margin:12px 0}.crew-report__events h2{font-size:1rem;margin:4px 0}.crew-report__events p,.crew-report__nasa p{font-size:.84rem;line-height:1.35}.crew-report__nasa li{font-size:.85rem;padding:4px 0}.crew-report__nasa li small{display:block;color:#afd1df;overflow-wrap:anywhere}.crew-report__nasa ul{max-height:180px;overflow:auto;padding-left:22px}.crew-report__nasa summary{cursor:pointer;color:#a8e3ee}.crew-report__card .science-card{margin:12px 0}.crew-debrief__card{text-align:center}.crew-debrief__icon{display:grid;place-items:center;margin:0 auto 12px;width:78px;height:78px;background:#365a65;color:#aae8dc;border:2px solid #8bdfd5;border-radius:50%}.crew-debrief__visual{display:grid;place-items:center;gap:2px;background:#17344b;border-radius:16px;padding:10px 16px}.crew-debrief__visual img{width:min(100%,330px);height:185px;object-fit:contain}.crew-debrief__visual strong{font-size:1.2rem}.crew-debrief__visual span{color:#b8d3dc}.crew-debrief__score{justify-content:center}.crew-debrief__buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:16px 0}.crew-debrief__card>small{color:#a4bccd}
+@media(max-width:1050px){.crew-ship-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.crew-hud{flex-wrap:wrap}.crew-hud__day{min-width:80px}.crew-hud__extras{flex-direction:row;gap:14px;border-left:0;padding-left:0;flex-basis:100%}.crew-landing__stage{grid-template-columns:minmax(120px,.26fr) minmax(0,.74fr);min-height:350px}}
+@media(max-width:780px){.crew-landing__stage{display:flex;flex-direction:column;align-items:stretch;gap:2px;padding-top:50px}.crew-dock{order:1;margin:6px 10px;align-self:stretch;padding:7px}.crew-dock header{padding:2px 5px}.crew-dock header small{width:auto;margin-left:auto}.crew-dock__roster{display:flex;gap:5px;justify-content:space-around}.crew-dock__member{min-width:56px}.crew-dock>p{margin:0;font-size:.71rem}.crew-ship{order:2;width:min(100%,850px);margin:auto}.crew-play__bottom{grid-template-columns:1fr}.crew-hud__meters{flex-basis:100%}.crew-hud__extras{flex-basis:100%}.crew-menu{padding:20px}.crew-prep__loadout{grid-template-columns:1fr}.crew-prep__ship{display:none}}
+@media(max-width:520px){.crew-menu__header h1{font-size:2rem}.crew-ship-grid{gap:8px}.crew-ship-card__footer{padding:9px}.crew-ship-card__footer strong{font-size:1rem}.crew-ship-card__footer small{font-size:.69rem}.crew-ship-card__image{aspect-ratio:5/4}.crew-prep{padding:12px}.crew-prep__header{gap:8px}.crew-prep__header h1{font-size:1.6rem}.crew-prep__destinations{gap:7px}.crew-planet{min-height:140px;padding:14px}.crew-planet strong{font-size:1.3rem}.crew-planet__orb{height:52px;width:52px}.crew-check{font-size:.62rem;padding:3px 6px}.crew-prep__cargo{padding:12px}.crew-cargo__grid{gap:6px}.crew-cargo__item{padding:7px}.crew-cargo__label{grid-template-columns:1fr;font-size:.76rem}.crew-cargo__label strong{grid-column:1}.crew-hud{padding:8px}.crew-hud__meters{gap:7px}.crew-stat__label{display:grid;grid-template-columns:auto 1fr;gap:2px;font-size:.67rem}.crew-stat__label strong{grid-column:1/-1}.crew-hud__day strong{font-size:1.45rem}.crew-hud__extras{font-size:.81rem}.crew-landing__heading{top:5px;left:5px;right:5px;gap:4px}.crew-landing__heading span,.crew-landing__heading small{font-size:.56rem;padding:3px 6px}.crew-dock{margin:20px 6px 3px}.crew-dock .crew-astronaut{width:50px}.crew-token__name{font-size:.61rem}.crew-ship__room{border-width:1px;border-radius:5px}.crew-ship__room-select{top:2%;left:2%;padding:1px;gap:1px;border-radius:4px}.crew-ship__room-select .crew-icon{width:17px;height:17px}.crew-ship__level{font-size:.51rem}.crew-ship__worker{top:34%}.crew-ship__worker .crew-astronaut--small{width:24px}.crew-ship__power button{min-height:18px;max-width:20px;padding:0}.crew-ship__power button .crew-icon{width:12px;height:12px}.crew-ship__zero-energy{font-size:.5rem}.crew-room-preview{top:7%;right:4%;width:50%;padding:2px}.crew-room-preview small{display:none}.crew-report__deltas{gap:5px}.crew-report__deltas>div{padding:8px 4px}.crew-report__deltas strong{font-size:1.5rem}}
+@media(hover:none),(pointer:coarse){.crew-ship-card:hover,.crew-planet:hover{transform:none}.crew-token{touch-action:none}}
+@media(prefers-reduced-motion:reduce){.crew-astronaut__arm{animation:none!important}.crew-token,.crew-ship-card,.crew-planet,.crew-ship__room{transition:none!important;transform:none!important}.crew-token .crew-astronaut{filter:none}}
+/* Keep the existing Phase 6 Data Sources button accessible without covering Run Day. */
+.crew-play + .sources-button,.crew-menu + .sources-button,.crew-prep + .sources-button,.crew-report + .sources-button,.crew-debrief + .sources-button{position:static;display:block;margin:9px 18px 16px auto;box-shadow:none}
+/* Full-compartment tap target; icon and badge remain visually compact. */
+.crew-ship__room-select{inset:0;width:100%;height:100%;display:flex;justify-content:flex-start;align-items:flex-start;border:0;background:transparent;padding:4px;z-index:1}
+.crew-ship__room-select .crew-icon{background:#071c32dc;border:1px solid #77a2ba;border-radius:7px;padding:3px;box-sizing:content-box}
+.crew-ship__level{background:#071c32dc;border:1px solid #77a2ba;border-radius:5px;padding:4px 3px}
+.crew-ship__worker{z-index:2}
+@media(max-width:520px){.crew-ship__room-select{padding:2px}.crew-ship__room-select .crew-icon{padding:1px}.crew-ship__level{padding:2px 1px}}
+
+/* Reevaluation D.1 — reliable one-day game warning, compact closed-hull ship and contextual X-ray room previews. */
+.crew-forecast{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:0 0 12px;padding:11px 17px;background:linear-gradient(110deg,#17364c,#0a2238);border:1px solid #7298a9;border-radius:15px;min-height:68px;box-shadow:0 10px 26px #020a1640}
+.crew-forecast__identity{display:flex;align-items:center;gap:11px;min-width:200px;color:#9dded8}
+.crew-forecast__identity>span{display:flex;flex-direction:column;gap:3px}
+.crew-forecast__identity small{font-size:.68rem;letter-spacing:.1em;color:#b3cddd;font-weight:800}
+.crew-forecast__identity strong{font-size:1.24rem;color:#fff2d6}
+.crew-forecast__levels{display:flex;align-items:center;gap:5px;flex:0 0 170px}
+.crew-forecast__levels>span{height:15px;flex:1;min-width:17px;border-radius:4px;background:#334f62;border:1px solid #688293;opacity:.45}
+.crew-forecast[data-level="0"] .crew-forecast__levels>span[data-active="true"]{background:#65d5ac;opacity:1}
+.crew-forecast[data-level="1"] .crew-forecast__levels>span[data-active="true"]{background:#9cdf86;opacity:1}
+.crew-forecast[data-level="2"] .crew-forecast__levels>span[data-active="true"]{background:#ffc875;opacity:1}
+.crew-forecast[data-level="3"] .crew-forecast__levels>span[data-active="true"]{background:#f18c7d;opacity:1}
+.crew-forecast>p{margin:0;flex:1 1 250px;color:#c0d9e7;font-size:.77rem;line-height:1.4}
+.crew-report__forecast{display:flex;align-items:center;gap:7px;flex-wrap:wrap;color:#f3e1a3}
+.crew-report__forecast strong{color:#f3fbff}
+/* Make the habitat read as a compact landed vehicle, not a floorplan across the whole landscape. */
+.crew-landing__stage{grid-template-columns:minmax(165px,.28fr) minmax(0,.72fr);min-height:480px}
+.crew-ship{width:min(88%,760px);max-height:560px;justify-self:end;margin:26px 5% 14px auto;align-self:center}
+.crew-ship__illustration{object-fit:contain}
+.crew-ship__room.is-focused:not(.is-hovered){border-color:transparent;background:transparent;box-shadow:none}
+.crew-ship__room.is-focused:not(.is-hovered) .crew-ship__room-select .crew-icon{border-color:#a8d9e9;box-shadow:0 0 12px #8be0f14a}
+.crew-ship__room.is-hovered{background:#4dedf31e;border-color:#fff0a8;box-shadow:0 0 19px #ffdd9477;z-index:4}
+.crew-ship__interior{position:absolute;left:4%;top:3%;width:92%;height:94%;object-fit:cover;border-radius:7px;z-index:0;pointer-events:none;animation:crew-room-reveal .17s ease-out both;box-shadow:inset 0 0 10px #142a36}
+@keyframes crew-room-reveal{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.crew-ship__room-select{z-index:1;align-items:flex-start;justify-content:flex-start}
+.crew-ship__room-select .crew-icon{box-shadow:0 1px 4px #020f18d0;background:#092539e8}
+.crew-ship__room.has-crew .crew-ship__worker{z-index:3;pointer-events:auto}
+.crew-ship__power{z-index:5}
+.crew-ship__hover-hint{position:absolute;bottom:7%;left:19%;right:3%;z-index:6;pointer-events:none;margin:0;color:#ffe8b7;background:#071e32eb;border:1px solid #d8bd86;border-radius:9px;padding:6px 10px;text-align:center;font-size:.75rem;font-weight:900;line-height:1.2}
+/* Important on touch and keyboard: selecting an astronaut and then focusing/tapping a hatch opens its interior too. */
+@media(max-width:1050px){.crew-landing__stage{grid-template-columns:minmax(130px,.28fr) minmax(0,.72fr);min-height:395px}.crew-ship{width:min(93%,710px);margin:34px 3% 13px auto}}
+@media(max-width:780px){.crew-landing__stage{min-height:0}.crew-ship{order:2;align-self:center;justify-self:center;width:min(96%,660px);margin:5px auto 14px}.crew-forecast{gap:9px;padding:10px 12px}.crew-forecast__identity{min-width:145px}.crew-forecast__levels{flex-basis:130px}.crew-forecast>p{flex-basis:100%}}
+@media(max-width:520px){.crew-forecast__identity strong{font-size:1rem}.crew-forecast__identity small{font-size:.57rem}.crew-forecast>p{font-size:.7rem}.crew-ship{width:100%;margin:2px auto 12px}.crew-ship__hover-hint{left:4%;bottom:1%;font-size:.64rem}.crew-ship__room-select .crew-icon{width:18px;height:18px}}
+@media(prefers-reduced-motion:reduce){.crew-ship__interior{animation:none!important;transform:none!important}}
+
+/* Reevaluation D.2: reversible two-page visual experiment.
+   Classic is deliberately unchanged; Playful uses color contrast and clear hierarchy,
+   not a claim that particular hues scientifically guarantee attention. */
+.crew-menu,.crew-prep{isolation:isolate}.crew-prep{position:relative}
+.crew-theme-switch{position:absolute;z-index:20;top:19px;right:clamp(15px,3.4vw,56px);min-height:46px;border:1.5px solid #8db7d2;border-radius:999px;padding:7px 12px;display:inline-flex;align-items:center;gap:8px;font:800 .82rem system-ui,sans-serif;background:#18374f;color:#fff;box-shadow:0 5px 16px #07101f5e;cursor:pointer}
+.crew-theme-switch__status{display:inline-flex;padding:6px 9px;border:1px solid #ffffff55;border-radius:100px;font-size:.62rem;letter-spacing:.08em;background:#081c3199;color:#dcf1fb}
+.crew-theme-switch:hover{border-color:#ffe6a1;transform:translateY(-1px)}
+.crew-theme-switch:focus-visible{outline:3px solid #fff2a7;outline-offset:3px}
+
+/* Playful: bright, distinct points of interest against a quiet indigo canvas. */
+.crew-menu[data-menu-style="playful"],.crew-prep[data-menu-style="playful"]{
+ --play-ink:#1b2546;--play-cream:#fffdf4;--play-peach:#ffc58c;--play-cyan:#70e5dd;--play-yellow:#ffda74;--play-lavender:#d8c7ff;
+ background: radial-gradient(ellipse at 4% 7%,#5675c2 0,transparent 38%),
+ radial-gradient(ellipse at 92% 4%,#7d4bc1 0,transparent 45%),
+ linear-gradient(143deg,#172c6a 0%,#27245d 46%,#26154a 100%);
+ color:#fff;
+}
+.crew-menu[data-menu-style="playful"]:before,.crew-prep[data-menu-style="playful"]:before{
+ content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+ background-image:radial-gradient(circle,#fff9 1.1px,transparent 1.9px),radial-gradient(circle,#fff8 1px,transparent 1.6px);
+ background-size:125px 95px,177px 151px;background-position:32px 44px,65px 22px;opacity:.37;
+}
+.crew-menu[data-menu-style="playful"] .crew-menu__halo{
+ background:radial-gradient(circle at 14% 33%,#5de0d933,transparent 21%),radial-gradient(circle at 86% 22%,#ffd78b36,transparent 26%);
+}
+.crew-menu[data-menu-style="playful"] .crew-eyebrow,.crew-prep[data-menu-style="playful"] .crew-eyebrow{color:#b9f9ed}
+.crew-menu[data-menu-style="playful"] .crew-menu__header h1{color:#fff9de;text-shadow:0 5px 28px #130e3c6b}
+.crew-menu[data-menu-style="playful"] .crew-menu__header p{color:#e2f2ff}
+.crew-menu[data-menu-style="playful"] .crew-ship-grid{gap:19px}
+.crew-menu[data-menu-style="playful"] .crew-ship-card{color:var(--play-ink);border-color:#fff;border-width:3px;background:#fffef8;box-shadow:0 14px 28px #070b3688}
+.crew-menu[data-menu-style="playful"] .crew-ship-card__image{background:radial-gradient(ellipse at 50% 72%,#b4deff 0,#eaf5ff 68%,#f9fdff 100%);padding:8px}
+.crew-menu[data-menu-style="playful"] .crew-ship-card[data-ship="titan"] .crew-ship-card__image{background:radial-gradient(ellipse at 50% 72%,#ffe0a2,#fff5d9 70%,#fffdf2)}
+.crew-menu[data-menu-style="playful"] .crew-ship-card[data-ship="horizon"] .crew-ship-card__image{background:radial-gradient(ellipse at 50% 72%,#a5f1dd,#e5fff4 72%,#f7fffb)}
+.crew-menu[data-menu-style="playful"] .crew-ship-card[data-ship="nova"] .crew-ship-card__image{background:radial-gradient(ellipse at 50% 72%,#dec4ff,#f3eaff 72%,#fefaff)}
+.crew-menu[data-menu-style="playful"] .crew-ship-card__image img{filter:drop-shadow(0 12px 10px #14274744)}
+.crew-menu[data-menu-style="playful"] .crew-ship-card__footer{background:#fffef9}
+.crew-menu[data-menu-style="playful"] .crew-ship-card__footer strong{color:#15254a}
+.crew-menu[data-menu-style="playful"] .crew-ship-card__footer small{color:#3d5069}
+.crew-menu[data-menu-style="playful"] .crew-ship-card:hover{border-color:#ffe17e;box-shadow:0 12px 30px #031c5088}
+.crew-menu[data-menu-style="playful"] .crew-ship-card.is-selected{border-color:#ffdd72;outline:3px solid #ffffffaa;box-shadow:0 0 0 5px #ffcf6177,0 18px 40px #11124f}
+.crew-menu[data-menu-style="playful"] .crew-ship-card__check{color:#253246;background:#ffd96b;border:2px solid #fff}
+.crew-menu[data-menu-style="playful"] .crew-menu__note{color:#e6f4ff}
+.crew-menu[data-menu-style="playful"] .crew-primary,.crew-prep[data-menu-style="playful"] .crew-primary{background:linear-gradient(115deg,#ffde84,#ffad78);border-color:#fff3c9;color:#293352;box-shadow:0 8px 0 #aa6085,0 17px 25px #130d3b99}
+.crew-menu[data-menu-style="playful"] .crew-primary:hover,.crew-prep[data-menu-style="playful"] .crew-primary:hover{filter:brightness(1.04);transform:translateY(-2px)}
+.crew-menu[data-menu-style="playful"] .crew-theme-switch,.crew-prep[data-menu-style="playful"] .crew-theme-switch{background:#fffbe9;border-color:#ffe6af;color:#22325a;box-shadow:0 6px 0 #574a9b}
+.crew-menu[data-menu-style="playful"] .crew-theme-switch__status,.crew-prep[data-menu-style="playful"] .crew-theme-switch__status{background:#364b88;color:#fff;border-color:#364b88}
+
+.crew-prep[data-menu-style="playful"] .crew-prep__header h1{color:#fff6e0}
+.crew-prep[data-menu-style="playful"] .crew-back{background:#f9fcff;border:2px solid #fff;color:#203863;box-shadow:0 5px 0 #6072ab}
+.crew-prep[data-menu-style="playful"] .crew-planet{border-width:3px;border-color:#ffffff99;box-shadow:0 9px 26px #080a3688}
+.crew-prep[data-menu-style="playful"] .crew-planet.is-selected{border-color:#ffdb72;box-shadow:0 0 0 4px #ffdf755c,0 14px 25px #080a3688}
+.crew-prep[data-menu-style="playful"] .crew-check{background:#fff9db;color:#26375b;border:1px solid #fbdb80}
+.crew-prep[data-menu-style="playful"] .crew-prep__ship{background:linear-gradient(150deg,#e4f3ff,#d9def8);border:3px solid #fff;box-shadow:0 12px 24px #120e496b;color:#203256}
+.crew-prep[data-menu-style="playful"] .crew-prep__ship strong{color:#243a5a}
+.crew-prep[data-menu-style="playful"] .crew-prep__ship small{color:#3a516c}
+.crew-prep[data-menu-style="playful"] .crew-prep__cargo{background:#fffdf3;border:3px solid #fff;box-shadow:0 12px 30px #150e4488;color:var(--play-ink)}
+.crew-prep[data-menu-style="playful"] .crew-prep__capacity h2{color:#202d4a}
+.crew-prep[data-menu-style="playful"] .crew-prep__capacity .crew-eyebrow{color:#284c7d}
+.crew-prep[data-menu-style="playful"] .crew-prep__capacity>strong{color:#1e4264}
+.crew-prep[data-menu-style="playful"] .crew-prep__capacity-track{background:#d8e5e9;border-color:#97b3ca}
+.crew-prep[data-menu-style="playful"] .crew-prep__capacity-track>span{background:linear-gradient(90deg,#4c88cf,#2d9a92)}
+.crew-prep[data-menu-style="playful"] .crew-cargo__item{background:#eaf4ff;border:2px solid #b9cfe8;color:#1e3154}
+.crew-prep[data-menu-style="playful"] .crew-cargo__item:nth-child(2){background:#e8fff0;border-color:#b1debf}
+.crew-prep[data-menu-style="playful"] .crew-cargo__item:nth-child(3){background:#fff4dc;border-color:#ecd9a7}
+.crew-prep[data-menu-style="playful"] .crew-cargo__label small{color:#3c5470}
+.crew-prep[data-menu-style="playful"] .crew-cargo__bar{background:#cddbe9}
+.crew-prep[data-menu-style="playful"] .crew-cargo__bar span{background:#3478b6}
+.crew-prep[data-menu-style="playful"] .crew-cargo__item:nth-child(2) .crew-cargo__bar span{background:#28835b}
+.crew-prep[data-menu-style="playful"] .crew-cargo__item:nth-child(3) .crew-cargo__bar span{background:#a9771c}
+.crew-prep[data-menu-style="playful"] .crew-cargo__stepper button{border:1px solid #45658e;background:#304f83;color:#fff;min-height:44px}
+.crew-prep[data-menu-style="playful"] .crew-cargo__stepper button:hover{background:#27406b}
+.crew-prep[data-menu-style="playful"] .crew-muted{color:#334a61}
+.crew-prep[data-menu-style="playful"] .crew-prep__warning{background:#fff0cd;border:2px solid #a56639;color:#57331d}
+.crew-prep[data-menu-style="playful"] .crew-error{background:#6c343e;color:#fff;border-color:#efb2ac}
+
+@media(max-width:900px){
+ .crew-theme-switch{right:12px;top:12px;font-size:.76rem}
+ .crew-menu__header{padding-top:42px}
+ .crew-prep__header{padding-top:54px}
+}
+@media(max-width:520px){
+ .crew-theme-switch{min-height:42px;gap:5px;padding:6px 9px}
+ .crew-theme-switch__status{padding:4px 6px;font-size:.55rem}
+ .crew-menu[data-menu-style="playful"] .crew-ship-grid{gap:8px}
+ .crew-menu[data-menu-style="playful"] .crew-ship-card{border-width:2px}
+ .crew-prep[data-menu-style="playful"] .crew-prep__cargo{padding:12px}
+}
+@media(prefers-reduced-motion:reduce){
+ .crew-theme-switch,.crew-menu[data-menu-style="playful"] .crew-ship-card,.crew-menu[data-menu-style="playful"] .crew-primary{transform:none!important;transition:none!important}
+}
+
+/* Third style: the untouched Classic background and UI + Playful's starfield.
+   No overriding background, text, panel or button colors for Starry. */
+/* A single irregular, scattered field; no tiled dot-grid and no repeating pattern. */
+.crew-menu[data-menu-style="starry"]:before,
+.crew-prep[data-menu-style="starry"]:before {
+ content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+ background-image:url('/art/classic-scattered-stars.svg');
+ background-position:center center;background-size:cover;background-repeat:no-repeat;
+ opacity:.72;
+}
+.crew-menu[data-menu-style="starry"] .crew-menu__halo {background:radial-gradient(circle at 83% 18%,#c4deff1e,transparent 27%),radial-gradient(circle at 18% 80%,#6bcddd1c,transparent 22%);}
+.crew-ship-card__layout{font-size:.72rem;color:#a9e9e9;line-height:1.3;min-height:1em;}
+.crew-menu[data-menu-style="playful"] .crew-ship-card__layout {color:#365979;}
+/* The drop targets use the exact same rectangles as the painted modules for each ship. */
+.crew-ship[data-ship="explorer"] .crew-ship__room {border-radius:12px;}
+.crew-ship[data-ship="titan"] .crew-ship__room {border-radius:4px;}
+.crew-ship[data-ship="horizon"] .crew-ship__room {clip-path:polygon(9% 0,91% 0,100% 50%,91% 100%,9% 100%,0 50%);border-radius:0;}
+.crew-ship[data-ship="nova"] .crew-ship__room {clip-path:polygon(9% 0,91% 0,100% 50%,91% 100%,9% 100%,0 50%);border-radius:0;}
+.crew-theme-switch__status{white-space:nowrap;}
+@media(max-width:520px){
+ .crew-theme-switch{max-width:min(89vw,340px);font-size:.70rem;}
+ .crew-ship-card__layout{font-size:.61rem;}
+}
+
+/* Reevaluation D.4 — legibility at a glance: closed room = centered icon.
+   Hover with picked crew OR an assigned crew member = room stays open.
+   With container-query dimensions, the icon slides to the corner using only
+   transform (rather than moving the button's actual hit area). */
+.crew-ship__room {container-type:size;}
+.crew-ship__room-select {
+  inset:0;display:block;position:absolute;padding:0;
+  width:100%;height:100%;border:0;background:transparent;
+  cursor:pointer;z-index:1;
+}
+.crew-ship__room-select .crew-icon {
+  position:absolute;left:50%;top:50%;width:28px;height:28px;
+  box-sizing:border-box;padding:3px;
+  background:#092539eb;border:1px solid #77a2ba;border-radius:8px;
+  transform:translate(-50%,-50%);
+  transition:transform .2s ease,opacity .2s ease;
+  box-shadow:0 1px 5px #020f18e0;
+}
+.crew-ship__room[data-room-open="true"] .crew-ship__room-select .crew-icon {
+  transform:translate(-50%,-50%) translate(calc(-50cqw + 19px),calc(-50cqh + 18px)) scale(.78);
+}
+.crew-ship__level {
+  position:absolute;top:3px;right:4px;z-index:2;
+  font-size:.58rem;padding:2px 3px;line-height:1.1;
+  background:#071c32e6;border:1px solid #77a2ba;border-radius:4px;
+}
+/* Worker is kept above Energy strip, with a smaller helmet and body.
+   The room-sized worker slot prevents the astronaut from covering Energy buttons. */
+.crew-ship__room .crew-ship__worker {
+  top:4px;bottom:28px;left:50%;transform:translateX(-50%);
+  width:29px;min-height:0;display:flex;align-items:center;justify-content:center;
+  z-index:3;pointer-events:auto;
+}
+.crew-ship__room .crew-ship__worker .crew-token {
+  padding:0;border:0;background:transparent;box-shadow:none;
+  height:100%;width:100%;min-width:0;min-height:0;
+  display:flex;justify-content:center;align-items:center;
+}
+.crew-ship__room .crew-ship__worker .crew-astronaut--small {
+  width:auto;max-width:23px;height:100%;max-height:29px;
+}
+.crew-ship__power {bottom:2%;z-index:5;}
+/* Fallback for browsers without container-size units: still reveal the corner icon. */
+@supports not (width:1cqw) {
+ .crew-ship__room[data-room-open="true"] .crew-ship__room-select .crew-icon {
+  left:5px;top:4px;transform:scale(.78);transition:opacity .2s ease;
+ }
+}
+@media(max-width:520px) {
+ .crew-ship__room-select .crew-icon {width:20px;height:20px;padding:1px;border-radius:5px;}
+ .crew-ship__room[data-room-open="true"] .crew-ship__room-select .crew-icon {
+   transform:translate(-50%,-50%) translate(calc(-50cqw + 13px),calc(-50cqh + 12px)) scale(.76);
+ }
+ .crew-ship__level {top:1px;right:2px;font-size:.45rem;padding:1px 2px;}
+ .crew-ship__room .crew-ship__worker {top:1px;bottom:19px;width:19px;}
+ .crew-ship__room .crew-ship__worker .crew-astronaut--small {max-width:16px;max-height:20px;}
+ .crew-ship__power button {min-height:15px;}
+}
+@media(prefers-reduced-motion:reduce) {
+ .crew-ship__room-select .crew-icon {transition:none!important;}
+}
+
+/* D.5 — a preflight crew assembly step; shared Classic/Playful/Classic+Stars toggle. */
+.crew-assembly{position:relative;isolation:isolate;min-height:100vh;padding:25px clamp(15px,4vw,65px) 50px;background:linear-gradient(145deg,#091726,#152a41 58%,#071523);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#ecf6ff;box-sizing:border-box;overflow:hidden}
+.crew-assembly *{box-sizing:border-box}
+.crew-assembly button:focus-visible{outline:3px solid #ffe29d;outline-offset:3px}
+.crew-assembly__header{display:flex;align-items:flex-start;gap:20px;padding-top:30px;max-width:1500px;margin:0 auto 16px}
+.crew-assembly__header h1{font-size:clamp(1.8rem,3.7vw,3.15rem);line-height:1.1;letter-spacing:-.025em;margin:8px 0 5px}
+.crew-assembly__header p{margin:5px 0 0;color:#c7ddeb;font-size:.96rem}
+.crew-assembly__summary{display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:1500px;margin:16px auto 18px}
+.crew-assembly__summary span{display:inline-flex;align-items:center;gap:7px;background:#102c40dd;border:1px solid #537c95;border-radius:999px;padding:7px 12px;font-size:.8rem;font-weight:800}
+.crew-assembly__layout{display:grid;grid-template-columns:minmax(350px,.82fr) minmax(0,1.18fr);align-items:start;gap:18px;max-width:1500px;margin:auto}
+.crew-assembly__roster,.crew-assembly__ship-panel{background:#12273cde;border:1.5px solid #587f9c;border-radius:19px;padding:clamp(13px,1.9vw,22px);min-width:0;box-shadow:0 18px 35px #020a173d}
+.crew-assembly__ship-panel{border-color:#69bfd2;background:#12283be0}
+.crew-assembly__title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}
+.crew-assembly__title h2{font-size:1.15rem;margin:0}
+.crew-assembly__title>span{padding:6px 10px;border:1px solid #547a92;border-radius:50px;font-size:.74rem;color:#bddfeb;font-weight:750;white-space:nowrap}
+.crew-assembly__candidates{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.crew-assembly__candidate{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;min-height:180px;border:2px solid #425c79;border-radius:14px;padding:9px 5px;background:#0d1d30;text-align:center}
+.crew-assembly__candidate[data-selected="true"]{border-color:#75d2c5;background:#142f42}
+.crew-assembly__candidate>strong{font-size:.94rem}
+.crew-assembly__portrait,.crew-assembly__actor{height:75px;width:82px;max-width:100%;flex:0 0 75px;display:grid;place-items:center}
+.crew-assembly__portrait .crew-astronaut,.crew-assembly__actor .crew-astronaut{height:73px;width:62px}
+.crew-assembly__actor{cursor:grab;border:0;background:transparent;padding:0;border-radius:10px;color:inherit;touch-action:none}
+.crew-assembly__actor:active,.crew-assembly__actor.is-picked{cursor:grabbing;background:#7ccded2e}
+.crew-assembly__actor.is-picked .crew-astronaut{filter:drop-shadow(0 0 9px #89e9fb)}
+.crew-assembly__candidate .crew-assembly__specialty{font-size:.65rem;font-weight:650;min-height:25px;line-height:1.15;color:#b4d7e5;display:flex;align-items:center;justify-content:center;gap:3px}
+.crew-assembly__assigned{background:#1a6758;color:#e4fff8;border:1px solid #5adaae;border-radius:8px;font-size:.59rem;font-weight:850;padding:2px 6px}
+.crew-assembly__choose{margin-top:auto;min-height:31px;cursor:pointer;border-radius:8px;padding:5px 10px;background:#193c53;border:1px solid #729db7;color:#e9f7ff;font-size:.72rem;font-weight:850}
+.crew-assembly__candidate[data-selected="true"] .crew-assembly__choose{background:#1f5d54;border-color:#69d3b3}
+.crew-assembly__helpers{display:flex;gap:8px;margin-top:13px;flex-wrap:wrap}
+.crew-assembly__helpers button{cursor:pointer;min-height:40px;flex:1;border-radius:10px;background:#173d57;border:1px solid #6f9db8;color:#e7f7ff;font-weight:750;padding:6px 9px}
+.crew-assembly__ship{width:min(100%,900px);margin:3px auto 7px;max-height:none;aspect-ratio:1200/760;align-self:auto;justify-self:center}
+.crew-assembly__ship .crew-ship__room-select{color:#b6f1fb}
+.crew-assembly__ship .crew-ship__worker .crew-assembly__actor{width:100%;height:100%;min-height:0;min-width:0;flex:1;touch-action:none}
+.crew-assembly__ship .crew-ship__worker .crew-assembly__actor .crew-astronaut{width:auto;height:100%;max-width:40px;max-height:46px}
+.crew-assembly__ship .crew-ship__room .crew-ship__worker{bottom:3px;top:4px;width:50px}
+.crew-assembly__instructions{display:flex;align-items:center;gap:8px;color:#aff5df;font-weight:780;background:#163f52;border:1px solid #5eabb0;border-radius:11px;padding:9px 11px;margin-top:9px}
+.crew-assembly__instructions p{margin:0;font-size:.83rem}
+.crew-assembly__ship-panel .crew-muted{margin:12px 0;font-size:.77rem}
+.crew-assembly__warning{padding:6px 9px;border-left:3px solid #e2c385;background:#7b582d29;color:#ffdfaf;font-size:.78rem;border-radius:3px;margin:5px 0}
+.crew-assembly__actions{max-width:1500px;margin:20px auto 0;display:grid;justify-items:center;gap:8px}
+.crew-assembly__actions .crew-primary{min-width:min(100%,300px)}
+.crew-assembly__actions>small{color:#bbdae5;text-align:center}
+.crew-assembly>.crew-error{max-width:1500px;margin:16px auto 0}
+.crew-assembly[data-menu-style="starry"]:before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background-image:url('/art/classic-scattered-stars.svg');background-position:center center;background-size:cover;background-repeat:no-repeat;opacity:.72}
+.crew-assembly[data-menu-style="playful"]{background:radial-gradient(ellipse at 4% 7%,#5675c2 0,transparent 38%),radial-gradient(ellipse at 92% 4%,#7d4bc1 0,transparent 45%),linear-gradient(143deg,#172c6a 0%,#27245d 46%,#26154a 100%)}
+.crew-assembly[data-menu-style="playful"]:before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background-image:radial-gradient(circle,#fff9 1.1px,transparent 1.9px),radial-gradient(circle,#fff8 1px,transparent 1.6px);background-size:125px 95px,177px 151px;background-position:32px 44px,65px 22px;opacity:.37}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__roster,.crew-assembly[data-menu-style="playful"] .crew-assembly__ship-panel{background:#fffdf4;color:#172e4c;border:3px solid #fff;box-shadow:0 12px 30px #100d426a}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__candidate{background:#edf4ff;border-color:#b7cde8;color:#1b3451}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__candidate[data-selected="true"]{background:#e7fcf5;border-color:#38a995}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__specialty,.crew-assembly[data-menu-style="playful"] .crew-assembly__title>span,.crew-assembly[data-menu-style="playful"] .crew-muted{color:#345273}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__choose{background:#edf4fd;color:#243e66;border-color:#8eabc7}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__candidate[data-selected="true"] .crew-assembly__choose{background:#c1eee0;border-color:#53a78e;color:#20483c}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__helpers button{background:#e5f1ff;border-color:#8fb3dc;color:#203a61}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__instructions{background:#dbf6ef;border-color:#77b9aa;color:#214d44}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__summary span{background:#fffce9;color:#243d63;border-color:#fff}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__warning{background:#fff0ce;color:#654014;border-left-color:#a86c25}
+.crew-assembly[data-menu-style="playful"] .crew-primary{background:linear-gradient(115deg,#ffde84,#ffad78);border-color:#fff3c9;color:#293352;box-shadow:0 8px 0 #aa6085,0 17px 25px #130d3b99}
+.crew-assembly[data-menu-style="playful"] .crew-theme-switch{background:#fffbe9;border-color:#ffe6af;color:#22325a;box-shadow:0 6px 0 #574a9b}
+.crew-assembly[data-menu-style="playful"] .crew-theme-switch__status{background:#364b88;color:#fff;border-color:#364b88}
+.crew-assembly[data-menu-style="playful"] .crew-back{background:#f9fcff;border:2px solid #fff;color:#203863;box-shadow:0 5px 0 #6072ab}
+
+/* Make staffed astronauts visibly larger than D.4 while leaving room for Energy controls. */
+.crew-ship__room .crew-ship__worker{top:2px;bottom:clamp(18px,25cqh,29px);width:52px;max-height:none}
+.crew-ship__room .crew-ship__worker .crew-astronaut--small{width:auto;height:100%;max-width:42px;max-height:48px}
+.crew-ship__room .crew-ship__worker .crew-token--small{width:100%;height:100%;min-width:0;min-height:0}
+.crew-assembly__ship .crew-ship__room .crew-ship__worker{bottom:2px}
+
+/* Phone: cards and ship stack; rooms remain tap/focus targets. */
+@media(max-width:1090px){.crew-assembly__layout{grid-template-columns:minmax(290px,.83fr) minmax(0,1.17fr)}.crew-assembly__candidates{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:790px){.crew-assembly__layout{grid-template-columns:1fr}.crew-assembly__ship-panel{order:2}.crew-assembly__roster{order:1}.crew-assembly__candidates{grid-template-columns:repeat(3,minmax(0,1fr))}.crew-assembly__header{padding-top:50px}}
+@media(max-width:520px){.crew-assembly{padding:12px 9px 35px}.crew-assembly__header{display:block;padding-top:54px}.crew-assembly__header .crew-back{margin-bottom:9px}.crew-assembly__header h1{font-size:1.65rem}.crew-assembly__header p{font-size:.83rem}.crew-assembly__candidates{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.crew-assembly__roster,.crew-assembly__ship-panel{padding:10px}.crew-assembly__candidate{min-height:164px}.crew-assembly__summary{gap:5px}.crew-assembly__summary span{font-size:.65rem;padding:5px 7px}.crew-assembly__title h2{font-size:1rem}.crew-assembly__ship{width:100%}.crew-assembly__ship .crew-ship__room .crew-ship__worker{top:1px;bottom:1px;width:22px}.crew-assembly__ship .crew-ship__worker .crew-assembly__actor .crew-astronaut{max-width:21px;max-height:23px}.crew-ship__room .crew-ship__worker{top:1px;bottom:clamp(14px,25cqh,22px);width:30px}.crew-ship__room .crew-ship__worker .crew-astronaut--small{max-width:27px;max-height:33px}}
+@media(prefers-reduced-motion:reduce){.crew-assembly__actor .crew-astronaut,.crew-assembly__candidate,.crew-assembly__ship .crew-ship__interior{animation:none!important;transition:none!important;transform:none!important}}
+/* Data sources remains reachable after each stage, without overlaying the crew chooser. */
+.crew-assembly + .sources-button{position:static;display:block;margin:9px 18px 16px auto;box-shadow:none}
+
+.crew-assembly__choose:disabled{opacity:.62;cursor:not-allowed;border-style:dashed}
+
+/* Reevaluation D.6 — six distinct, labeled crew / room colors.
+   Color reinforces (does not replace) room icons and specialty names. */
+.crew-assembly__layout--selection{grid-template-columns:minmax(380px,1.25fr) minmax(280px,.75fr)}
+.crew-assembly__layout--selection .crew-assembly__candidate{
+  border-color:color-mix(in srgb,var(--crew-accent) 53%,#425c79);
+  box-shadow:inset 0 3px 0 var(--crew-accent);
+}
+.crew-assembly__layout--selection .crew-assembly__candidate[data-selected="true"]{
+  border-color:var(--crew-accent);
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--crew-accent) 30%,transparent),inset 0 3px 0 var(--crew-accent);
+}
+.crew-assembly__color-name{font-size:.69rem;font-weight:800;color:var(--crew-accent)}
+.crew-assembly__layout--selection .crew-assembly__choose{width:90%;min-height:39px}
+.crew-assembly__layout--selection .crew-assembly__candidate[data-selected="true"] .crew-assembly__choose{border-color:var(--crew-accent)}
+.crew-assembly__select-hint{display:flex;align-items:start;gap:7px;font-size:.82rem;color:#c8e3ea;margin:15px 0 0}
+.crew-assembly__ship-panel--selection{display:flex;flex-direction:column;gap:8px}
+.crew-assembly__ship-picture{display:block;width:100%;aspect-ratio:1200/760;max-height:310px;object-fit:contain;filter:drop-shadow(0 12px 18px #00101daa)}
+.crew-assembly__ship-panel--selection h3{font-size:1.05rem;margin:3px 0}
+.crew-assembly__chosen-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.crew-assembly__chosen{min-width:0;display:flex;align-items:center;gap:8px;padding:9px;border:1px solid var(--crew-accent);border-radius:11px;background:#132d40}
+.crew-assembly__chosen>span{flex:0 0 auto;display:grid;place-items:center;color:var(--crew-accent)}
+.crew-assembly__chosen strong{display:block;font-size:.82rem}
+.crew-assembly__chosen small{display:block;font-size:.69rem;color:#c3dce5;line-height:1.32}
+.crew-assembly__ship-panel--selection .crew-assembly__instructions{margin-top:auto}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__color-name{color:#374b6b}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__select-hint{color:#304861}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__chosen{background:#edf4ff;color:#24374d}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__chosen small{color:#365477}
+.crew-assembly[data-menu-style="playful"] .crew-assembly__ship-panel--selection h3{color:#213b56}
+.crew-dock__member{padding:4px 1px;border-radius:9px;border:1px solid color-mix(in srgb,var(--crew-accent) 65%,transparent);background:#0b1d30a6}
+.crew-dock__specialty{display:flex;align-items:center;justify-content:center;gap:2px;color:var(--crew-accent);text-align:center;font-weight:850;font-size:clamp(.53rem,.85vw,.68rem);line-height:1.2}
+.crew-token.is-picked{border-color:var(--crew-accent);box-shadow:0 0 17px color-mix(in srgb,var(--crew-accent) 50%,transparent)}
+.crew-play .crew-ship__room{border:2px solid color-mix(in srgb,var(--room-accent) 74%,transparent);background:color-mix(in srgb,var(--room-accent) 8%,transparent)}
+.crew-play .crew-ship__room.is-focused:not(.is-hovered){border-color:var(--room-accent);box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--room-accent) 20%,transparent)}
+.crew-play .crew-ship__room.is-hovered{border-color:#fff3c9;box-shadow:0 0 0 3px var(--room-accent),inset 0 0 25px color-mix(in srgb,var(--room-accent) 30%,transparent)}
+.crew-play .crew-ship__room.has-crew{background:color-mix(in srgb,var(--room-accent) 10%,transparent)}
+.crew-play .crew-ship__room-select .crew-icon{color:var(--room-accent);border-color:var(--room-accent)}
+.crew-play .crew-ship__room-select .crew-icon,.crew-play .crew-ship__room-select .crew-ship__level{pointer-events:none}
+.crew-play .crew-ship__worker .crew-token--small{touch-action:none}
+@media(max-width:790px){.crew-assembly__layout--selection{grid-template-columns:1fr}}
+@media(max-width:520px){.crew-assembly__chosen-grid{grid-template-columns:1fr 1fr;gap:5px}.crew-assembly__chosen{padding:6px;gap:4px}.crew-assembly__chosen small{font-size:.59rem}.crew-dock__specialty{font-size:.54rem}}
+/* Six astronauts must remain visible and tappable on narrow phones. */
+@media(max-width:520px){
+  .crew-dock__roster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .crew-dock__member{min-width:0}
+  .crew-dock__specialty{max-width:100%;flex-wrap:wrap}
+  .crew-dock__roster .crew-token{min-width:0;width:100%}
+}
+
+/* Reevaluation D.9 — shared design experiment on planning, daily report and debrief.
+   No reducers or resource budgets are changed when the style switch is used. */
+.crew-play,.crew-report,.crew-debrief {position:relative;isolation:isolate;}
+.crew-play>.crew-theme-switch,
+.crew-report>.crew-theme-switch,
+.crew-debrief>.crew-theme-switch {
+  position:relative;top:auto;right:auto;display:flex;
+  width:max-content;max-width:100%;margin:0 0 12px auto;flex-shrink:0;
+}
+.crew-report,.crew-debrief {
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-start;gap:10px;
+}
+.crew-report>.crew-theme-switch,.crew-debrief>.crew-theme-switch {
+  align-self:flex-end;margin-bottom:4px;
+}
+/* Keep the planet landscape in the report/debrief; Playful changes the overlay. */
+.crew-play[data-menu-style="playful"]{
+  background:radial-gradient(ellipse at 8% 2%,#5448af,#211d5c 56%,#120f33);
+}
+.crew-report[data-menu-style="playful"],
+.crew-debrief[data-menu-style="playful"] {
+  background-image:linear-gradient(135deg,#392a86cf,#321b69ba),var(--surface-art);
+}
+.crew-play[data-menu-style="playful"] .crew-hud,
+.crew-play[data-menu-style="playful"] .crew-forecast,
+.crew-play[data-menu-style="playful"] .crew-room-actions,
+.crew-play[data-menu-style="playful"] .crew-command {
+  background:linear-gradient(145deg,#302761,#1c2153);
+  border-color:#a69ae4;
+  box-shadow:0 8px 22px #150c3d55;
+}
+.crew-play[data-menu-style="playful"] .crew-room-actions__buttons button {
+  background:#473b81;border-color:#b4a5e8;color:#fff8ea;
+}
+.crew-play[data-menu-style="playful"] .crew-room-actions__buttons button.is-active {
+  background:#22635c;border-color:#a3f4da;
+}
+.crew-play[data-menu-style="playful"] .crew-dock {
+  background:#221d53ee;border:2px solid #a99bfc;
+}
+.crew-play[data-menu-style="playful"] .crew-landing {
+  border:2px solid #a99bfc;
+}
+.crew-play[data-menu-style="playful"] .crew-dock__return {
+  background:#554695;border-color:#d5c5ff;
+}
+.crew-play[data-menu-style="playful"] .crew-command__summary>div {color:#c3fff3;}
+.crew-play[data-menu-style="playful"] .crew-forecast__identity {color:#f7d98f;}
+.crew-report[data-menu-style="playful"] .crew-report__card,
+.crew-debrief[data-menu-style="playful"] .crew-debrief__card {
+  background:#272356f5;border:2px solid #bfb1f4;
+}
+.crew-report[data-menu-style="playful"] h1,
+.crew-debrief[data-menu-style="playful"] h1 {color:#fff0b9;}
+.crew-report[data-menu-style="playful"] .crew-report__deltas>div,
+.crew-report[data-menu-style="playful"] .crew-report__events,
+.crew-report[data-menu-style="playful"] .crew-report__nasa,
+.crew-debrief[data-menu-style="playful"] .crew-debrief__visual {
+  background:#392e72;border-color:#9b8ed7;
+}
+.crew-play[data-menu-style="playful"] .crew-primary,
+.crew-report[data-menu-style="playful"] .crew-primary,
+.crew-debrief[data-menu-style="playful"] .crew-primary {
+  background:linear-gradient(115deg,#ffe18a,#ffb781);
+  border-color:#fff0bc;color:#292146;
+}
+.crew-report[data-menu-style="playful"] .crew-secondary,
+.crew-debrief[data-menu-style="playful"] .crew-secondary {
+  background:#453882;color:#fff;border-color:#bcadf6;
+}
+.crew-play[data-menu-style="playful"]>.crew-theme-switch,
+.crew-report[data-menu-style="playful"]>.crew-theme-switch,
+.crew-debrief[data-menu-style="playful"]>.crew-theme-switch {
+  background:#fff6e4;border-color:#ffe0a2;color:#312452;
+}
+.crew-play[data-menu-style="playful"]>.crew-theme-switch .crew-theme-switch__status,
+.crew-report[data-menu-style="playful"]>.crew-theme-switch .crew-theme-switch__status,
+.crew-debrief[data-menu-style="playful"]>.crew-theme-switch .crew-theme-switch__status {
+  background:#4b3986;border-color:#4b3986;color:#fff;
+}
+/* Classic + Stars retains the original Classic surfaces and adds an untiled starfield. */
+.crew-play[data-menu-style="starry"] {
+  background:#0b1625 url('/art/classic-scattered-stars.svg') center top/cover no-repeat;
+}
+.crew-report[data-menu-style="starry"],
+.crew-debrief[data-menu-style="starry"] {
+  background-image:url('/art/classic-scattered-stars.svg'),linear-gradient(#061222b9,#071523dd),var(--surface-art);
+  background-size:cover,cover,cover;
+  background-position:center center,center center,center center;
+  background-repeat:no-repeat;
+}
+
+/* More identifiable color matching: saturated compartment outlines, bright icon chips,
+   and a visible edge accent even for closed / empty rooms. Icon + name remain available. */
+.crew-ship__room {
+  border:2.5px solid var(--room-accent,#8dd8ec);
+  background:color-mix(in srgb,var(--room-accent,#8dd8ec) 15%,transparent);
+  box-shadow:inset 0 0 0 1px #061624aa,0 0 11px color-mix(in srgb,var(--room-accent,#8dd8ec) 45%,transparent);
+}
+.crew-ship__room::after {
+  content:"";position:absolute;z-index:0;pointer-events:none;
+  left:9%;right:9%;top:0;height:5px;
+  background:var(--room-accent,#8dd8ec);
+  border-radius:0 0 5px 5px;
+  box-shadow:0 0 13px var(--room-accent,#8dd8ec);
+}
+.crew-ship__room[data-room-open="true"] {
+  background:color-mix(in srgb,var(--room-accent,#8dd8ec) 10%,transparent);
+  border-color:var(--room-accent,#8dd8ec);
+}
+.crew-ship__room.is-hovered {
+  border-color:#fff3bf;outline:2px solid var(--room-accent,#8dd8ec);
+  box-shadow:0 0 25px var(--room-accent,#8dd8ec);
+}
+.crew-ship__room-select .crew-icon {
+  color:var(--room-accent,#8dd8ec);
+  border:2px solid var(--room-accent,#8dd8ec);
+  background:#091c2cf5;
+  box-shadow:0 0 9px color-mix(in srgb,var(--room-accent,#8dd8ec) 60%,transparent);
+}
+.crew-ship__level {color:#fff;border-color:var(--room-accent,#8dd8ec);}
+.crew-ship__room.has-crew {box-shadow:inset 0 0 0 1px var(--room-accent,#8dd8ec),0 0 16px color-mix(in srgb,var(--room-accent,#8dd8ec) 45%,transparent);}
+.crew-dock__member {
+  border:1.5px solid var(--crew-accent,#8dd8ec);
+  border-radius:11px;
+  background:color-mix(in srgb,var(--crew-accent,#8dd8ec) 17%,#0a1827);
+  padding:4px 2px;
+}
+.crew-dock__specialty {color:var(--crew-accent,#d8f4ff);font-weight:800;}
+@media(max-width:520px) {
+  .crew-play>.crew-theme-switch,.crew-report>.crew-theme-switch,.crew-debrief>.crew-theme-switch {
+    font-size:.7rem;min-height:44px;padding:5px 8px;
+  }
+  .crew-ship__room {border-width:1.5px;}
+  .crew-ship__room::after {height:3px;}
+  .crew-dock__member {padding:2px 0;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .crew-ship__room,.crew-ship__room-select .crew-icon,.crew-theme-switch {transition:none!important;}
+}
+
+/* Selected room keeps its own identity rather than reverting to a neutral border. */
+.crew-ship__room.is-focused:not(.is-hovered) {
+  border-color:var(--room-accent,#8dd8ec);
+  background:color-mix(in srgb,var(--room-accent,#8dd8ec) 17%,transparent);
+  box-shadow:0 0 17px color-mix(in srgb,var(--room-accent,#8dd8ec) 55%,transparent);
+}
+.crew-room-actions {border-top:4px solid var(--room-accent,#80dfdf);}
+.crew-room-actions__icon {
+  border:2px solid var(--room-accent,#8dd8ec);
+  color:var(--room-accent,#8dd8ec);
+  background:color-mix(in srgb,var(--room-accent,#8dd8ec) 20%,#112b42);
+}
