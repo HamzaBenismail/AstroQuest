@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
 import { ROOMS_C3 } from '../logic/v3/engine.js';
 import { ROOM_NAMES, ROOM_TAGLINES } from '../ui/rooms.js';
-import { ROOM_ICONS, IconAir, IconArrowLeft, IconArrowRight, IconBattery, IconCheck, IconInfo, IconSupplies, IconWarning } from '../ui/icons.jsx';
+import { ROOM_ICONS, IconAir, IconArrowLeft, IconArrowRight, IconBattery, IconCheck, IconInfo, IconSupplies } from '../ui/icons.jsx';
 import { SHIPS, shipById } from './fleet.jsx';
 import { CREW, CrewArt, crewById } from './crew.jsx';
+import { homeAssignments, isRosterComplete, placeCrew, removeCrew, roomOf, specialistCount } from './assign.js';
 import './prep.css';
 
 const STEPS = [
@@ -200,32 +201,32 @@ function CrewStep({ shipId, assignments, setAssignments, picked, setPicked, onBa
   const ship = shipById(shipId);
   const [dragOver, setDragOver] = useState(null);
   const [announcement, setAnnouncement] = useState('');
-  const placedIds = Object.values(assignments);
-  const remaining = CREW.length - placedIds.length;
+  const placed = Object.values(assignments).length;
+  const remaining = CREW.length - placed;
+  const complete = isRosterComplete(assignments);
+  const specialists = specialistCount(assignments);
 
   const assign = (room, crewId) => {
     const member = crewById(crewId);
     if (!member) return;
-    setAssignments(prev => {
-      const next = {};
-      for (const [key, value] of Object.entries(prev)) {
-        if (value !== crewId) next[key] = value;
-      }
-      next[room] = crewId;
-      return next;
-    });
+    const displaced = crewById(assignments[room]);
+    setAssignments(prev => placeCrew(prev, room, crewId));
     setPicked(null);
-    setAnnouncement(`${member.name} is now in ${ROOM_NAMES[room]}.`);
+    setAnnouncement(displaced && displaced.id !== crewId
+      ? `${member.name} is now in ${ROOM_NAMES[room]}, and ${displaced.name} swapped places with them.`
+      : `${member.name} is now in ${ROOM_NAMES[room]}.`);
   };
 
   const clear = room => {
     const member = crewById(assignments[room]);
-    setAssignments(prev => {
-      const next = { ...prev };
-      delete next[room];
-      return next;
-    });
+    setAssignments(prev => removeCrew(prev, room));
     if (member) setAnnouncement(`${member.name} is back in the crew list.`);
+  };
+
+  const fillHome = () => {
+    setAssignments(homeAssignments());
+    setPicked(null);
+    setAnnouncement('Every astronaut is now in the department they trained for.');
   };
 
   return (
@@ -245,32 +246,23 @@ function CrewStep({ shipId, assignments, setAssignments, picked, setPicked, onBa
             mouse-and-keyboard affordance and does nothing under a finger. */}
         <span className="prep-hint-drag">Drag an astronaut onto a department — or tap one, then tap the room.</span>
         <span className="prep-hint-tap">Tap an astronaut, then tap the department you want them in.</span>
-        {' '}You have four astronauts and six departments. <strong>A department with nobody in it stays
-        closed for the whole mission</strong>, so choose the four you need most.
+        {' '}Six astronauts, six departments, one each. Every astronaut can work anywhere, and each one
+        has a department they trained for.
       </p>
-
-      {!assignments.lifeSupport && placedIds.length > 0 && (
-        <p className="notice notice--warn">
-          <IconWarning size={18}/>
-          <span>
-            <strong>Nobody is in Life Support.</strong> That is the department that makes your Air,
-            and a closed department cannot be given Energy. Your crew would last about two days.
-          </span>
-        </p>
-      )}
 
       <div className="prep-crew-layout">
         <section className="prep-tray" aria-labelledby="tray-title">
           <div className="prep-tray__head">
             <h2 id="tray-title">Your crew</h2>
-            <span className={remaining === 0 ? 'chip chip--data' : 'chip'}>
-              {remaining === 0 ? <><IconCheck size={14}/>All placed</> : `${remaining} to place`}
+            <span className={complete ? 'chip chip--data' : 'chip'}>
+              {complete ? <><IconCheck size={14}/>All placed</> : `${remaining} to place`}
             </span>
           </div>
           <ul className="prep-tray__list">
             {CREW.map(member => {
-              const placedIn = Object.keys(assignments).find(room => assignments[room] === member.id);
+              const placedIn = roomOf(assignments, member.id);
               const isPicked = picked === member.id;
+              const atHome = placedIn === member.home;
               return (
                 <li key={member.id}>
                   <button type="button"
@@ -278,7 +270,7 @@ function CrewStep({ shipId, assignments, setAssignments, picked, setPicked, onBa
                     style={{ '--crew-accent': member.accent }}
                     draggable
                     aria-pressed={isPicked}
-                    aria-label={`${member.name}, ${member.role}${placedIn ? `, currently in ${ROOM_NAMES[placedIn]}` : ', not placed yet'}`}
+                    aria-label={`${member.name}, ${member.role}, trained for ${ROOM_NAMES[member.home]}${placedIn ? `, currently in ${ROOM_NAMES[placedIn]}` : ', not placed yet'}`}
                     onDragStart={event => {
                       event.dataTransfer.setData('text/plain', member.id);
                       event.dataTransfer.effectAllowed = 'move';
@@ -286,10 +278,14 @@ function CrewStep({ shipId, assignments, setAssignments, picked, setPicked, onBa
                     }}
                     onDragEnd={() => setDragOver(null)}
                     onClick={() => setPicked(isPicked ? null : member.id)}>
-                    <CrewArt member={member} size={84}/>
+                    <CrewArt member={member} size={76}/>
                     <strong>{member.name}</strong>
                     <small>{member.role}</small>
-                    {placedIn && <span className="prep-crew__where">{ROOM_NAMES[placedIn]}</span>}
+                    {placedIn && (
+                      <span className={atHome ? 'prep-crew__where is-home' : 'prep-crew__where'}>
+                        {atHome && <IconCheck size={11}/>}{ROOM_NAMES[placedIn]}
+                      </span>
+                    )}
                   </button>
                 </li>
               );
@@ -300,6 +296,9 @@ function CrewStep({ shipId, assignments, setAssignments, picked, setPicked, onBa
               ? `${crewById(picked).name} is ready — now choose a department.`
               : 'Tap an astronaut to pick them up.'}
           </p>
+          <button type="button" className="btn-secondary prep-tray__auto" onClick={fillHome}>
+            Put everyone in their specialty
+          </button>
         </section>
 
         <section className="prep-depts" aria-labelledby="depts-title"
@@ -313,6 +312,7 @@ function CrewStep({ shipId, assignments, setAssignments, picked, setPicked, onBa
               const Icon = ROOM_ICONS[room];
               const member = crewById(assignments[room]);
               const isOver = dragOver === room;
+              const atHome = member?.home === room;
               return (
                 <li key={room}
                   className={`prep-dept${member ? ' is-filled' : ''}${isOver ? ' is-over' : ''}`}
@@ -336,7 +336,13 @@ function CrewStep({ shipId, assignments, setAssignments, picked, setPicked, onBa
                     onClick={() => { if (picked) assign(room, picked); }}>
                     <span className="prep-dept__label"><Icon size={20}/>{ROOM_NAMES[room]}</span>
                     {member
-                      ? <span className="prep-dept__crew"><CrewArt member={member} size={56}/><strong>{member.name}</strong></span>
+                      ? <span className="prep-dept__crew">
+                          <CrewArt member={member} size={56}/>
+                          <strong>{member.name}</strong>
+                          {atHome
+                            ? <small className="prep-dept__fit"><IconCheck size={11}/>Trained for this</small>
+                            : <small className="prep-dept__fit is-away">{member.role}</small>}
+                        </span>
                       : <span className="prep-dept__empty">
                           <span className="prep-dept__ring" aria-hidden="true"/>
                           <small>{ROOM_TAGLINES[room]}</small>
@@ -351,16 +357,23 @@ function CrewStep({ shipId, assignments, setAssignments, picked, setPicked, onBa
               );
             })}
           </ul>
+          <p className="prep-help">
+            {complete
+              ? specialists === CREW.length
+                ? 'Every astronaut is in the department they trained for.'
+                : `${specialists} of ${CREW.length} are in their own specialty. The rest will manage — nobody is in the wrong place.`
+              : 'Every department needs somebody before you can launch.'}
+          </p>
         </section>
       </div>
 
       <p className="prep-visually-hidden" role="status" aria-live="polite">{announcement}</p>
 
       <div className="prep-actions">
-        <button type="button" className="btn-primary" disabled={remaining !== 0} onClick={onLaunch}>
-          {remaining === 0
+        <button type="button" className="btn-primary" disabled={!complete} onClick={onLaunch}>
+          {complete
             ? <>Launch the mission<IconArrowRight size={22}/></>
-            : `Place ${remaining} more astronaut${remaining === 1 ? '' : 's'}`}
+            : `Fill ${remaining} more department${remaining === 1 ? '' : 's'}`}
         </button>
       </div>
     </>

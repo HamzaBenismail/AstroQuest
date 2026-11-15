@@ -413,14 +413,33 @@
 .prep-crew.is-placed { opacity: 0.55; }
 
 .prep-crew__where {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   margin-top: 4px;
   padding: 3px 9px;
   border-radius: 999px;
-  background: var(--ok-deep);
+  background: #16233A;
   font-size: 10.5px;
   font-weight: 700;
-  color: #9FE8BF;
+  color: var(--ink-3);
 }
+
+/* standing in the department they trained for */
+.prep-crew__where.is-home { background: var(--ok-deep); color: #9FE8BF; }
+.prep-crew__where.is-home .icon { color: var(--ok); }
+
+.prep-dept__fit {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--ok);
+}
+
+.prep-dept__fit.is-away { color: var(--ink-4); font-weight: 600; }
+.prep-tray__auto { width: 100%; }
 
 .prep-depts__grid { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 

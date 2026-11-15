@@ -162,6 +162,12 @@
 }
 
 .c3-scene__room:hover { border-color: #7DD3E8; }
+
+/* an astronaut is being dragged over this department */
+.c3-scene__room[data-over='true'] {
+  border-color: var(--amber-lit) !important;
+  background: var(--amber-deep);
+}
 .c3-scene__room[data-lit='true'] { border-color: var(--ok-edge); background: #0E1D22; }
 .c3-scene__room[aria-pressed='true'] { border-color: var(--cyan); background: #10263B; }
 

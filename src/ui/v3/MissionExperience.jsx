@@ -15,7 +15,8 @@ import {
   IconSupplies, IconWarning, METER_ICONS, ROOM_ICONS,
 } from '../icons.jsx';
 import { shipById } from '../../prep/fleet.jsx';
-import { CrewArt, crewById } from '../../prep/crew.jsx';
+import { CREW, CrewArt, crewById } from '../../prep/crew.jsx';
+import { placeCrew, roomOf } from '../../prep/assign.js';
 import './experience.css';
 
 const ROOM_NAMES = {
@@ -424,6 +425,63 @@ function RoomPanel({ session, config, preview, dispatch, crew, isStaffed }) {
   );
 }
 
+/**
+ * Move the crew around mid-mission. Every move is a swap, so a department is
+ * never left empty and the roster stays complete from launch to debrief.
+ */
+function CrewBar({ assignments, picked, onPick, onCancel, note }) {
+  const pickedMember = picked ? crewById(picked) : null;
+  return (
+    <section className="c3-crewbar" aria-label="Crew roster">
+      <div className="c3-crewbar__head">
+        <h2 className="c3-h2">Crew roster</h2>
+        {pickedMember ? (
+          <span className="c3-crewbar__moving">
+            Moving <strong>{pickedMember.name}</strong> — now tap a department
+            <button type="button" onClick={onCancel}>Cancel</button>
+          </span>
+        ) : (
+          <span className="c3-crewbar__hint">
+            <span className="prep-hint-drag">Drag an astronaut onto another department, or tap one then tap a room.</span>
+            <span className="prep-hint-tap">Tap an astronaut, then tap the department to move them to.</span>
+          </span>
+        )}
+      </div>
+      <ul>
+        {CREW.map(member => {
+          const room = roomOf(assignments, member.id);
+          const isPicked = picked === member.id;
+          const atHome = room === member.home;
+          return (
+            <li key={member.id}>
+              <button type="button" draggable
+                className={isPicked ? 'c3-crewchip is-picked' : 'c3-crewchip'}
+                style={{ '--crew-accent': member.accent }}
+                aria-pressed={isPicked}
+                aria-label={`${member.name}, ${member.role}, currently in ${room ? ROOM_NAMES[room] : 'no department'}. Choose to move them.`}
+                onDragStart={event => {
+                  event.dataTransfer.setData('text/plain', member.id);
+                  event.dataTransfer.effectAllowed = 'move';
+                  onPick(member.id);
+                }}
+                onClick={() => onPick(isPicked ? null : member.id)}>
+                <CrewArt member={member} size={34}/>
+                <span>
+                  <strong>{member.name}</strong>
+                  <small className={atHome ? 'is-home' : undefined}>
+                    {room ? ROOM_NAMES[room] : 'No department'}
+                  </small>
+                </span>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+      <p className="c3-visually-hidden" role="status" aria-live="polite">{note}</p>
+    </section>
+  );
+}
+
 function Porthole() {
   return (
     <svg className="c3-porthole" viewBox="0 0 460 460" role="img"
@@ -483,11 +541,11 @@ function MissionBar({ children }) {
   );
 }
 
-function Briefing({ config, mission, ship, prep, onStart }) {
+function Briefing({ config, mission, ship, prep, assignments = {}, onStart }) {
   const [helpOpen, setHelpOpen] = useState(false);
   const ShipArt = ship?.Art;
   const crewOnDuty = prep
-    ? ROOMS_C3.filter(room => prep.assignments[room]).map(room => ({ room, member: crewById(prep.assignments[room]) }))
+    ? ROOMS_C3.filter(room => assignments[room]).map(room => ({ room, member: crewById(assignments[room]) }))
     : [];
   const starting = {
     air: config.startingMeters.air,
@@ -940,17 +998,40 @@ export default function MissionExperienceC({ config, mission, prep, onReconfigur
 
   // Mission prep is optional: without it the game runs on the config defaults.
   const ship = prep ? shipById(prep.shipId) : null;
-  const assignments = prep?.assignments ?? {};
 
-  // Mission prep decides who works where, and a department only runs with an
-  // astronaut posted to it. This gates which PLANS the UI will let a player
-  // build; it never changes how the engine resolves a plan it is given. When
-  // prep did not run, nothing is gated and the game behaves as it always did.
+  // The roster starts where mission prep left it and can be changed any day:
+  // moves are swaps, so every department keeps somebody in it.
+  const [assignments, setAssignments] = useState(() => prep?.assignments ?? {});
+  const [pickedCrew, setPickedCrew] = useState(null);
+  const [crewNote, setCrewNote] = useState('');
+
+  // A department only runs with an astronaut posted to it. This gates which
+  // PLANS the UI will let a player build; it never changes how the engine
+  // resolves a plan it is given. Without prep nothing is gated, and the game
+  // behaves exactly as it did before mission prep existed.
   const crewRequired = Boolean(prep);
   const isStaffed = room => !crewRequired || Boolean(assignments[room]);
 
+  const moveCrew = (room, crewId) => {
+    const member = crewById(crewId);
+    if (!member) return;
+    const displaced = crewById(assignments[room]);
+    setAssignments(previous => placeCrew(previous, room, crewId));
+    setPickedCrew(null);
+    setCrewNote(displaced && displaced.id !== crewId
+      ? `${member.name} moved to ${ROOM_NAMES[room]}, swapping with ${displaced.name}.`
+      : `${member.name} moved to ${ROOM_NAMES[room]}.`);
+  };
+
+  const restart = () => {
+    setAssignments(prep?.assignments ?? {});
+    setPickedCrew(null);
+    setCrewNote('');
+    dispatch({ type: 'RESTART' });
+  };
+
   if (session.screen === 'briefing') {
-    return <Briefing config={config} mission={mission} ship={ship} prep={prep}
+    return <Briefing config={config} mission={mission} ship={ship} prep={prep} assignments={assignments}
       onStart={() => dispatch({ type: 'START' })}/>;
   }
   if (session.screen === 'report') {
@@ -958,7 +1039,7 @@ export default function MissionExperienceC({ config, mission, prep, onReconfigur
   }
   if (session.screen === 'debrief') {
     return <Debrief config={config} session={session} mission={mission}
-      onRestart={() => dispatch({ type: 'RESTART' })} onReconfigure={onReconfigure}/>;
+      onRestart={restart} onReconfigure={onReconfigure}/>;
   }
 
   const preview = previewC3(session, config);
@@ -990,15 +1071,21 @@ export default function MissionExperienceC({ config, mission, prep, onReconfigur
             ? <>Space weather is uncertain. Ask Earth from the Communications room, or decide for yourself — powering the shelter is always the safe choice.</>
             : <>Earth thinks today could be <strong>{WEATHER[forecast]}</strong>. Guesses can be off by one level, so the shelter is still worth Energy.</>}
         </p>
-        <button type="button" className="btn-secondary" onClick={() => dispatch({ type: 'RESTART' })}>
+        <button type="button" className="btn-secondary" onClick={restart}>
           <IconReplay size={18}/>Restart mission
         </button>
       </div>
 
       <div className="c3-main-grid">
-        <CutawaySceneC config={config} session={session} ship={ship} assignments={assignments}
-          crewRequired={crewRequired}
-          onSelectRoom={room => dispatch({ type: 'SELECT_ROOM', room })}/>
+        <div className="c3-outpost">
+          <CutawaySceneC config={config} session={session} ship={ship} assignments={assignments}
+            crewRequired={crewRequired} pickedCrew={pickedCrew} onDropCrew={moveCrew}
+            onSelectRoom={room => dispatch({ type: 'SELECT_ROOM', room })}/>
+          {crewRequired && (
+            <CrewBar assignments={assignments} picked={pickedCrew} note={crewNote}
+              onPick={setPickedCrew} onCancel={() => setPickedCrew(null)}/>
+          )}
+        </div>
         <RoomPanel config={config} session={session} preview={preview} dispatch={dispatch}
           crew={crewById(assignments[session.selectedRoom])} isStaffed={isStaffed}/>
       </div>

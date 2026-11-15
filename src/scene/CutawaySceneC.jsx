@@ -10,14 +10,19 @@
  * each module shows the astronaut assigned to it, so the ship and crew a player
  * picked are the ones they see all mission.
  */
+import { useState } from 'react';
 import { ROOMS_C3 } from '../logic/v3/engine.js';
 import { ROOM_NAMES, ROOM_TAGLINES } from '../ui/rooms.js';
 import { IconAlert, IconBattery, IconBolt, IconClock, IconWarning, ROOM_ICONS } from '../ui/icons.jsx';
 import { CrewArt, crewById } from '../prep/crew.jsx';
 import './cutaway-c.css';
 
-export default function CutawaySceneC({ config, session, ship, assignments = {}, crewRequired = false, onSelectRoom }) {
+export default function CutawaySceneC({
+  config, session, ship, assignments = {}, crewRequired = false,
+  pickedCrew = null, onDropCrew, onSelectRoom,
+}) {
   const { game, plan, selectedRoom } = session;
+  const [dragOver, setDragOver] = useState(null);
   const limited = !config.powerBudget.sunlitDays.includes(game.day);
   const lowAir = game.meters.air <= config.successMinMeter;
 
@@ -78,11 +83,31 @@ export default function CutawaySceneC({ config, session, ship, assignments = {},
                 className={`c3-scene__room c3-scene__room--${room}`}
                 data-lit={lit ? 'true' : 'false'}
                 data-dark={dark ? 'true' : 'false'}
+                data-over={dragOver === room ? 'true' : 'false'}
                 aria-pressed={selected}
-                aria-label={dark
-                  ? `${ROOM_NAMES[room]}, level ${game.roomLevels[room]}, closed — no astronaut is posted here`
-                  : `${ROOM_NAMES[room]}, level ${game.roomLevels[room]}, ${text}${member ? `, ${member.name} on duty` : ''}`}
-                onClick={() => onSelectRoom(room)}>
+                aria-label={pickedCrew
+                  ? `Move the picked astronaut into ${ROOM_NAMES[room]}`
+                  : dark
+                    ? `${ROOM_NAMES[room]}, level ${game.roomLevels[room]}, closed — no astronaut is posted here`
+                    : `${ROOM_NAMES[room]}, level ${game.roomLevels[room]}, ${text}${member ? `, ${member.name} on duty` : ''}`}
+                onDragOver={onDropCrew ? event => {
+                  event.preventDefault();
+                  event.dataTransfer.dropEffect = 'move';
+                  setDragOver(room);
+                } : undefined}
+                onDragLeave={onDropCrew ? () => setDragOver(current => (current === room ? null : current)) : undefined}
+                onDrop={onDropCrew ? event => {
+                  event.preventDefault();
+                  const id = event.dataTransfer.getData('text/plain');
+                  setDragOver(null);
+                  if (id) onDropCrew(room, id);
+                } : undefined}
+                onClick={() => {
+                  // While an astronaut is picked up, a tap posts them here;
+                  // otherwise it selects the room as usual.
+                  if (pickedCrew && onDropCrew) onDropCrew(room, pickedCrew);
+                  else onSelectRoom(room);
+                }}>
                 <span className="c3-scene__row">
                   <Icon size={26}/>
                   <small className="c3-scene__level">Lv {game.roomLevels[room]}</small>

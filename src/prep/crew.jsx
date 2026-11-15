@@ -1,11 +1,16 @@
 /**
- * The four astronauts a player places into departments before launch.
+ * The six astronauts a player places into departments.
  *
- * Each one is drawn from the same friendly base — big helmet, round visor,
- * soft suit — and then given its own accent colour, skin tone, visor shape and
- * chest patch, so a child can tell them apart instantly and remember who they
- * put where. The role line is flavour: it hints at a department without
- * becoming a rule, so no placement is ever "wrong".
+ * There is one for every department, so no department is ever left closed —
+ * placing the crew is about who fits where, not about which rooms to give up.
+ * Each one is drawn from the same friendly base — big helmet, round visor, soft
+ * suit — and then given its own accent colour, skin tone, visor shape and chest
+ * patch, so a child can tell them apart instantly and remember who went where.
+ *
+ * `home` is the department an astronaut trained for. Putting someone in their
+ * home department is the tidy choice and the UI says so, but every astronaut
+ * can work anywhere: no placement is ever wrong, and none of this changes the
+ * simulation's arithmetic.
  */
 
 function Astronaut({ accent, skin, patch, visor, name }) {
@@ -25,7 +30,7 @@ function Astronaut({ accent, skin, patch, visor, name }) {
       </g>
       {/* body */}
       <rect x="30" y="70" width="60" height="58" rx="20" fill="#F2F6FC"/>
-      {/* chest panel — the quickest way to tell four suits apart */}
+      {/* chest panel — the quickest way to tell six suits apart */}
       {patch === 'square' && <rect x="46" y="84" width="28" height="20" rx="6" fill={accent}/>}
       {patch === 'round' && <circle cx="60" cy="94" r="12" fill={accent}/>}
       {patch === 'chevron' && <path d="M46 102l14-18 14 18-14-6Z" fill={accent}/>}
@@ -34,6 +39,13 @@ function Astronaut({ accent, skin, patch, visor, name }) {
           <rect x="44" y="84" width="32" height="6" rx="3"/>
           <rect x="44" y="94" width="32" height="6" rx="3"/>
           <rect x="44" y="104" width="20" height="6" rx="3"/>
+        </g>
+      )}
+      {patch === 'triangle' && <path d="M60 82l15 24H45Z" fill={accent}/>}
+      {patch === 'dots' && (
+        <g fill={accent}>
+          <circle cx="50" cy="88" r="5"/><circle cx="70" cy="88" r="5"/>
+          <circle cx="50" cy="102" r="5"/><circle cx="70" cy="102" r="5"/>
         </g>
       )}
       {/* legs */}
@@ -67,8 +79,9 @@ export const CREW = [
   {
     id: 'ari',
     name: 'Ari',
-    role: 'Engineer',
-    likes: 'Keeping the power steady',
+    role: 'Life support engineer',
+    home: 'lifeSupport',
+    likes: 'Keeping the air clean and the crew breathing',
     accent: '#FFA23A',
     skin: '#C98A5E',
     patch: 'square',
@@ -78,6 +91,7 @@ export const CREW = [
     id: 'juno',
     name: 'Juno',
     role: 'Botanist',
+    home: 'greenhouse',
     likes: 'Growing food that actually tastes good',
     accent: '#6FE3A0',
     skin: '#8D5A36',
@@ -85,9 +99,32 @@ export const CREW = [
     visor: 'wide',
   },
   {
+    id: 'rhea',
+    name: 'Rhea',
+    role: 'Power technician',
+    home: 'power',
+    likes: 'Saving a little charge for a rainy day',
+    accent: '#FFD166',
+    skin: '#5A3722',
+    patch: 'triangle',
+    visor: 'wide',
+  },
+  {
+    id: 'sol',
+    name: 'Sol',
+    role: 'Geologist',
+    home: 'science',
+    likes: 'Collecting the strangest rocks',
+    accent: '#5CE1F2',
+    skin: '#6B4226',
+    patch: 'bars',
+    visor: 'wide',
+  },
+  {
     id: 'kai',
     name: 'Kai',
     role: 'Medic',
+    home: 'shield',
     likes: 'Making sure everyone sleeps enough',
     accent: '#C79BFF',
     skin: '#F0C9A4',
@@ -95,14 +132,15 @@ export const CREW = [
     visor: 'round',
   },
   {
-    id: 'sol',
-    name: 'Sol',
-    role: 'Geologist',
-    likes: 'Collecting the strangest rocks',
-    accent: '#5CE1F2',
-    skin: '#6B4226',
-    patch: 'bars',
-    visor: 'wide',
+    id: 'milo',
+    name: 'Milo',
+    role: 'Comms officer',
+    home: 'comms',
+    likes: 'Talking to Earth and waiting for the reply',
+    accent: '#FF9ECF',
+    skin: '#E0A878',
+    patch: 'dots',
+    visor: 'round',
   },
 ];
 
