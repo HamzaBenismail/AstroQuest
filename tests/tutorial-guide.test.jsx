@@ -4,7 +4,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import {
   TUTORIAL_STORAGE_KEY, TUTORIAL_STAGES, TUTORIAL_STEPS, guideStageForState,
   normalizeGuidePreferences, readGuidePreferences, writeGuidePreferences,
-  markGuideStageSeen, skipAutomaticGuide,
+  markGuideStageSeen, skipAutomaticGuide, SYSTEM_ROOM_ORDER, systemGuideIndexForRoom,
 } from '../src/ui/v4/tutorialGuide.js';
 import { TutorialGuide, TutorialHelpButton } from '../src/ui/v4/TutorialGuide.jsx';
 import { readFileSync } from 'node:fs';
@@ -89,5 +89,47 @@ describe('AstroQuest staged tutorial', () => {
     const panel = text('../src/ui/v4/TutorialGuide.jsx');
     expect(guide).not.toMatch(/reduceCrewExperience|reduceC3Session|COMMIT_DAY|SET_POWER/);
     expect(panel).not.toMatch(/reduceCrewExperience|reduceC3Session|COMMIT_DAY|SET_POWER/);
+  });
+});
+
+describe('Room-by-room, Energy and Research tutorial', () => {
+  it('has a manually accessible lesson for every room and all three resources', () => {
+    const screens = text('../src/ui/v4/CrewMissionExperience.jsx');
+    const steps = TUTORIAL_STEPS.systems;
+    expect(steps).toHaveLength(9);
+    expect(SYSTEM_ROOM_ORDER).toEqual(['lifeSupport', 'greenhouse', 'science', 'power', 'shield', 'comms']);
+    for (const [index, room] of SYSTEM_ROOM_ORDER.entries()) {
+      expect(systemGuideIndexForRoom(room)).toBe(index);
+      expect(steps[index].anchor).toBe(`room-${room}`);
+      expect(screens).toContain('data-guide-anchor={`room-${room}`}');
+    }
+    expect(steps.slice(6).map(step => step.anchor)).toEqual(['energy', 'battery', 'research']);
+    for (const step of steps) {
+      expect(step.title.length).toBeGreaterThan(9);
+      expect(step.text.length).toBeGreaterThan(90);
+    }
+    for (const resource of ['energy','battery','research']) {
+      expect(screens).toContain(`data-guide-anchor="${resource}"`);
+    }
+    expect(systemGuideIndexForRoom('unexpected')).toBe(0);
+  });
+
+  it('keeps advanced topics optional, replayable and isolated from the simulator', () => {
+    expect(TUTORIAL_STAGES).not.toContain('systems');
+    expect(TUTORIAL_STEPS.play).toHaveLength(5);
+    const saved = markGuideStageSeen({ seenStages:['play'], disabledAuto:false }, 'play');
+    expect(saved.seenStages).toEqual(['play']);
+    const interactive = text('../src/ui/v4/CrewMissionExperience.jsx');
+    expect(interactive).toContain('onShowRoomGuide={openSystemGuide}');
+    expect(interactive).toContain('Learn what ${def.name} does');
+    expect(interactive).toContain("setGuide({stage:'systems', index:systemGuideIndexForRoom(room)})");
+    const html = renderToStaticMarkup(<TutorialGuide stage="systems" stepIndex={7}
+      onStep={()=>{}} onClose={()=>{}} onSkipAll={()=>{}} onRelatedGuide={()=>{}} />);
+    expect(html).toContain('Battery · Save Energy for later');
+    expect(html).toContain('← Back to mission basics');
+    const basic = renderToStaticMarkup(<TutorialGuide stage="play" stepIndex={0}
+      onStep={()=>{}} onClose={()=>{}} onSkipAll={()=>{}} onRelatedGuide={()=>{}} />);
+    expect(basic).toContain('Explore rooms, Energy &amp; Research');
+    expect(text('../src/ui/v4/tutorialGuide.js')).not.toMatch(/reduceCrewExperience|reduceC3Session|COMMIT_DAY|SET_POWER/);
   });
 });

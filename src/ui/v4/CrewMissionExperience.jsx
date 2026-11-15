@@ -11,7 +11,7 @@ import { roomTapAction } from './crewTap.js';
 import { LaunchCinematic, DayPassage, ReportShipStage, EndingShipStage } from './CinematicScenes.jsx';
 import { canBeginDayAnimation, CINEMATIC_DURATIONS, endingMotion } from './cinematicRules.js';
 import { TutorialGuide, TutorialHelpButton } from './TutorialGuide.jsx';
-import { guideStageForState, browserGuideStorage, readGuidePreferences, writeGuidePreferences, markGuideStageSeen, skipAutomaticGuide } from './tutorialGuide.js';
+import { guideStageForState, systemGuideIndexForRoom, browserGuideStorage, readGuidePreferences, writeGuidePreferences, markGuideStageSeen, skipAutomaticGuide } from './tutorialGuide.js';
 import discoveryCatalog from '../../data/discoveries.js';
 import { DiscoveryPopup, DiscoveryCollection } from './DiscoveryUI.jsx';
 import { discoveryOptions } from '../../logic/v4/discoveries.js';
@@ -262,9 +262,9 @@ function Hud({ config, state, preview }) {
     <div className="crew-hud__meters" data-guide-anchor="meters"><Stat icon="air" label="Air" value={game.meters.air} max={config.meterMax}/>
       <Stat icon="supplies" label="Supplies" value={game.meters.supplies} max={config.meterMax}/>
       <Stat icon="safety" label="Safety" value={game.meters.safety} max={config.meterMax} className="crew-stat--safety"/></div>
-    <div className="crew-hud__extras"><span title="Generated Energy"><Icon type="energy" size={18}/> <strong>{preview.used ?? 0}/{preview.generation ?? '—'}</strong></span>
-      <span title="Battery"><Icon type="battery" size={18}/> <strong>{game.battery}/{cap}</strong></span>
-      <span title="Research Points"><Icon type="science" size={18}/> <strong>{game.research.available}</strong></span></div>
+    <div className="crew-hud__extras"><span data-guide-anchor="energy" title="Generated Energy"><Icon type="energy" size={18}/> <strong>{preview.used ?? 0}/{preview.generation ?? '—'}</strong></span>
+      <span data-guide-anchor="battery" title="Battery"><Icon type="battery" size={18}/> <strong>{game.battery}/{cap}</strong></span>
+      <span data-guide-anchor="research" title="Research Points"><Icon type="science" size={18}/> <strong>{game.research.available}</strong></span></div>
   </header>;
 }
 
@@ -284,7 +284,7 @@ function ForecastBar({ level, day, config }) {
   </section>;
 }
 
-function RoomActions({ state, config, dispatch }) {
+function RoomActions({ state, config, dispatch, onShowRoomGuide = () => {} }) {
   const room = state.focusedRoom;
   const def = ROOMS[room];
   const game = state.session.game;
@@ -298,6 +298,8 @@ function RoomActions({ state, config, dispatch }) {
   return <section className="crew-room-actions" style={{'--room-accent':ROOM_ACCENTS[room]}} aria-label={`${def.name} actions`}>
     <div className="crew-room-actions__head"><span className="crew-room-actions__icon"><Icon type={def.icon}/></span>
       <div><strong>{def.name}</strong><small>Level {game.roomLevels[room]} · {isStaffed ? 'Crew working' : 'Needs astronaut'}</small></div></div>
+    <button type="button" className="crew-room-actions__learn" onClick={() => onShowRoomGuide(room)}
+      aria-label={`Learn what ${def.name} does`}>What does this room do?</button>
     <div className="crew-room-actions__buttons">
       {worker && <button type="button" aria-pressed={state.pickedCrewId===worker.id}
         onClick={() => dispatch({type:'PICK_CREW',id:worker.id})}>
@@ -332,7 +334,7 @@ function RoomActions({ state, config, dispatch }) {
   </section>;
 }
 
-export function CrewGameplay({ state, config, dispatch, mission, uiStyle = 'classic', onToggleStyle = () => {}, arriving = false }) {
+export function CrewGameplay({ state, config, dispatch, mission, uiStyle = 'classic', onToggleStyle = () => {}, onShowRoomGuide = () => {}, arriving = false }) {
   const game = state.session.game;
   const plan = state.session.plan;
   const preview = previewC3(state.session, config);
@@ -467,7 +469,7 @@ export function CrewGameplay({ state, config, dispatch, mission, uiStyle = 'clas
               // A staffed department stays open; otherwise reveal only while placing crew.
               const showingInterior = Boolean(worker) || previewing;
               const canPlace = !worker || worker.id === selectedCrew?.id;
-              return <div key={room} data-drop-room={room} data-room-open={showingInterior ? 'true' : 'false'} data-room-color={ROOMS[room].color}
+              return <div key={room} data-drop-room={room} data-guide-anchor={`room-${room}`} data-room-open={showingInterior ? 'true' : 'false'} data-room-color={ROOMS[room].color}
                 style={{...shipHatchStyle(ship,room), '--room-accent':ROOM_ACCENTS[room]}}
                 className={`crew-ship__room crew-ship__room--${room} ${state.focusedRoom===room?'is-focused':''} ${previewing?'is-hovered':''} ${worker?'has-crew':''}`}
                 onPointerEnter={() => picked && dispatch({ type: 'HOVER_ROOM', room })}
@@ -499,7 +501,7 @@ export function CrewGameplay({ state, config, dispatch, mission, uiStyle = 'clas
       </div>
     </section>
     <div className="crew-play__bottom">
-      <RoomActions state={state} config={config} dispatch={dispatch}/>
+      <RoomActions state={state} config={config} dispatch={dispatch} onShowRoomGuide={onShowRoomGuide}/>
       <section className="crew-command" aria-label="Daily plan summary">
         <div className="crew-command__summary"><span className="crew-eyebrow">DAILY PLAN</span>
           <div><Icon type="energy" size={23}/><strong>{preview.used ?? 0} / {preview.generation ?? '—'}</strong><small>Energy</small></div>
@@ -598,6 +600,14 @@ export default function CrewMissionExperience({ config, mission }) {
     setGuide({stage: guideStage, index: 0});
     setGuidePreferences(previous => writeGuidePreferences(browserGuideStorage(), markGuideStageSeen(previous, guideStage)));
   };
+  const openSystemGuide = room => {
+    if (guideStage !== 'play') return;
+    setGuide({stage:'systems', index:systemGuideIndexForRoom(room)});
+  };
+  const switchGuide = () => {
+    if (guide?.stage === 'systems') setGuide({stage:'play', index:0});
+    else if (guideStage === 'play') openSystemGuide('lifeSupport');
+  };
   const skipGuide = () => {
     setGuide(null);
     setGuidePreferences(previous => writeGuidePreferences(browserGuideStorage(), skipAutomaticGuide(previous)));
@@ -605,9 +615,10 @@ export default function CrewMissionExperience({ config, mission }) {
   const guidedScreen = content => <>
     {content}
     {guideStage && <TutorialHelpButton onClick={openGuide} stage={guideStage}/>}
-    {guide?.stage === guideStage && <TutorialGuide key={guideStage} stage={guideStage} stepIndex={guide.index}
-      onStep={index => setGuide(current => current?.stage === guideStage ? {...current, index} : current)}
-      onClose={() => setGuide(null)} onSkipAll={skipGuide} styleName={uiStyle}/>}
+    {(guide?.stage === guideStage || (guideStage === 'play' && guide?.stage === 'systems')) &&
+      <TutorialGuide key={guide.stage} stage={guide.stage} stepIndex={guide.index}
+        onStep={index => setGuide(current => current?.stage === guide.stage ? {...current, index} : current)}
+        onClose={() => setGuide(null)} onSkipAll={skipGuide} onRelatedGuide={switchGuide} styleName={uiStyle}/>}
   </>;
   const toggleUiStyle = () => setUiStyle(nextMenuStyle);
 
@@ -702,5 +713,5 @@ export default function CrewMissionExperience({ config, mission }) {
       dispatch={act} uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>);
   }
   return guidedScreen(<CrewGameplay state={state} config={config} mission={mission} dispatch={act}
-    uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>);
+    uiStyle={uiStyle} onToggleStyle={toggleUiStyle} onShowRoomGuide={openSystemGuide}/>);
 }

@@ -2,6 +2,14 @@
 export const TUTORIAL_STORAGE_KEY = 'astroquest.tutorial.v1';
 export const TUTORIAL_STAGES = Object.freeze(['menu', 'preparation', 'assembly', 'play', 'report', 'debrief', 'collection']);
 
+/** On-demand room guide: not an additional automatic, first-run tutorial chapter. */
+export const SYSTEM_ROOM_ORDER = Object.freeze(['lifeSupport', 'greenhouse', 'science', 'power', 'shield', 'comms']);
+export function systemGuideIndexForRoom(room) {
+  const index = SYSTEM_ROOM_ORDER.indexOf(room);
+  return index >= 0 ? index : 0;
+}
+
+
 export const TUTORIAL_STEPS = Object.freeze({
   menu: [
     { title: 'Welcome to AstroQuest!', text: 'You are the mission commander! Pick a spacecraft, build your crew, and keep everyone safe for ten days. We will show you how as you play.', anchor: 'menu-title' },
@@ -21,6 +29,17 @@ export const TUTORIAL_STEPS = Object.freeze({
     { title: 'Share your Energy', text: 'Staff a room before powering it. Use the small Energy buttons inside the ship to choose how much power each room receives. Different rooms do different jobs.', anchor: 'ship' },
     { title: 'Watch the forecast', text: 'Tomorrow’s space-weather forecast might be wrong. Prepare shelter protection, care for your crew, and use Research Points for improvements.', anchor: 'forecast' },
     { title: 'Run the day', text: 'Check your plan, then select Run Day. After the animation, read the mission log to learn what really happened. A powered Science Lab with its specialist can unlock discoveries.', anchor: 'run-day' },
+  ],
+  systems: [
+    { title: 'Life Support · Air', text: 'The crew uses Air every day. Staff Life Support and give it Energy to replace Air. Crew care can also improve Crew Safety, but costs Energy and Supplies.', anchor: 'room-lifeSupport' },
+    { title: 'Greenhouse · Supplies', text: 'Your Greenhouse helps grow food for the crew. Give it a worker and Energy. Food grown today helps your Supplies on the next day, so plan ahead!', anchor: 'room-greenhouse' },
+    { title: 'Science Lab · Discoveries', text: 'A staffed, powered Science Lab earns Research Points. Put the blue science specialist here to work toward extra research bonuses and collectible space-biology discoveries.', anchor: 'room-science' },
+    { title: 'Power Station · Storage', text: 'The spacecraft generates Energy each day. Put an astronaut in the Power Station to store unused Energy in your battery. Upgrading this room improves generation and battery space.', anchor: 'room-power' },
+    { title: 'Storm Shelter · Crew Safety', text: 'Power the Storm Shelter to reduce damage to Crew Safety during stormy days. Forecasts can be wrong, so prepare protection when the weather looks risky.', anchor: 'room-shield' },
+    { title: 'Communications · Earth advice', text: 'With an astronaut here, you can spend Energy to ask Earth for advice. Replies take simulated turns to arrive. Upgrades can help the response arrive sooner.', anchor: 'room-comms' },
+    { title: 'Energy · Your daily budget', text: 'Energy powers your staffed rooms and some actions. The first number is Energy planned for today; the second is Energy generated today. Do not spend more than you can generate and draw from the battery.', anchor: 'energy' },
+    { title: 'Battery · Save Energy for later', text: 'The battery holds leftover Energy for future days. Staff the Power Station and choose Store to charge it using unused generated Energy. You cannot charge and use the battery on the same day.', anchor: 'battery' },
+    { title: 'Research Points · Better rooms', text: 'Power the Science Lab to earn Research Points. Some expeditions and discoveries can grant more. Spend points plus Energy to upgrade a staffed room; the upgrade helps starting the next day.', anchor: 'research' },
   ],
   report: [
     { title: 'Read your mission log', text: 'The log shows the storm that actually occurred and how your choices affected your resources. Compare it with the earlier forecast.', anchor: 'report' },

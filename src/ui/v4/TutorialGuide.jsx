@@ -4,7 +4,7 @@ import './tutorial-guide.css';
 
 const STAGE_LABELS = {
   menu: 'GETTING STARTED', preparation: 'PACK YOUR SHIP', assembly: 'YOUR CREW',
-  play: 'MISSION CONTROL', report: 'DAILY REPORT', debrief: 'YOUR RESULTS', collection: 'SCIENCE ARCHIVE',
+  play: 'MISSION CONTROL', systems: 'ROOMS & RESOURCES', report: 'DAILY REPORT', debrief: 'YOUR RESULTS', collection: 'SCIENCE ARCHIVE',
 };
 
 function findAnchorRect(anchor) {
@@ -23,7 +23,7 @@ function findAnchorRect(anchor) {
   };
 }
 
-export function TutorialGuide({ stage, stepIndex, onStep, onClose, onSkipAll, styleName = 'classic' }) {
+export function TutorialGuide({ stage, stepIndex, onStep, onClose, onSkipAll, onRelatedGuide, styleName = 'classic' }) {
   const steps = TUTORIAL_STEPS[stage] || [];
   const step = steps[Math.min(Math.max(stepIndex, 0), steps.length - 1)];
   const [spotlight, setSpotlight] = useState(null);
@@ -62,6 +62,10 @@ export function TutorialGuide({ stage, stepIndex, onStep, onClose, onSkipAll, st
         <button type="button" className="astro-guide__secondary" disabled={stepIndex === 0} onClick={() => onStep(stepIndex - 1)}>Back</button>
         <button type="button" className="astro-guide__next" onClick={last ? onClose : () => onStep(stepIndex + 1)}>{last ? 'Got it!' : 'Next tip →'}</button>
       </div>
+      {(stage === 'play' || stage === 'systems') && onRelatedGuide &&
+        <button type="button" className="astro-guide__topic-switch" onClick={onRelatedGuide}>
+          {stage === 'play' ? 'Explore rooms, Energy & Research →' : '← Back to mission basics'}
+        </button>}
       <button type="button" className="astro-guide__skip" onClick={onSkipAll}>Skip automatic tips</button>
     </aside>
   </div>;

@@ -25,3 +25,10 @@
 /* Avoid covering Run Day and Continue controls during active missions. */
 .astro-guide__help[data-guide-screen="play"],.astro-guide__help[data-guide-screen="report"],.astro-guide__help[data-guide-screen="debrief"]{top:14px;bottom:auto}
 @media(max-width:700px){.astro-guide__help[data-guide-screen="play"],.astro-guide__help[data-guide-screen="report"],.astro-guide__help[data-guide-screen="debrief"]{top:12px;bottom:auto}}
+
+/* Optional deeper learning: separate from the brief first-run mission guide. */
+.astro-guide__topic-switch{display:block;width:100%;margin:13px 0 0;padding:10px 12px;border:1px solid #75d9ce;border-radius:11px;background:#173c50;color:#d8fff4;font-size:.87rem;line-height:1.35;font-weight:800;cursor:pointer;text-align:center}
+.astro-guide__topic-switch:hover{background:#215766}
+.crew-room-actions__learn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;margin:0 0 11px;padding:5px 11px;border:1px solid var(--room-accent,#8dd8ec);border-radius:9px;background:#12354a;color:#e7fcff;font-size:.79rem;font-weight:750;cursor:pointer}
+.crew-room-actions__learn:hover{background:#21536b}
+.crew-room-actions__learn:focus-visible,.astro-guide__topic-switch:focus-visible{outline:3px solid #ffe59f;outline-offset:2px}
