@@ -10,6 +10,8 @@ import { ROOM_ACCENTS, CREW_COLOR_NAMES, CREW_SUIT_COLORS } from './crewColors.j
 import { roomTapAction } from './crewTap.js';
 import { LaunchCinematic, DayPassage, ReportShipStage, EndingShipStage } from './CinematicScenes.jsx';
 import { canBeginDayAnimation, CINEMATIC_DURATIONS, endingMotion } from './cinematicRules.js';
+import { TutorialGuide, TutorialHelpButton } from './TutorialGuide.jsx';
+import { guideStageForState, browserGuideStorage, readGuidePreferences, writeGuidePreferences, markGuideStageSeen, skipAutomaticGuide } from './tutorialGuide.js';
 import discoveryCatalog from '../../data/discoveries.js';
 import { DiscoveryPopup, DiscoveryCollection } from './DiscoveryUI.jsx';
 import { discoveryOptions } from '../../logic/v4/discoveries.js';
@@ -101,9 +103,9 @@ function ShipPicker({ state, dispatch, uiStyle, onToggleStyle }) {
   return <main className="crew-menu" data-menu-style={uiStyle}>
     <MenuStyleSwitch uiStyle={uiStyle} onToggleStyle={onToggleStyle}/>
     <div className="crew-menu__halo" aria-hidden="true"/>
-    <header className="crew-menu__header"><span className="crew-eyebrow"><Icon type="rocket" size={19}/> JUNIOR ASTRONAUT MISSION TRAINER</span>
+    <header className="crew-menu__header" data-guide-anchor="menu-title"><span className="crew-eyebrow"><Icon type="rocket" size={19}/> JUNIOR ASTRONAUT MISSION TRAINER</span>
       <h1>AstroQuest</h1><p>Choose your spacecraft. Every great mission starts with a ship.</p></header>
-    <div className="crew-ship-grid" role="group" aria-label="Choose a spacecraft design">
+    <div className="crew-ship-grid" data-guide-anchor="ship-choices" role="group" aria-label="Choose a spacecraft design">
       {SHIP_IDS.map(id => <button key={id} type="button" className={`crew-ship-card ${state.ship === id ? 'is-selected' : ''}`} data-ship={id}
         aria-pressed={state.ship === id} onClick={() => dispatch({ type: 'SELECT_SHIP', ship: id })}>
         <span className="crew-ship-card__image"><img src={`/art/ship-${id}-sealed.svg`} alt=""/></span>
@@ -140,7 +142,7 @@ function Preparation({ state, config, dispatch, uiStyle, onToggleStyle }) {
     <MenuStyleSwitch uiStyle={uiStyle} onToggleStyle={onToggleStyle}/>
     <header className="crew-prep__header"><button type="button" className="crew-back" onClick={() => dispatch({ type: 'BACK_TO_MENU' })}>← Ships</button>
       <div><span className="crew-eyebrow">MISSION PREPARATION</span><h1>Where are we landing?</h1></div></header>
-    <section className="crew-prep__destinations" aria-label="Choose destination">
+    <section className="crew-prep__destinations" data-guide-anchor="destinations" aria-label="Choose destination">
       {['moon','mars'].map(p => <button key={p} type="button" className={`crew-planet ${state.destination === p ? 'is-selected' : ''}`}
         aria-pressed={state.destination === p} onClick={() => dispatch({ type: 'SELECT_DESTINATION', destination: p })}
         style={{ '--planet-image': `url('/art/${p}-landscape.svg')` }}>
@@ -151,7 +153,7 @@ function Preparation({ state, config, dispatch, uiStyle, onToggleStyle }) {
     {state.destination === 'mars' && <p className="crew-prep__warning" role="status">Mars uses the same Earth-observed archived space-weather events and simplified game rules as the Moon setting. They are not measurements from Mars.</p>}
     <section className="crew-prep__loadout">
       <div className="crew-prep__ship"><img src={`/art/ship-${state.ship}-sealed.svg`} alt=""/><strong>{SHIPS[state.ship].name}</strong><small>{SHIP_DECK_LAYOUTS[state.ship].pattern} · six departments</small></div>
-      <div className="crew-prep__cargo">
+      <div className="crew-prep__cargo" data-guide-anchor="cargo">
         <div className="crew-prep__capacity"><div><span className="crew-eyebrow">CARGO BAY</span><h2>Load your supplies</h2></div>
           <strong>{loaded} / {options.cargoCapacity}</strong></div>
         <div className="crew-prep__capacity-track" role="progressbar" aria-label="Cargo filled" aria-valuemin={0} aria-valuemax={options.cargoCapacity} aria-valuenow={loaded}><span style={{width:`${loaded / options.cargoCapacity * 100}%`}}/></div>
@@ -190,7 +192,7 @@ export function CrewAssembly({ state, config, dispatch, uiStyle, onToggleStyle }
     <div className="crew-assembly__layout crew-assembly__layout--selection">
       <section className="crew-assembly__roster" aria-label="Choose up to six astronauts">
         <div className="crew-assembly__title"><h2>Meet your crew</h2><span>{state.crew.length}/{limit} selected</span></div>
-        <div className="crew-assembly__candidates">
+        <div className="crew-assembly__candidates" data-guide-anchor="crew-candidates">
           {state.candidates.map(candidate=>{
             const chosen = chosenIds.has(candidate.id);
             const room = ROOMS[candidate.specialty];
@@ -225,7 +227,7 @@ export function CrewAssembly({ state, config, dispatch, uiStyle, onToggleStyle }
       </section>
     </div>
     {state.error && <p className="crew-error" role="alert">{state.error}</p>}
-    <div className="crew-assembly__actions">
+    <div className="crew-assembly__actions" data-guide-anchor="launch">
       <button type="button" className="crew-primary" disabled={!state.crew.length}
         onClick={()=>dispatch({type:'LAUNCH'})}><Icon type="rocket" size={21}/> Launch with {state.crew.length} astronaut{state.crew.length!==1?'s':''} <span aria-hidden="true">→</span></button>
       {state.destination==='mars' && <small>Mars is an illustrated mission setting. Archived DONKI events are not Martian surface readings.</small>}
@@ -257,7 +259,7 @@ function Hud({ config, state, preview }) {
   const cap = c3BatteryCapacity(game, config);
   return <header className="crew-hud">
     <div className="crew-hud__day"><small>MISSION DAY</small><strong>{game.day} <span>/ {config.missionLengthDays}</span></strong></div>
-    <div className="crew-hud__meters"><Stat icon="air" label="Air" value={game.meters.air} max={config.meterMax}/>
+    <div className="crew-hud__meters" data-guide-anchor="meters"><Stat icon="air" label="Air" value={game.meters.air} max={config.meterMax}/>
       <Stat icon="supplies" label="Supplies" value={game.meters.supplies} max={config.meterMax}/>
       <Stat icon="safety" label="Safety" value={game.meters.safety} max={config.meterMax} className="crew-stat--safety"/></div>
     <div className="crew-hud__extras"><span title="Generated Energy"><Icon type="energy" size={18}/> <strong>{preview.used ?? 0}/{preview.generation ?? '—'}</strong></span>
@@ -273,7 +275,7 @@ function ForecastBar({ level, day, config }) {
   const min = config.stormLevelRange[0];
   const max = config.stormLevelRange[1];
   const levels = Array.from({ length: max - min + 1 }, (_, i) => i + min);
-  return <section className="crew-forecast" data-level={level} aria-label={`Day's game storm forecast: ${STORM_LABELS[level] ?? level}`}>
+  return <section className="crew-forecast" data-guide-anchor="forecast" data-level={level} aria-label={`Day's game storm forecast: ${STORM_LABELS[level] ?? level}`}>
     <div className="crew-forecast__identity"><Icon type="storm" size={25}/>
       <span><small>STORM FORECAST · DAY {day}</small><strong>{STORM_LABELS[level] ?? `Level ${level}`}</strong></span>
     </div>
@@ -439,7 +441,7 @@ export function CrewGameplay({ state, config, dispatch, mission, uiStyle = 'clas
       <div className="crew-landing__stage">
         <div className="crew-landing__heading"><span>{PLANETS[planet].label.toUpperCase()} / DAY {game.day}</span>
           {planet === 'mars' && <small>Mars setting · archived DONKI events are not Mars surface readings</small>}</div>
-        <aside className="crew-dock" data-crew-dock="true" aria-label="Crew dock">
+        <aside className="crew-dock" data-guide-anchor="crew-dock" data-crew-dock="true" aria-label="Crew dock">
           <header><Icon type="crew" size={20}/><strong>YOUR CREW</strong><small>Pick & place</small></header>
           <div className="crew-dock__roster">
             {state.crew.filter(c => c.room === null).map(c => <div className="crew-dock__member" key={c.id} style={{'--crew-accent':ROOM_ACCENTS[c.specialty]}}>{astronautToken(c)}
@@ -452,7 +454,7 @@ export function CrewGameplay({ state, config, dispatch, mission, uiStyle = 'clas
           {picked && <button type="button" className="crew-dock__return" onClick={() => dispatch({ type: 'PLACE_CREW', room: null })}>Return to dock</button>}
           <p><Icon type="move" size={16}/> Match suit colors to room outlines. Tap an astronaut, then tap an empty room.</p>
         </aside>
-        <section className="crew-ship" data-ship={ship} aria-label={`${SHIPS[ship].name} spaceship departments; ${SHIP_DECK_LAYOUTS[ship].pattern}`} >
+        <section className="crew-ship" data-guide-anchor="ship" data-ship={ship} aria-label={`${SHIPS[ship].name} spaceship departments; ${SHIP_DECK_LAYOUTS[ship].pattern}`} >
           <img className="crew-ship__illustration" src={`/art/ship-${ship}-sealed.svg`} alt="" draggable="false"/>
           <div className="crew-ship__rooms">
             {ROOM_IDS.map(room => {
@@ -507,7 +509,7 @@ export function CrewGameplay({ state, config, dispatch, mission, uiStyle = 'clas
           {game.expedition.active && <small><Icon type="rocket" size={15}/> Expedition underway</small>}
         </div>
         {state.error && <p className="crew-play__error" role="alert">{state.error}</p>}
-        <button type="button" className="crew-primary crew-command__run" onClick={() => dispatch({ type: 'COMMIT_DAY' })}><Icon type="rocket" size={20}/> Run Day {game.day} <span aria-hidden="true">→</span></button>
+        <button type="button" className="crew-primary crew-command__run" data-guide-anchor="run-day" onClick={() => dispatch({ type: 'COMMIT_DAY' })}><Icon type="rocket" size={20}/> Run Day {game.day} <span aria-hidden="true">→</span></button>
         <small className="crew-command__note">All meters use simplified game units.</small>
       </section>
     </div>
@@ -526,7 +528,7 @@ export function CrewDayReport({ state, config, mission, dispatch, uiStyle = 'cla
   return <main className={`crew-report crew-report--${state.destination} smp-report-layout ${exiting ? "is-exiting" : ""}`} data-menu-style={uiStyle} style={{ '--surface-art': `url('/art/${state.destination}-landscape.svg')` }}>
     <MenuStyleSwitch uiStyle={uiStyle} onToggleStyle={onToggleStyle}/>
     <div className="smp-report-layout__grid">
-    <section className="crew-report__card"><span className="crew-eyebrow">MISSION LOG · DAY {reveal.day}</span><h1>{won ? 'Mission accomplished!' : failed ? 'Mission ended' : 'Day complete!'}</h1>
+    <section className="crew-report__card" data-guide-anchor="report"><span className="crew-eyebrow">MISSION LOG · DAY {reveal.day}</span><h1>{won ? 'Mission accomplished!' : failed ? 'Mission ended' : 'Day complete!'}</h1>
       <div className="crew-report__deltas">{Object.entries({air:'Air',supplies:'Supplies',safety:'Safety'}).map(([key,label]) => <div key={key}>
         <Icon type={key} size={34}/><span>{label}</span><strong>{history.meterDeltas[key]>0?'+':''}{history.meterDeltas[key]}</strong><small>{reveal.after[key]} remaining</small></div>)}</div>
       <div className="crew-report__progress"><span><Icon type="science" size={20}/> Research +{history.research.gained}</span><span><Icon type="battery" size={20}/> Battery {history.energy.batteryAfter}</span></div>
@@ -554,7 +556,7 @@ function Debrief({ state, config, mission, dispatch, uiStyle = 'classic', onTogg
   return <main className={`crew-debrief crew-debrief--${state.destination} smp-debrief-layout`} data-menu-style={uiStyle} style={{ '--surface-art': `url('/art/${state.destination}-landscape.svg')` }}>
     <MenuStyleSwitch uiStyle={uiStyle} onToggleStyle={onToggleStyle}/>
     <div className="smp-debrief-layout__grid">
-    <section className="crew-debrief__card"><div className="crew-debrief__icon"><Icon type={d.status==='succeeded'?'trophy':'info'} size={44}/></div>
+    <section className="crew-debrief__card" data-guide-anchor="debrief"><div className="crew-debrief__icon"><Icon type={d.status==='succeeded'?'trophy':'info'} size={44}/></div>
       <span className="crew-eyebrow">FINAL MISSION REPORT</span><h1>{d.status==='succeeded'?'Mission success!':'Mission complete — try again'}</h1>
       <p>{d.status==='succeeded'?'Your crew protected the outpost for all ten days.':d.reason==='safety'?'Crew Safety ran low. Try more shelter power or crew care.':d.reason==='air'?'Air ran low. Give Life Support more power.':d.reason==='supplies'?'Supplies ran low. Prepare your cargo and grow food earlier.':'Your crew needs stronger resource reserves. Try a new approach.'}</p>
       <p className="smp-debrief__mission">{SHIPS[state.ship].name} · {PLANETS[state.destination].label} · {d.daysCompleted}/{config.missionLengthDays} days</p>
@@ -577,6 +579,36 @@ export default function CrewMissionExperience({ config, mission }) {
   const [uiStyle, setUiStyle] = useState('classic');
   const [cinematic, setCinematic] = useState(null);
   const [reportExiting, setReportExiting] = useState(false);
+  // A light, non-blocking guide, separate from the mission reducer and resource engine.
+  const [guidePreferences, setGuidePreferences] = useState(() => readGuidePreferences(browserGuideStorage()));
+  const [guide, setGuide] = useState(null);
+  const guideStage = guideStageForState(state, cinematic || reportExiting);
+  const previousGuideStage = useRef(null);
+  useEffect(() => {
+    // A new screen starts a new chapter, never resurrecting a dismissed old chapter.
+    if (previousGuideStage.current === guideStage) return;
+    previousGuideStage.current = guideStage;
+    setGuide(null);
+    if (!guideStage || guidePreferences.disabledAuto || guidePreferences.seenStages.includes(guideStage)) return;
+    setGuide({stage: guideStage, index: 0});
+    setGuidePreferences(previous => writeGuidePreferences(browserGuideStorage(), markGuideStageSeen(previous, guideStage)));
+  }, [guideStage, guidePreferences]);
+  const openGuide = () => {
+    if (!guideStage) return;
+    setGuide({stage: guideStage, index: 0});
+    setGuidePreferences(previous => writeGuidePreferences(browserGuideStorage(), markGuideStageSeen(previous, guideStage)));
+  };
+  const skipGuide = () => {
+    setGuide(null);
+    setGuidePreferences(previous => writeGuidePreferences(browserGuideStorage(), skipAutomaticGuide(previous)));
+  };
+  const guidedScreen = content => <>
+    {content}
+    {guideStage && <TutorialHelpButton onClick={openGuide} stage={guideStage}/>}
+    {guide?.stage === guideStage && <TutorialGuide key={guideStage} stage={guideStage} stepIndex={guide.index}
+      onStep={index => setGuide(current => current?.stage === guideStage ? {...current, index} : current)}
+      onClose={() => setGuide(null)} onSkipAll={skipGuide} styleName={uiStyle}/>}
+  </>;
   const toggleUiStyle = () => setUiStyle(nextMenuStyle);
 
   // Pure simulation remains authoritative. Only validated plans get an interstitial.
@@ -636,16 +668,16 @@ export default function CrewMissionExperience({ config, mission }) {
   if (state.collectionScope) {
     const lifetime = state.collectionScope === 'lifetime';
     const ids = lifetime ? state.lifetimeDiscoveryIds : state.discoveryProgress.runIds;
-    return <DiscoveryCollection ids={ids} styleName={uiStyle}
+    return guidedScreen(<DiscoveryCollection ids={ids} styleName={uiStyle}
       title={lifetime ? 'Your discoveries' : 'Discovered this mission'}
       subtitle={lifetime ? 'A collection of space-biology investigations from all your missions.' : 'Space-biology investigations your science specialist completed during this mission.'}
       onBack={() => act({type:'CLOSE_COLLECTION'})}
       onReset={lifetime ? () => { clearDiscoveryIds(browserDiscoveryStorage()); act({type:'RESET_SAVED_DISCOVERIES'}); } : undefined}
-      headerAction={<MenuStyleSwitch uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>} />;
+      headerAction={<MenuStyleSwitch uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>} />);
   }
-  if (state.stage === 'menu') return <ShipPicker state={state} dispatch={act} uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>;
-  if (state.stage === 'preparation') return <Preparation state={state} config={config} dispatch={act} uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>;
-  if (state.stage === 'crew-assembly') return <CrewAssembly state={state} config={config} dispatch={act} uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>;
+  if (state.stage === 'menu') return guidedScreen(<ShipPicker state={state} dispatch={act} uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>);
+  if (state.stage === 'preparation') return guidedScreen(<Preparation state={state} config={config} dispatch={act} uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>);
+  if (state.stage === 'crew-assembly') return guidedScreen(<CrewAssembly state={state} config={config} dispatch={act} uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>);
 
   if (cinematic?.kind === 'day') {
     return <DayPassage key={`day-${cinematic.day}`} ship={cinematic.ship} destination={cinematic.destination}
@@ -661,14 +693,14 @@ export default function CrewMissionExperience({ config, mission }) {
         destination={cinematic.destination} onComplete={finishCinematic}/>
     </>;
   }
-  if (state.session.screen === 'report') return <CrewDayReport state={state} config={config} mission={mission}
-    dispatch={act} uiStyle={uiStyle} onToggleStyle={toggleUiStyle} exiting={reportExiting}/>;
+  if (state.session.screen === 'report') return guidedScreen(<CrewDayReport state={state} config={config} mission={mission}
+    dispatch={act} uiStyle={uiStyle} onToggleStyle={toggleUiStyle} exiting={reportExiting}/>);
   if (state.session.screen === 'debrief') {
     // Victory plays a homecoming, defeat uses symbolic drifting ship fragments.
     endingMotion(state.session.game.status);
-    return <Debrief state={state} config={config} mission={mission}
-      dispatch={act} uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>;
+    return guidedScreen(<Debrief state={state} config={config} mission={mission}
+      dispatch={act} uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>);
   }
-  return <CrewGameplay state={state} config={config} mission={mission} dispatch={act}
-    uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>;
+  return guidedScreen(<CrewGameplay state={state} config={config} mission={mission} dispatch={act}
+    uiStyle={uiStyle} onToggleStyle={toggleUiStyle}/>);
 }

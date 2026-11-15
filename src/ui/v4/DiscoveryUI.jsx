@@ -69,7 +69,7 @@ export function DiscoveryCollection({ ids, title, subtitle, onBack, onReset, hea
   return <main className="science-collection" data-menu-style={styleName}>
     {headerAction}
     <div className="science-collection__stars" aria-hidden="true"/>
-    <section className="science-collection__content">
+    <section className="science-collection__content" data-guide-anchor="collection">
       <button type="button" className="science-collection__back" onClick={onBack}>← Back</button>
       <p className="science-collection__eyebrow">MISSION SCIENCE ARCHIVE</p>
       <h1>{title}</h1>

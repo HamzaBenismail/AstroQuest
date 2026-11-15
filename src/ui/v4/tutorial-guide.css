@@ -1,0 +1,27 @@
+/* Non-blocking, staged mission guidance. All game controls remain interactive. */
+.astro-guide { --guide-ink:#eafaff; --guide-muted:#b6d7e6; --guide-bg:#0b2439; --guide-border:#87c5da; position:fixed;inset:0;z-index:4100;pointer-events:none;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--guide-ink) }
+.astro-guide[data-menu-style="playful"] {--guide-bg:#25346d;--guide-border:#f9ce79;--guide-muted:#e3eaff}
+.astro-guide[data-menu-style="starry"] {--guide-bg:#11213b;--guide-border:#9fc9ff;--guide-muted:#c0d7eb}
+.astro-guide__spotlight {position:fixed;z-index:1;pointer-events:none;border-radius:16px;outline:3px solid #b4ffe4;outline-offset:0;box-shadow:0 0 0 120vmax #020a186b,0 0 35px 6px #a6ebdb6b;transition:top .18s ease,left .18s ease,width .18s ease,height .18s ease}
+.astro-guide__panel {position:fixed;z-index:2;right:clamp(14px,3vw,38px);bottom:clamp(16px,4vh,40px);width:min(390px,calc(100vw - 28px));max-height:min(550px,calc(100dvh - 36px));overflow-y:auto;background:linear-gradient(155deg,var(--guide-bg),#071525);border:2px solid var(--guide-border);border-radius:22px;padding:20px 23px 16px;box-shadow:0 18px 60px #000b,0 0 0 1px #fff2;pointer-events:auto;animation:astro-guide-in .26s ease-out both}
+.astro-guide__topline{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#97f0dc;font-size:.71rem;font-weight:850;letter-spacing:.14em}
+.astro-guide__close{font-size:1.05rem;min-width:36px;min-height:36px;border:1px solid #7b9cb5;border-radius:50%;background:#24465e;color:#fff;cursor:pointer}
+.astro-guide__chapter{font-size:.75rem;letter-spacing:.1em;color:var(--guide-muted);font-weight:850;margin:17px 0 5px}
+.astro-guide__panel h2{font-size:clamp(1.35rem,3vw,1.75rem);line-height:1.16;margin:0 0 12px;color:#fff}
+.astro-guide__lesson{font-size:1rem;line-height:1.6;color:#e1eef8;margin:0 0 18px}
+.astro-guide__progress{display:flex;gap:6px;margin:14px 0 18px}.astro-guide__progress i{height:6px;flex:1;background:#446179;border-radius:99px}.astro-guide__progress i.is-active{background:#8debd7}
+.astro-guide__actions{display:flex;gap:10px}.astro-guide__actions button{min-height:46px;padding:10px 15px;border-radius:12px;cursor:pointer;font-size:.96rem;font-weight:800}
+.astro-guide__secondary{border:1px solid #a4c8da;background:#1c3449;color:#f0f9ff;flex:1}.astro-guide__secondary:disabled{opacity:.37;cursor:default}
+.astro-guide__next{border:1px solid #d9ffed;background:#a7f0dd;color:#0b2c3b;flex:1.45}
+.astro-guide__skip{display:block;margin:14px auto 0;padding:8px 10px;background:transparent;border:0;text-decoration:underline;text-underline-offset:3px;font-size:.83rem;color:#c3deea;cursor:pointer}
+.astro-guide__panel button:focus-visible,.astro-guide__help:focus-visible{outline:3px solid #ffe59f;outline-offset:3px}
+.astro-guide__help{position:fixed;z-index:220;left:clamp(12px,2vw,30px);bottom:clamp(14px,3vh,28px);display:inline-flex;align-items:center;gap:9px;min-height:45px;padding:8px 16px;border:2px solid #a5e5e3;border-radius:99px;background:#102d45ee;color:#ebfbff;box-shadow:0 7px 30px #0009;font-size:.91rem;font-weight:800;cursor:pointer}
+.astro-guide__help span{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#a9f4de;color:#0a3038;font-size:1.1rem;font-weight:950}
+.astro-guide__help:hover{background:#224861}
+@keyframes astro-guide-in {from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){.astro-guide__spotlight{display:none}.astro-guide__panel{left:12px;right:12px;bottom:12px;width:auto;max-height:min(65dvh,510px);padding:15px 18px}.astro-guide__help{left:10px;bottom:10px;padding:6px 12px;font-size:.83rem;min-height:40px}.astro-guide__lesson{font-size:.91rem;line-height:1.45}}
+@media(prefers-reduced-motion:reduce){.astro-guide__spotlight{transition:none}.astro-guide__panel{animation:none}}
+
+/* Avoid covering Run Day and Continue controls during active missions. */
+.astro-guide__help[data-guide-screen="play"],.astro-guide__help[data-guide-screen="report"],.astro-guide__help[data-guide-screen="debrief"]{top:14px;bottom:auto}
+@media(max-width:700px){.astro-guide__help[data-guide-screen="play"],.astro-guide__help[data-guide-screen="report"],.astro-guide__help[data-guide-screen="debrief"]{top:12px;bottom:auto}}
