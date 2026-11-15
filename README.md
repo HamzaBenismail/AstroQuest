@@ -43,6 +43,12 @@ If you want to download fresh source data *during development only*, copy `.env.
 | `tests/` | Vitest and dependency-free smoke tests |
 | `docs/` | Current implementation history and release notes |
 
+## AI-assisted coding acknowledgment
+
+**Claude (Anthropic) and ChatGPT (OpenAI) assisted our team with coding** during development of this project, including implementation suggestions, debugging, testing support, and code/documentation improvements. The project team directed the work, integrated and reviewed the contributions, and is responsible for the final code, design decisions, scientific claims, and submission.
+
+Their assistance does not imply that Anthropic or OpenAI sponsors or endorses this project.
+
 ## Release & cleanup notes
 
 The submitted archive has been cleaned: dependencies (`node_modules/`), build output (`dist/`), backup configuration, local draft review data, standalone experiment previews, and obsolete intermediate installation notes are excluded. `.gitignore` also prevents those from being accidentally re-added. `package-lock.json`, real archived NASA records, attribution/source documents, and tests are **retained**.
