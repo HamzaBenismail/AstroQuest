@@ -14,6 +14,8 @@ import {
   IconCheck, IconClock, IconEva, IconInfo, IconPatch, IconReplay, IconScience, IconShield,
   IconSupplies, IconWarning, METER_ICONS, ROOM_ICONS,
 } from '../icons.jsx';
+import { shipById } from '../../prep/fleet.jsx';
+import { CrewArt, crewById } from '../../prep/crew.jsx';
 import './experience.css';
 
 const ROOM_NAMES = {
@@ -338,7 +340,7 @@ function CommsBlock({ session, config, dispatch }) {
   );
 }
 
-function RoomPanel({ session, config, preview, dispatch }) {
+function RoomPanel({ session, config, preview, dispatch, crew }) {
   const room = session.selectedRoom;
   const Icon = ROOM_ICONS[room];
   const allocatable = Object.hasOwn(session.plan.allocation, room);
@@ -349,6 +351,15 @@ function RoomPanel({ session, config, preview, dispatch }) {
         <small className="eyebrow">Selected room · level {session.game.roomLevels[room]}</small>
         <h2><Icon size={26}/>{ROOM_NAMES[room]}</h2>
         <p>{ROOM_DESCRIPTIONS[room]}</p>
+        {crew && (
+          <span className="c3-panel__crew" style={{ '--crew-accent': crew.accent }}>
+            <CrewArt member={crew} size={42}/>
+            <span>
+              <strong>{crew.name} is on duty here</strong>
+              <small>{crew.role} · {crew.likes}</small>
+            </span>
+          </span>
+        )}
       </div>
 
       {allocatable && (
@@ -452,8 +463,12 @@ function MissionBar({ children }) {
   );
 }
 
-function Briefing({ config, mission, onStart }) {
+function Briefing({ config, mission, ship, prep, onStart }) {
   const [helpOpen, setHelpOpen] = useState(false);
+  const ShipArt = ship?.Art;
+  const crewOnDuty = prep
+    ? ROOMS_C3.filter(room => prep.assignments[room]).map(room => ({ room, member: crewById(prep.assignments[room]) }))
+    : [];
   const starting = {
     air: config.startingMeters.air,
     supplies: config.startingMeters.food,
@@ -534,7 +549,23 @@ function Briefing({ config, mission, onStart }) {
         </div>
 
         <div className="c3-intro__side">
-          <Porthole/>
+          {ship ? (
+            <figure className="c3-myship" style={{ '--ship-accent': ship.accent }}>
+              <ShipArt accent={ship.accent}/>
+              <figcaption>
+                <strong>{ship.name}</strong>
+                <span>{ship.tagline} · landing on {prep.destination === 'mars' ? 'Mars' : 'the Moon'}</span>
+              </figcaption>
+              <ul className="c3-myship__crew">
+                {crewOnDuty.map(({ room, member }) => (
+                  <li key={room} style={{ '--crew-accent': member.accent }}>
+                    <CrewArt member={member} size={38}/>
+                    <span><strong>{member.name}</strong><small>{ROOM_NAMES[room]}</small></span>
+                  </li>
+                ))}
+              </ul>
+            </figure>
+          ) : <Porthole/>}
           <ScienceCard card={chooseScienceCard(cards, { stage: 'briefing' })}/>
         </div>
       </div>
@@ -732,7 +763,7 @@ function Report({ config, session, onContinue }) {
   );
 }
 
-function Debrief({ config, session, mission, onRestart }) {
+function Debrief({ config, session, mission, onRestart, onReconfigure }) {
   const result = c3Debrief(session.game, mission);
   const won = result.status === 'succeeded';
   const reason = result.reason === 'objectives-not-met'
@@ -783,6 +814,11 @@ function Debrief({ config, session, mission, onRestart }) {
             <button type="button" className="btn-primary" onClick={onRestart}>
               <IconReplay size={21}/>Fly it again
             </button>
+            {onReconfigure && (
+              <button type="button" className="btn-secondary" onClick={onReconfigure}>
+                Change ship &amp; crew
+              </button>
+            )}
           </div>
         </div>
 
@@ -874,22 +910,27 @@ function Debrief({ config, session, mission, onRestart }) {
   );
 }
 
-export default function MissionExperienceC({ config, mission }) {
+export default function MissionExperienceC({ config, mission, prep, onReconfigure }) {
   const [session, dispatch] = useReducer(
     (state, action) => reduceC3Session(state, action, config, mission),
     null,
     () => initC3Session(config, mission),
   );
 
+  // Mission prep is optional: without it the game runs on the config defaults.
+  const ship = prep ? shipById(prep.shipId) : null;
+  const assignments = prep?.assignments ?? {};
+
   if (session.screen === 'briefing') {
-    return <Briefing config={config} mission={mission} onStart={() => dispatch({ type: 'START' })}/>;
+    return <Briefing config={config} mission={mission} ship={ship} prep={prep}
+      onStart={() => dispatch({ type: 'START' })}/>;
   }
   if (session.screen === 'report') {
     return <Report config={config} session={session} onContinue={() => dispatch({ type: 'CONTINUE' })}/>;
   }
   if (session.screen === 'debrief') {
     return <Debrief config={config} session={session} mission={mission}
-      onRestart={() => dispatch({ type: 'RESTART' })}/>;
+      onRestart={() => dispatch({ type: 'RESTART' })} onReconfigure={onReconfigure}/>;
   }
 
   const preview = previewC3(session, config);
@@ -927,9 +968,10 @@ export default function MissionExperienceC({ config, mission }) {
       </div>
 
       <div className="c3-main-grid">
-        <CutawaySceneC config={config} session={session}
+        <CutawaySceneC config={config} session={session} ship={ship} assignments={assignments}
           onSelectRoom={room => dispatch({ type: 'SELECT_ROOM', room })}/>
-        <RoomPanel config={config} session={session} preview={preview} dispatch={dispatch}/>
+        <RoomPanel config={config} session={session} preview={preview} dispatch={dispatch}
+          crew={crewById(assignments[session.selectedRoom])}/>
       </div>
 
       <footer className="c3-footer">

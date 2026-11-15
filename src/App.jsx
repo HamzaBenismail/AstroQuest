@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useMemo, useReducer, useState } from 'react';
 import config from './data/config.json';
 import { initialSession, reduceSession } from './ui/session.js';
 import BriefingScreen from './ui/BriefingScreen.jsx';
@@ -10,6 +10,7 @@ import LunarScene from './scene/LunarScene.jsx';
 import MissionExperience from './ui/v2/MissionExperience.jsx';
 import MissionExperienceC from './ui/v3/MissionExperience.jsx';
 import SourcesScreen from './ui/SourcesScreen.jsx';
+import MissionPrep from './prep/MissionPrep.jsx';
 import { IconInfo } from './ui/icons.jsx';
 import './ui/science.css';
 
@@ -63,12 +64,42 @@ export function MissionApp({ config: gameConfig, mission }) {
     mission={mission} onRestart={() => dispatch({ type: 'RESTART' })}/></main>;
 }
 
+/**
+ * Fold the player's cargo choices into the config the engine reads.
+ *
+ * The engine is untouched: it still takes its starting Air, Supplies and
+ * battery charge from config, so loading the cargo bay is just a different
+ * config. The prep screen hands out exactly the approved default total, so a
+ * default load reproduces today's balance and no load can exceed it.
+ */
+export function applyPrep(config, prep) {
+  if (!prep) return config;
+  const c3 = config.reevaluation.c3;
+  return {
+    ...config,
+    startingMeters: { ...config.startingMeters, air: prep.cargo.air, food: prep.cargo.supplies },
+    reevaluation: {
+      ...config.reevaluation,
+      c3: { ...c3, battery: { ...c3.battery, initialCharge: prep.cargo.battery } },
+    },
+  };
+}
+
 export default function App() {
   const [showSources, setShowSources] = useState(false);
+  const [prep, setPrep] = useState(null);
   const ready = missionGateStatus(config, missionFiles);
+  const playConfig = useMemo(() => applyPrep(config, prep), [prep]);
+
+  const v3 = prep
+    ? <MissionExperienceC key={prep.startedAt} config={playConfig} mission={ready.mission} prep={prep}
+        onReconfigure={() => setPrep(null)}/>
+    : <MissionPrep config={config}
+        onReady={choices => setPrep({ ...choices, startedAt: Date.now() })}/>;
+
   const game = ready.issue ? <DataGate issue={ready.issue}/>
     : config.reevaluation?.version === 3
-      ? <MissionExperienceC config={config} mission={ready.mission}/>
+      ? v3
     : config.reevaluation?.version === 2
       ? <MissionExperience config={config} mission={ready.mission}/>
       : <MissionApp config={config} mission={ready.mission}/>;
