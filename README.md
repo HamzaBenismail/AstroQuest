@@ -1,56 +1,94 @@
-# SMP — Junior Astronaut Mission Trainer
+# AstroQuest — Junior Astronaut Mission Trainer
 
-Browser-based, turn-based space-outpost resource management game for children aged approximately 7–12. Built for the NASA Space Apps Challenge 2026, **Build a Junior Astronaut Mission Trainer**.
+**Build your spacecraft. Lead your crew. Explore beyond Earth.**
 
-## What's in this branch
+**AstroQuest** is a browser-based space exploration and resource-management game for children aged **7–12**, created for the **NASA Space Apps Challenge 2026** challenge, *Build a Junior Astronaut Mission Trainer*.
 
-- Choose among four spacecraft shapes and the Moon/Mars *visual training scenes*.
-- Prepare a limited cargo loadout, choose up to six astronauts, and assign them to color-matched rooms.
-- Allocate Energy, maintain Air / Supplies / Crew Safety (all simplified **game units**), recover, upgrade rooms with earned Research Points, contact Earth, and send expeditions.
-- View a fallible one-day storm forecast and play through ten days using an **archived NASA DONKI** event window.
-- Unlock a persistent collection of 32 space-biology discovery entries with specialist-only bonuses. See `public/art/DISCOVERY-REFERENCES.md` and `public/art/DISCOVERY-PHOTO-CREDITS.md` for study/image provenance. Some study-specific claims still require scientific sign-off.
-- Optional themes: Classic, Playful, Classic + Stars; skippable cinematics and reduced-motion support.
-- Phase 3, Reevaluation B/C, and flat UI fallbacks remain available in `src/` for regression and rollback.
+Instead of learning about space missions only by reading, players get to make the decisions: who works where, how much Energy each department receives, what supplies to pack, and how to prepare for an uncertain space-weather forecast. Every choice has consequences—and every mission offers another chance to learn.
 
-**Scientific honesty:** Archived DONKI events drive abstract gameplay storm severity, **not** measured radiation doses at the Moon or Mars. The Mars selection is a visual training variant using the existing archived event dataset, **not** a validated Mars surface weather model. Earth message-processing delays and expeditions are gameplay abstractions. Biological study claims have an internal review gate.
+## The adventure
 
-## Local development
+1. **Choose your spacecraft.** Pick one of four ship designs with different internal department arrangements.
+2. **Pack your cargo.** Select a Moon or Mars-themed destination and divide limited storage between Air, Supplies, and batteries.
+3. **Assemble a crew.** Choose up to six astronauts, each with a distinct color and specialty.
+4. **Manage the outpost.** Drag or tap astronauts into matching departments, distribute Energy, and keep Air, Supplies, and Crew Safety above critical levels.
+5. **Plan ahead.** Review an imperfect one-day storm forecast, save Energy, request advice from Earth, improve rooms, and send expeditions.
+6. **Make discoveries.** Power the Science Lab with the right specialist to unlock space-biology topics and bonus Research Points.
+7. **Finish your mission.** After ten days, see how your strategy worked and try a different approach.
 
-Requires Node.js supported by Vite 7 (Node 20.19+ or 22.12+), and npm.
+### Meet the departments
 
-```sh
+| Department | Responsibility |
+| --- | --- |
+| **Life Support** | Maintains breathable Air and supports crew recovery. |
+| **Greenhouse** | Grows food that contributes to the game's combined Supplies resource. |
+| **Power Station** | Generates Energy and manages battery storage. |
+| **Science Lab** | Earns Research Points and unlocks scientific discoveries. |
+| **Storm Shelter** | Protects crew readiness during dangerous space-weather events. |
+| **Communications** | Sends requests to Earth and receives contextual mission advice. |
+
+Only staffed departments consume allocated working Energy, so players must decide where their crew and power will be most useful. Research Points can improve rooms over multiple levels, while recovery actions and expeditions offer different ways to handle setbacks.
+
+## Real science behind the game
+
+AstroQuest uses NASA resources to turn authentic space-science topics into age-appropriate decisions and discoveries:
+
+- **[NASA DONKI — Space Weather Database](https://ccmc.gsfc.nasa.gov/tools/DONKI/)** supplies archived solar-flare and space-weather records for the ten-day scenario. The game translates them into simplified storm levels and an uncertain forecast.
+- **[NASA Open Science Data Repository (OSDR)](https://osdr.nasa.gov/bio/repo/)** provides research references for **32 collectible space-biology topics**, including growing plants in space, muscles and bones, microorganisms, immune health, and radiation biology.
+- **[NASA Open APIs](https://api.nasa.gov/)** was used to retrieve archived data during development. The game works with bundled data and does **not** require a live NASA connection during play.
+
+Collected discoveries include short explanations for children and photographs of related real research. The collection persists between missions on the same browser.
+
+**Important scientific distinction:** Energy, Air, Supplies, Crew Safety, Research Points, expeditions, and storm severity are **simplified game mechanics**, not operational NASA measurements or radiation doses. The Moon scenario draws on historical DONKI records; the Mars option currently uses the same abstract events as a **visual training scenario**, not a validated Martian weather model. Specific interpretations of some OSDR studies still require scientific review.
+
+### Scientific and image credits
+
+We acknowledge the **Community Coordinated Modeling Center (CCMC) at Goddard Space Flight Center** for the use of DONKI.
+
+- [Discovery studies and scientific references](public/art/DISCOVERY-REFERENCES.md)
+- [Real photograph sources and credits](public/art/DISCOVERY-PHOTO-CREDITS.md)
+- [Original illustration credits](public/art/CREDITS.md)
+- [Crew art credits](public/art/CREDITS-CREW.md)
+
+Scientific photographs illustrate related topics; they do not necessarily depict the exact linked OSDR study.
+
+## Designed for young explorers
+
+The interface uses colorful astronauts, matching department icons, interactive spacecraft rooms, and immediate visual feedback. Players can choose among **Classic**, **Playful**, and **Classic + Stars** themes.
+
+Animated launches, landings, space-weather events, and mission endings give the game an adventure feel. Animations are skippable, reduced-motion preferences are respected, and room placement can be completed without dragging.
+
+AstroQuest encourages **curiosity, strategic thinking, teamwork, problem-solving, and responsible resource management**—including learning why preparation matters when a plan does not work.
+
+## Play locally
+
+Requires **Node.js 20.19+ or 22.12+** and npm.
+
+```bash
+git clone https://github.com/HamzaBenismail/AstroQuest.git
+cd AstroQuest
 npm ci
-npm run check:data
-npm test
-npm run build
 npm run dev
 ```
 
-Open the URL printed by Vite. The `src/data/config.json` in this release enables the crew UI and v3 gameplay. `npm run check:data` verifies the archived DONKI event lineage from `scripts/raw/`.
+Open the local address printed by Vite. To validate the bundled NASA records, run tests, or build the project:
 
-If you want to download fresh source data *during development only*, copy `.env.example` to `.env`, insert a key from <https://api.nasa.gov/> and run `npm run prefetch`. **The browser never calls the NASA API, and API keys must not be committed.** Preserve the approved storm mapping and original source IDs. The current mission is `src/data/missions/storm-window-2024-05-08.json`.
+```bash
+npm run check:data
+npm test
+npm run build
+```
 
-## Project structure
+The game runs in a browser without accounts, a backend, or a NASA API key.
 
-| Folder | Purpose |
-| --- | --- |
-| `src/ui/v4/` | Current interactive crew, discovery, and cinematic experience |
-| `src/logic/v4/` | Pure crew/discovery rules |
-| `src/logic/v3/` | Pure resource/upgrade/expedition simulator |
-| `src/data/` | Approved configuration, embedded mission, and catalog |
-| `public/art/` | SVG illustrations, original asset credits, photo/source references |
-| `scripts/` | Developer-side offline import, data validation, opt-in migrations |
-| `tests/` | Vitest and dependency-free smoke tests |
-| `docs/` | Current implementation history and release notes |
+**Built with:** React, JavaScript, Vite, HTML/CSS, SVG illustrations, and Vitest.
 
-## AI-assisted coding acknowledgment
+## Acknowledgments
 
-**Claude (Anthropic) and ChatGPT (OpenAI) assisted our team with coding** during development of this project, including implementation suggestions, debugging, testing support, and code/documentation improvements. The project team directed the work, integrated and reviewed the contributions, and is responsible for the final code, design decisions, scientific claims, and submission.
+**Claude (Anthropic) and ChatGPT (OpenAI) assisted our team with coding**, including implementation suggestions, debugging, testing support, and improvements to source code and documentation. The team directed and reviewed the work and remains responsible for the final design, code, scientific claims, and submission.
 
-Their assistance does not imply that Anthropic or OpenAI sponsors or endorses this project.
+Their assistance does not imply sponsorship or endorsement by Anthropic or OpenAI.
 
-## Release & cleanup notes
+---
 
-The submitted archive has been cleaned: dependencies (`node_modules/`), build output (`dist/`), backup configuration, local draft review data, standalone experiment previews, and obsolete intermediate installation notes are excluded. `.gitignore` also prevents those from being accidentally re-added. `package-lock.json`, real archived NASA records, attribution/source documents, and tests are **retained**.
-
-This is a prototype, not an official NASA product or NASA-endorsed software. Attribution appears in the game and in the public source documentation.
+*AstroQuest is an independent educational prototype. It is not an official NASA product or endorsed by NASA.*
