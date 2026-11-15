@@ -1,7 +1,7 @@
 export default function BriefingScreen({ config, mission, onStart }) {
   return (
     <section className="panel briefing" aria-labelledby="briefing-title">
-      <p className="eyebrow">Mission briefing · Lunar outpost</p>
+      <p className="eyebrow">AstroQuest · Mission briefing · Lunar outpost</p>
       <h1 id="briefing-title">Keep the crew safe.</h1>
       <p>Run your outpost for {config.missionLengthDays} days.</p>
       <p>Keep Air, Food, and Crew Safety above zero.</p>

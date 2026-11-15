@@ -94,7 +94,7 @@ function RoomPanel({ session, config, dispatch, preview }) {
 
 function Briefing({ config, mission, onStart }) {
   return <main className="v2-start"><div className="v2-start__card">
-    <p className="v2-kicker">JUNIOR ASTRONAUT MISSION TRAINER / REEVALUATION B</p>
+    <p className="v2-kicker">ASTROQUEST · JUNIOR ASTRONAUT MISSION TRAINER</p>
     <h1>Run a Moon base. Keep your crew safe.</h1>
     <p>Plan Energy for {config.missionLengthDays} days. Build research and prepare for real archived space-weather events.</p>
     <ol><li>Choose a room inside your outpost.</li><li>Share Energy between Air, greenhouse, research and shelter.</li>

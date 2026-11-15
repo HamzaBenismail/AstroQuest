@@ -102,7 +102,7 @@ function ShipPicker({ state, dispatch, uiStyle, onToggleStyle }) {
     <MenuStyleSwitch uiStyle={uiStyle} onToggleStyle={onToggleStyle}/>
     <div className="crew-menu__halo" aria-hidden="true"/>
     <header className="crew-menu__header"><span className="crew-eyebrow"><Icon type="rocket" size={19}/> JUNIOR ASTRONAUT MISSION TRAINER</span>
-      <h1>Choose your spacecraft</h1><p>Every great mission starts with a ship.</p></header>
+      <h1>AstroQuest</h1><p>Choose your spacecraft. Every great mission starts with a ship.</p></header>
     <div className="crew-ship-grid" role="group" aria-label="Choose a spacecraft design">
       {SHIP_IDS.map(id => <button key={id} type="button" className={`crew-ship-card ${state.ship === id ? 'is-selected' : ''}`} data-ship={id}
         aria-pressed={state.ship === id} onClick={() => dispatch({ type: 'SELECT_SHIP', ship: id })}>

@@ -160,7 +160,7 @@ function RoomPanel({ session, config, preview, dispatch }) {
 
 function Briefing({ config, mission, onStart }) {
   return <main className="c3-intro-wrap"><section className="c3-intro">
-    <small className="c3-eyebrow">JUNIOR ASTRONAUT MISSION TRAINER</small>
+    <small className="c3-eyebrow">ASTROQUEST · JUNIOR ASTRONAUT MISSION TRAINER</small>
     <h1>Build a stronger Moon outpost.</h1>
     <p>Keep Air, Supplies, and Crew Safety high for {config.missionLengthDays} days.</p>
     <ol><li>Select a room to plan its Energy.</li><li>Earn Research Points and upgrade any room to Level 3.</li>
