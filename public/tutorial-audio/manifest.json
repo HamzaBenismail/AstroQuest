@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "engine": "ElevenLabs",
+  "voiceName": "Jessica - Playful, Bright, Warm",
+  "voiceId": "cgSgspJ2msm6clMCkdW9",
+  "modelId": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.75
+  },
+  "clips": [
+    {
+      "stage": "assembly",
+      "index": 0,
+      "file": "assembly-01.mp3",
+      "text": "Meet your astronauts.  Choose at least one astronaut, up to six. Their suit colors and symbols show their specialties. You will assign their rooms after landing.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "assembly",
+      "index": 1,
+      "file": "assembly-02.mp3",
+      "text": "Ready to launch?  Your crew starts together in the dock. Launch when you are happy with your team; you can move astronauts between rooms during the mission.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "collection",
+      "index": 0,
+      "file": "collection-01.mp3",
+      "text": "Your science discoveries.  When the blue Science Lab specialist works in a powered Science Lab, you can unlock new lessons. Your collection is kept on this device until you reset it.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "debrief",
+      "index": 0,
+      "file": "debrief-01.mp3",
+      "text": "Mission complete!  Review what went well and what you would change. Try again with a new plan, or explore the discoveries your Science Lab collected.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "menu",
+      "index": 0,
+      "file": "menu-01.mp3",
+      "text": "Welcome to AstroQuest!  You are the mission commander! Pick a spacecraft, build your crew, and keep everyone safe for ten days. We will show you how as you play.",
+      "source": "user-provided ElevenLabs recording"
+    },
+    {
+      "stage": "menu",
+      "index": 1,
+      "file": "menu-02.mp3",
+      "text": "Choose your spacecraft.  Tap any of the four ships to select it. Each has the same abilities, but the rooms are arranged differently. When you are ready, choose Prepare mission.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "play",
+      "index": 0,
+      "file": "play-01.mp3",
+      "text": "Keep an eye on your meters.  Protect Air, Supplies, and Crew Safety. If a vital meter reaches zero, your mission can end early. These numbers are game units.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "play",
+      "index": 1,
+      "file": "play-02.mp3",
+      "text": "Place your astronauts.  Tap an astronaut in the crew dock, then tap a room. You can also drag them. Matching suit colors show the specialist for each department.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "play",
+      "index": 2,
+      "file": "play-03.mp3",
+      "text": "Share your Energy.  Staff a room before powering it. Use the small Energy buttons inside the ship to choose how much power each room receives. Different rooms do different jobs.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "play",
+      "index": 3,
+      "file": "play-04.mp3",
+      "text": "Watch the forecast.  Tomorrow’s space-weather forecast might be wrong. Prepare shelter protection, care for your crew, and use Research Points for improvements.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "play",
+      "index": 4,
+      "file": "play-05.mp3",
+      "text": "Run the day.  Check your plan, then select Run Day. After the animation, read the mission log to learn what really happened. A powered Science Lab with its specialist can unlock discoveries.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "preparation",
+      "index": 0,
+      "file": "preparation-01.mp3",
+      "text": "Where will you land?  Choose the Moon or Mars. Mars is an illustrated training setting: both use simplified game rules based on archived space-weather events.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "preparation",
+      "index": 1,
+      "file": "preparation-02.mp3",
+      "text": "Pack wisely!  Your cargo space is limited. Balance Air, Supplies, and batteries with the + and − buttons. Choose Assemble crew when your cargo is ready.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "report",
+      "index": 0,
+      "file": "report-01.mp3",
+      "text": "Read your mission log.  The log shows the storm that actually occurred and how your choices affected your resources. Compare it with the earlier forecast.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "report",
+      "index": 1,
+      "file": "report-02.mp3",
+      "text": "Plan your next move.  Continue to the next day, or review your final results if the mission has ended. A fresh strategy can make the difference.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "systems",
+      "index": 0,
+      "file": "systems-01.mp3",
+      "text": "Life Support · Air.  The crew uses Air every day. Staff Life Support and give it Energy to replace Air. Crew care can also improve Crew Safety, but costs Energy and Supplies.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "systems",
+      "index": 1,
+      "file": "systems-02.mp3",
+      "text": "Greenhouse · Supplies.  Your Greenhouse helps grow food for the crew. Give it a worker and Energy. Food grown today helps your Supplies on the next day, so plan ahead!",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "systems",
+      "index": 2,
+      "file": "systems-03.mp3",
+      "text": "Science Lab · Discoveries.  A staffed, powered Science Lab earns Research Points. Put the blue science specialist here to work toward extra research bonuses and collectible space-biology discoveries.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "systems",
+      "index": 3,
+      "file": "systems-04.mp3",
+      "text": "Power Station · Storage.  The spacecraft generates Energy each day. Put an astronaut in the Power Station to store unused Energy in your battery. Upgrading this room improves generation and battery space.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "systems",
+      "index": 4,
+      "file": "systems-05.mp3",
+      "text": "Storm Shelter · Crew Safety.  Power the Storm Shelter to reduce damage to Crew Safety during stormy days. Forecasts can be wrong, so prepare protection when the weather looks risky.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "systems",
+      "index": 5,
+      "file": "systems-06.mp3",
+      "text": "Communications · Earth advice.  With an astronaut here, you can spend Energy to ask Earth for advice. Replies take simulated turns to arrive. Upgrades can help the response arrive sooner.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "systems",
+      "index": 6,
+      "file": "systems-07.mp3",
+      "text": "Energy · Your daily budget.  Energy powers your staffed rooms and some actions. The first number is Energy planned for today; the second is Energy generated today. Do not spend more than you can generate and draw from the battery.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "systems",
+      "index": 7,
+      "file": "systems-08.mp3",
+      "text": "Battery · Save Energy for later.  The battery holds leftover Energy for future days. Staff the Power Station and choose Store to charge it using unused generated Energy. You cannot charge and use the battery on the same day.",
+      "source": "ElevenLabs API"
+    },
+    {
+      "stage": "systems",
+      "index": 8,
+      "file": "systems-09.mp3",
+      "text": "Research Points · Better rooms.  Power the Science Lab to earn Research Points. Some expeditions and discoveries can grant more. Spend points plus Energy to upgrade a staffed room; the upgrade helps starting the next day.",
+      "source": "ElevenLabs API"
+    }
+  ]
+}

@@ -32,3 +32,27 @@
 .crew-room-actions__learn{display:inline-flex;align-items:center;justify-content:center;min-height:34px;margin:0 0 11px;padding:5px 11px;border:1px solid var(--room-accent,#8dd8ec);border-radius:9px;background:#12354a;color:#e7fcff;font-size:.79rem;font-weight:750;cursor:pointer}
 .crew-room-actions__learn:hover{background:#21536b}
 .crew-room-actions__learn:focus-visible,.astro-guide__topic-switch:focus-visible{outline:3px solid #ffe59f;outline-offset:2px}
+
+
+/* Optional spoken guidance; no audio plays until the player enables it. */
+.astro-guide__narration{padding:11px 12px;margin:-4px 0 14px;background:#051a2ebd;border:1px solid #668da2;border-radius:13px}
+.astro-guide__audio-actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.astro-guide__audio-actions button{min-height:37px;border:1px solid #7dacc1;border-radius:9px;background:#1a3a50;color:#ebfaff;font-size:.79rem;font-weight:800;padding:7px 10px;cursor:pointer}
+.astro-guide__audio-actions .astro-guide__audio-primary{background:#a5efdc;border-color:#d0ffed;color:#0a2838}
+.astro-guide__audio-actions .astro-guide__audio-primary[aria-pressed="true"]{background:#174c58;color:#dcfff5}
+.astro-guide__audio-settings{margin-top:9px;font-size:.75rem;color:#bfd9e7}
+.astro-guide__audio-settings summary{cursor:pointer;font-weight:750;text-underline-offset:2px}
+.astro-guide__audio-inputs{display:grid;grid-template-columns:minmax(0,1fr) 82px;gap:9px;margin-top:8px}
+.astro-guide__audio-inputs label{display:grid;gap:3px;font-size:.72rem;font-weight:750}
+.astro-guide__audio-inputs select{background:#14354c;color:#edfaff;border:1px solid #86b0c4;border-radius:7px;padding:7px 4px;min-width:0;max-width:100%;font-size:.78rem}
+.astro-guide__audio-error,.astro-guide__audio-unavailable{margin:8px 0 0;font-size:.75rem;color:#ffd59b;line-height:1.45}
+.astro-guide__panel .astro-guide__audio-actions button:focus-visible,.astro-guide__audio-settings select:focus-visible,.astro-guide__audio-settings summary:focus-visible{outline:3px solid #ffe59f;outline-offset:2px}
+@media(max-width:700px){.astro-guide__narration{padding:8px;margin:-4px 0 11px}.astro-guide__audio-actions button{font-size:.75rem;min-height:34px;padding:6px 8px}}
+
+/* Neural narration sample input: review-only; shown inside Voice settings. */
+.astro-guide__sample{display:block;margin-top:10px;font-size:.82rem}
+.astro-guide__sample input{display:block;width:100%;font-size:.78rem;margin-top:6px;color:inherit}
+.astro-guide__audio-actions button:disabled{opacity:.5;cursor:not-allowed}
+
+/* Attribution for free-tier, noncommercial neural narration. */
+.astro-guide__voice-credit{margin:9px 0 0;color:#bcd3e1;font-size:.73rem;line-height:1.3}
