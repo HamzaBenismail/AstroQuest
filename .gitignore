@@ -1,0 +1,10 @@
+# Phase markdown files
+PHASE*.md
+
+# Dependencies
+node_modules/
+
+# Envirement files
+.env
+.env.*
+!.env.example
