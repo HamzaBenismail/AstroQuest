@@ -1,0 +1,56 @@
+/* AstroQuest welcome scene: all planet and nebula shapes are illustrative CSS art. */
+.aq-title-screen{--aq-cyan:#a6ecf8;--aq-mint:#b6f9df;position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(24px,4vh,48px);width:100%;min-height:100vh;min-height:100dvh;overflow:hidden;padding:clamp(22px,3vw,48px);color:#f4f9ff;background:radial-gradient(ellipse at 52% 56%,#173355 0%,#08182d 48%,#030817 85%,#02050e 100%);font-family:system-ui,-apple-system,'Segoe UI',sans-serif}
+.aq-title-screen *{box-sizing:border-box}
+.aq-title-screen__universe{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.aq-title-screen__stars{position:absolute;inset:-8%;background:url('/art/classic-scattered-stars.svg') center/cover no-repeat}
+.aq-title-screen__stars--far{opacity:.6;animation:aq-star-drift 42s linear infinite alternate}
+.aq-title-screen__stars--near{opacity:.42;filter:drop-shadow(0 0 3px #b6eaff);transform:scale(1.24) rotate(8deg);animation:aq-star-glimmer 7s ease-in-out infinite alternate}
+.aq-title-screen__nebula{position:absolute;inset:-28%;opacity:.7;background:radial-gradient(ellipse 25% 19% at 46% 45%,#306b9c62,transparent 95%),radial-gradient(ellipse 20% 26% at 72% 62%,#7a3a9166,transparent 90%),radial-gradient(ellipse 28% 19% at 8% 79%,#308b9561,transparent 85%);filter:blur(38px)}
+.aq-title-screen__planet{position:absolute;aspect-ratio:1;border-radius:50%;filter:drop-shadow(0 0 25px #69bef433)}
+.aq-title-screen__planet--earth{width:clamp(126px,17vw,275px);top:-7%;left:-4%;background:radial-gradient(circle at 28% 25%,#e3ffff94 0 5%,transparent 30%),radial-gradient(ellipse at 32% 50%,#60a883 0 17%,transparent 18%),radial-gradient(ellipse at 67% 73%,#448b78 0 11%,transparent 12%),radial-gradient(ellipse at 47% 33%,#3fba9c 0 13%,transparent 14%),radial-gradient(circle at 40% 35%,#90dcf8 0%,#327eb7 44%,#12385e 75%,#08182c 100%);box-shadow:inset -30px -21px 35px #020a1dd6,0 0 80px #62c1f52e;animation:aq-planet-float 15s ease-in-out infinite alternate}
+.aq-title-screen__planet--mars{width:clamp(125px,15vw,240px);top:15%;right:-5%;background:radial-gradient(circle at 31% 24%,#ffd7b5 0%,#e79d79 30%,#b75e55 60%,#54243c 90%),linear-gradient(45deg,transparent 40%,#f0c28c 43%,transparent 54%);box-shadow:inset -27px -16px 35px #280d24bd,0 0 100px #ea8f7b25;animation:aq-planet-float 17s ease-in-out -5s infinite alternate-reverse}
+.aq-title-screen__planet--ringed{width:clamp(75px,9vw,135px);right:12%;bottom:12%;background:radial-gradient(circle at 35% 28%,#f9d9ac,#bc94b3 55%,#56375c 90%);box-shadow:inset -14px -9px 21px #302047,0 0 45px #c8a1c333;transform:rotate(-23deg)}
+.aq-title-screen__ring{position:absolute;inset:35% -52%;border:clamp(6px,1.15vw,15px) solid #eed2baba;border-left-color:#caacdb9c;border-top-color:#f9e4c6d9;border-radius:50%;transform:rotate(-27deg);box-shadow:0 0 12px #edd2cf3d}
+.aq-title-screen__horizon{position:absolute;inset:auto 0 0;height:19%;background:linear-gradient(0deg,#020916 8%,#061a3035 70%,transparent);pointer-events:none}
+.aq-title-screen__hero{position:relative;width:min(1150px,100%);height:clamp(340px,56vh,510px);display:grid;place-items:center}
+.aq-title-screen__brand{position:relative;z-index:2;text-align:center;margin-top:clamp(30px,4vh,65px);padding:0 20px;pointer-events:none;animation:aq-logo-reveal 1.15s cubic-bezier(.17,.6,.24,1) .85s both}
+.aq-title-screen__eyebrow{margin:0 0 16px;color:#bde7ff;letter-spacing:clamp(.14em,.4vw,.35em);font-weight:800;font-size:clamp(.56rem,1.2vw,.9rem);text-shadow:0 3px 14px #051426}
+.aq-title-screen__logo{margin:0;color:#eefbff;font-size:clamp(3.6rem,11vw,9.25rem);font-weight:900;line-height:1;letter-spacing:-.075em;text-shadow:0 8px 48px #001225,0 0 36px #72cdf652;white-space:nowrap}
+.aq-title-screen__logo span{color:#91e7f7;text-shadow:0 5px 32px #00233e,0 0 45px #4acde26a}
+.aq-title-screen__subtitle{margin:17px 0 0;color:#d4e9f7;font-size:clamp(.9rem,1.7vw,1.24rem);letter-spacing:.025em;text-shadow:0 3px 12px #021225}
+.aq-title-screen__flight{position:absolute;z-index:4;left:69%;top:57%;width:clamp(260px,33vw,440px);aspect-ratio:1200/760;transform-origin:45% 50%;filter:drop-shadow(0 22px 25px #000b);animation:aq-ship-arrive 2s cubic-bezier(.11,.52,.22,.98) .05s both;pointer-events:none}
+.aq-title-screen__flight img{position:relative;z-index:2;display:block;width:100%;height:100%;object-fit:contain;transform:rotate(-6deg);filter:drop-shadow(0 0 11px #b6eaff4f)}
+.aq-title-screen__engine-glow{position:absolute;left:-26%;top:41%;width:70%;height:19%;z-index:1;transform:rotate(-7deg);background:radial-gradient(ellipse at 95% 50%,#f9f5dfbb,#78e5ff94 27%,#4e92e750 48%,transparent 79%);filter:blur(12px);animation:aq-engine-fade 2.2s ease-out .1s both}
+.aq-title-screen__motion-trail{position:absolute;left:-140%;top:38%;height:22%;width:175%;z-index:0;background:linear-gradient(90deg,transparent 0%,#2d77bb12 12%,#6fd0f747 68%,#d6f4ff80 90%,transparent 100%);filter:blur(15px);transform:rotate(-6deg);animation:aq-engine-fade 2.2s ease-out .1s both}
+.aq-title-screen__start{position:relative;z-index:6;display:inline-flex;justify-content:center;align-items:center;gap:17px;min-width:clamp(170px,20vw,240px);min-height:62px;padding:15px 35px;border:2px solid #d5f8ff;border-radius:100px;background:linear-gradient(135deg,#e6fbff,#88dcf0);box-shadow:0 9px 45px #1da2d75c,inset 0 2px 2px #ffffff;color:#09233a;font:900 clamp(1.1rem,2.3vw,1.32rem)/1 system-ui,-apple-system,'Segoe UI',sans-serif;letter-spacing:.045em;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;animation:aq-start-appear .8s ease-out 1.95s both}
+.aq-title-screen__start span{font-size:1.25em}
+.aq-title-screen__start:hover{transform:translateY(-3px);box-shadow:0 15px 52px #1da2d77d,inset 0 2px 2px #ffffff}
+.aq-title-screen__start:active{transform:translateY(1px)}
+.aq-title-screen__start:focus-visible{outline:4px solid #fff1a6;outline-offset:5px}
+@keyframes aq-ship-arrive{0%{opacity:0;transform:translate3d(-150vw,55px,0) rotate(-10deg) scale(.64)}16%{opacity:1}72%{opacity:1;transform:translate3d(-7%,0,0) rotate(1deg) scale(1.07)}100%{opacity:1;transform:translate3d(0,0,0) rotate(0) scale(1)}}
+@keyframes aq-logo-reveal{0%{opacity:0;clip-path:inset(0 100% 0 0);filter:blur(10px);transform:translate3d(-28px,0,0)}45%{opacity:.8;filter:blur(1px)}100%{opacity:1;clip-path:inset(0 0 0 0);filter:blur(0);transform:translate3d(0,0,0)}}
+@keyframes aq-engine-fade{0%{opacity:.92}60%{opacity:.65}100%{opacity:.22}}
+@keyframes aq-start-appear{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes aq-star-drift{from{transform:scale(1.05) translate3d(-1%,0,0)}to{transform:scale(1.12) translate3d(1%,1%,0)}}
+@keyframes aq-star-glimmer{from{opacity:.24}to{opacity:.56}}
+@keyframes aq-planet-float{from{transform:translateY(-6px)}to{transform:translateY(15px)}}
+@media(max-width:650px){
+ .aq-title-screen{gap:18px;padding:20px 14px 34px;justify-content:center}
+ .aq-title-screen__hero{height:min(53vh,410px);min-height:300px}
+ .aq-title-screen__brand{margin-top:60px;padding:0 4px}
+ .aq-title-screen__eyebrow{font-size:.54rem;letter-spacing:.15em;margin-bottom:16px}
+ .aq-title-screen__logo{font-size:clamp(3.05rem,13vw,5.4rem);letter-spacing:-.08em}
+ .aq-title-screen__subtitle{font-size:.84rem;margin-top:13px}
+ .aq-title-screen__flight{left:45%;top:3%;width:clamp(255px,71vw,390px);animation-name:aq-ship-arrive-mobile}
+ .aq-title-screen__planet--mars{top:24%;right:-14%}
+ .aq-title-screen__planet--earth{top:-3%;left:-16%}
+ .aq-title-screen__planet--ringed{right:4%;bottom:12%}
+ .aq-title-screen__start{min-height:57px}
+}
+@keyframes aq-ship-arrive-mobile{0%{opacity:0;transform:translate3d(-130vw,45px,0) rotate(-10deg) scale(.62)}22%{opacity:1}100%{opacity:1;transform:translate3d(0,0,0) rotate(-4deg) scale(.84)}}
+@media(prefers-reduced-motion:reduce){
+ .aq-title-screen__stars,.aq-title-screen__planet,.aq-title-screen__flight,.aq-title-screen__brand,.aq-title-screen__engine-glow,.aq-title-screen__motion-trail,.aq-title-screen__start{animation:none!important}
+ .aq-title-screen__brand{opacity:1;clip-path:none;filter:none;transform:none}
+ .aq-title-screen__flight{transform:translate3d(0,0,0) scale(.8);opacity:1}
+ .aq-title-screen__start{opacity:1;transform:none;transition:none}
+}

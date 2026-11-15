@@ -10,6 +10,7 @@ import LunarScene from './scene/LunarScene.jsx';
 import MissionExperience from './ui/v2/MissionExperience.jsx';
 import MissionExperienceC from './ui/v3/MissionExperience.jsx';
 import CrewMissionExperience from './ui/v4/CrewMissionExperience.jsx';
+import TitleScreen from './ui/v4/TitleScreen.jsx';
 import SourcesScreen from './ui/SourcesScreen.jsx';
 import './ui/science.css';
 
@@ -65,7 +66,12 @@ export function MissionApp({ config: gameConfig, mission }) {
 
 export default function App() {
   const [showSources, setShowSources] = useState(false);
+  const [showTitleScreen, setShowTitleScreen] = useState(true);
   const ready = missionGateStatus(config, missionFiles);
+  // Don't mount the gameplay/tutorial or Data Sources control until Start is pressed.
+  if (showTitleScreen && !ready.issue) {
+    return <TitleScreen onStart={() => setShowTitleScreen(false)} />;
+  }
   const game = ready.issue ? <DataGate issue={ready.issue}/>
     : config.reevaluation?.version === 3
       ? (config.reevaluation?.crewUI?.enabled
