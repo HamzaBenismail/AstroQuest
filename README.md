@@ -1,47 +1,50 @@
-# Junior Astronaut Mission Trainer
+# SMP — Junior Astronaut Mission Trainer
 
-A short browser game for kids aged 7-12, built for the NASA Space Apps Challenge 2026
-("Build a Junior Astronaut Mission Trainer"). The player commands a 10-day lunar outpost
-mission, splitting a limited power budget across life support, a radiation shield, a
-greenhouse and science — with real archived NASA space weather data (DONKI) deciding which
-days are dangerous. See `CLAUDE.md` for the full design and rules.
+Browser-based, turn-based space-outpost resource management game for children aged approximately 7–12. Built for the NASA Space Apps Challenge 2026, **Build a Junior Astronaut Mission Trainer**.
 
-## Commands
+## What's in this branch
 
-| Command | Purpose |
-|---|---|
-| `npm install` | Install dependencies |
-| `npm run dev` | Start the local dev server |
-| `npm test` | Run the Vitest test suite |
-| `npm run build` | Build the static production bundle |
-| `npm run prefetch` | Fetch and cache raw NASA DONKI data (requires `NASA_API_KEY` in `.env`) — see Phase 2 |
+- Choose among four spacecraft shapes and the Moon/Mars *visual training scenes*.
+- Prepare a limited cargo loadout, choose up to six astronauts, and assign them to color-matched rooms.
+- Allocate Energy, maintain Air / Supplies / Crew Safety (all simplified **game units**), recover, upgrade rooms with earned Research Points, contact Earth, and send expeditions.
+- View a fallible one-day storm forecast and play through ten days using an **archived NASA DONKI** event window.
+- Unlock a persistent collection of 32 space-biology discovery entries with specialist-only bonuses. See `public/art/DISCOVERY-REFERENCES.md` and `public/art/DISCOVERY-PHOTO-CREDITS.md` for study/image provenance. Some study-specific claims still require scientific sign-off.
+- Optional themes: Classic, Playful, Classic + Stars; skippable cinematics and reduced-motion support.
+- Phase 3, Reevaluation B/C, and flat UI fallbacks remain available in `src/` for regression and rollback.
 
-## Data Sources
+**Scientific honesty:** Archived DONKI events drive abstract gameplay storm severity, **not** measured radiation doses at the Moon or Mars. The Mars selection is a visual training variant using the existing archived event dataset, **not** a validated Mars surface weather model. Earth message-processing delays and expeditions are gameplay abstractions. Biological study claims have an internal review gate.
 
-This game uses real NASA open data. Every dataset below is **archived** — downloaded once by
-a prefetch script and embedded in the build. **The shipped game never calls NASA from your
-browser.** This list mirrors the in-app Data Sources screen.
+## Local development
 
-| Dataset | Role in the game | Status |
-|---|---|---|
-| **NASA DONKI** (CCMC Database Of Notifications, Knowledge, Information) | Decides which days are dangerous — real solar flares, radiation storms and geomagnetic storms set each day's storm level. | Archived (downloaded once, embedded) |
-| **NASA OSDR** (Open Science Data Repository) | Source of the "Real NASA Science" cards — real spaceflight studies behind the facts the game teaches. Each card links its study. | Archived (study pages linked) |
-| **api.nasa.gov** | Hub the prefetch script uses to download DONKI data at build time. | Build-time only, never from the browser |
+Requires Node.js supported by Vite 7 (Node 20.19+ or 22.12+), and npm.
 
-**Not a forecast:** DONKI is a NASA research/archival catalog, not an official forecast. The
-U.S. government's official space-weather forecaster is the NOAA Space Weather Prediction
-Center. The "forecast" in this game is a simplified game mechanic, not a real prediction.
+```sh
+npm ci
+npm run check:data
+npm test
+npm run build
+npm run dev
+```
 
-**Independent project:** This is made for the NASA Space Apps Challenge and is not affiliated
-with, endorsed by, or sponsored by NASA.
+Open the URL printed by Vite. The `src/data/config.json` in this release enables the crew UI and v3 gameplay. `npm run check:data` verifies the archived DONKI event lineage from `scripts/raw/`.
 
-> Note: the exact CCMC acknowledgement wording on the in-app Data Sources screen is pending
-> human verification against CCMC's publication/data policy (see Phase 6 verification).
+If you want to download fresh source data *during development only*, copy `.env.example` to `.env`, insert a key from <https://api.nasa.gov/> and run `npm run prefetch`. **The browser never calls the NASA API, and API keys must not be committed.** Preserve the approved storm mapping and original source IDs. The current mission is `src/data/missions/storm-window-2024-05-08.json`.
 
-## Build phases
+## Project structure
 
-See `Phases/` for the full sequential build plan from setup to deployed MVP.
+| Folder | Purpose |
+| --- | --- |
+| `src/ui/v4/` | Current interactive crew, discovery, and cinematic experience |
+| `src/logic/v4/` | Pure crew/discovery rules |
+| `src/logic/v3/` | Pure resource/upgrade/expedition simulator |
+| `src/data/` | Approved configuration, embedded mission, and catalog |
+| `public/art/` | SVG illustrations, original asset credits, photo/source references |
+| `scripts/` | Developer-side offline import, data validation, opt-in migrations |
+| `tests/` | Vitest and dependency-free smoke tests |
+| `docs/` | Current implementation history and release notes |
 
-## Future work
+## Release & cleanup notes
 
-_(Nice-to-have ideas that are out of MVP scope go here — see CLAUDE.md §9.)_
+The submitted archive has been cleaned: dependencies (`node_modules/`), build output (`dist/`), backup configuration, local draft review data, standalone experiment previews, and obsolete intermediate installation notes are excluded. `.gitignore` also prevents those from being accidentally re-added. `package-lock.json`, real archived NASA records, attribution/source documents, and tests are **retained**.
+
+This is a prototype, not an official NASA product or NASA-endorsed software. Attribution appears in the game and in the public source documentation.

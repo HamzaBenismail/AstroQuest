@@ -1,0 +1,104 @@
+/* Phase 5: presentation only. The game engine owns all rules and outcomes. */
+.phase5-page { padding-top: clamp(12px, 2.1vw, 28px); }
+.lunar-mission-shell { width: min(100%, 1130px); position: relative; }
+.phase5-ui-layer { position: relative; z-index: 5; margin: -20px auto 0; padding: 0 clamp(0px, 1.2vw, 16px) 28px; }
+.phase5-ui-layer .game-layout { max-width: none; }
+.phase5-ui-layer .result { position: relative; margin: auto; background: #1a2638f0; }
+.lunar-scene {
+  --pointer-x: 0; --pointer-y: 0;
+  position: relative; isolation: isolate; overflow: hidden;
+  width: 100%; aspect-ratio: 16 / 9;
+  min-height: 270px; border-radius: 19px;
+  border: 1px solid #475769;
+  background: #151f2b;
+  box-shadow: 0 16px 50px #0005;
+}
+.lunar-scene__background {
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, #080f1d 0%, #283746 61%, #4b5055 100%);
+  transition: opacity 260ms ease;
+}
+.lunar-scene[data-night="true"] .lunar-scene__background {
+  background: linear-gradient(180deg, #030916 0%, #121b30 70%, #263245 100%);
+}
+.scene-layer { position: absolute; inset: -2%; pointer-events: none; will-change: transform; transition: transform 180ms ease-out; }
+.scene-layer__base, .scene-layer img, .scene-effects__storm {
+  position: absolute; width: 100%; height: 100%; inset: 0; object-fit: cover; display: block; pointer-events: none;
+}
+.scene-layer--sky { z-index: 0; transform: translate3d(var(--layer-x-0, 0px), var(--layer-y-0, 0px), 0); }
+.scene-layer--body { z-index: 1; transform: translate3d(var(--layer-x-1, 0px), var(--layer-y-1, 0px), 0); }
+.scene-layer--rim { z-index: 2; transform: translate3d(var(--layer-x-2, 0px), var(--layer-y-2, 0px), 0); }
+.scene-layer--ground { z-index: 3; transform: translate3d(var(--layer-x-3, 0px), var(--layer-y-3, 0px), 0); }
+.scene-layer--outpost { z-index: 4; transform: translate3d(var(--layer-x-4, 0px), var(--layer-y-4, 0px), 0); }
+.scene-layer--effects { z-index: 5; transform: translate3d(var(--layer-x-5, 0px), var(--layer-y-5, 0px), 0); }
+.scene-layer--foreground { z-index: 6; transform: translate3d(var(--layer-x-6, 0px), var(--layer-y-6, 0px), 0); }
+.scene-outpost__lights { opacity: .9; transition: opacity 220ms ease; }
+.lunar-scene[data-power="limited"] .scene-outpost__lights { opacity: .24; }
+.scene-outpost__plants {
+  transform-origin: 67% 69%;
+  transform: scaleY(var(--plant-height, 0.5));
+  opacity: .25; transition: transform 250ms ease, opacity 250ms ease;
+}
+.lunar-scene[data-greenhouse="on"] .scene-outpost__plants { opacity: 1; }
+.scene-outpost__air-warning { opacity: 0; }
+.lunar-scene[data-low-air="true"] .scene-outpost__air-warning { opacity: 1; animation: scene-air-pulse 1.3s ease-in-out infinite alternate; }
+@keyframes scene-air-pulse { from { opacity: .35; } to { opacity: 1; } }
+.scene-layer--effects > .scene-layer__base { opacity: 0; transition: opacity 220ms ease; }
+.lunar-scene[data-shield="on"] .scene-layer--effects > .scene-layer__base { opacity: 1; }
+.scene-effects__storm { background: linear-gradient(135deg, #e451422e 0%, #b9204430 55%, #ff632542 100%); opacity: 0; transition: opacity 220ms ease; }
+.lunar-scene[data-storm="true"] .scene-effects__storm { opacity: 1; }
+.lunar-scene__status {
+  position: absolute; top: 14px; left: 15px; right: 15px; z-index: 8;
+  display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px; pointer-events: none;
+}
+.scene-chip { color: #f4f7fc; font: 700 .79rem/1.35 system-ui,sans-serif; background: #152436e8; border: 1px solid #718aa1; padding: 6px 10px; border-radius: 20px; }
+.scene-chip--alert { color: #ffe6d6; background: #682d2dea; border-color: #d88a73; }
+.lunar-scene__storm-banner {
+  position: absolute; bottom: 45px; left: max(14px, 3%); right: max(14px, 3%); z-index: 8;
+  display: grid; gap: 3px; color: #fff6f2; background: #541f2bea;
+  border: 1px solid #ee9f8c; padding: 10px 14px; border-radius: 12px; box-shadow: 0 5px 20px #0006;
+}
+.lunar-scene__storm-banner strong { font-size: .86rem; }
+.lunar-scene__storm-banner span { font-size: .86rem; line-height: 1.35; }
+.lunar-scene__storm-banner small { font-size: .75rem; color: #ffe0d5; }
+.lunar-scene__caption { position: absolute; z-index: 8; bottom: 6px; left: 16px; right: 16px; margin: 0; color: #eef3f9; font: 600 .72rem/1.2 system-ui,sans-serif; text-shadow: 0 1px 5px #070d18; }
+@media (max-width: 700px) {
+  .lunar-scene { min-height: 300px; aspect-ratio: 4 / 3; }
+  .lunar-scene__status { top: 10px; left: 10px; right: 10px; gap: 5px; }
+  .scene-chip { font-size: .68rem; padding: 5px 7px; }
+  .lunar-scene__storm-banner { bottom: 36px; font-size: .78rem; }
+  .phase5-ui-layer { margin-top: -10px; padding: 0 1px 16px; }
+}
+@media (hover: none), (pointer: coarse) {
+  .scene-layer { transform: none !important; transition: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene-layer { transform: none !important; transition: none !important; will-change: auto; }
+  .scene-layer img, .scene-effects__storm, .lunar-scene__background { animation: none !important; transition: none !important; }
+  .scene-outpost__plants { transform: none !important; }
+  .scene-outpost__air-warning { animation: none !important; }
+}
+
+/* Clickable room labels are HTML controls, not game-simulation logic. */
+.lunar-scene__rooms { position: absolute; inset: 0; z-index: 7; pointer-events: none; }
+.scene-room {
+  position: absolute; display: flex; justify-content: center; align-items: flex-end;
+  min-width: 0; min-height: 42px; padding: 0 1px 6px;
+  pointer-events: auto; border: 1px solid #e4f1f42a; border-radius: 14px;
+  background: #14273b14; color: #f0f5fa; opacity: .82;
+  font: 700 .72rem/1.2 system-ui,sans-serif;
+  text-shadow: 0 2px 5px #010813;
+  transition: opacity 160ms ease;
+}
+.scene-room:hover, .scene-room:focus-visible { opacity: 1; background: #223a52a6; border-color: #b9e3fa; }
+.scene-room:focus-visible { outline: 3px solid #a6dbff; outline-offset: 3px; }
+.scene-room--lifeSupport { left: 25%; top: 52%; width: 20%; height: 24%; }
+.scene-room--shield { left: 47%; top: 50%; width: 13%; height: 26%; }
+.scene-room--greenhouse { left: 60%; top: 53%; width: 16%; height: 23%; }
+.scene-room--science { left: 76%; top: 37%; width: 10%; height: 38%; }
+.allocation-row:focus { outline: 3px solid #a6dbff; outline-offset: 3px; border-radius: 6px; }
+@media (max-width: 700px) {
+  .scene-room { font-size: .6rem; border-radius: 8px; }
+  .scene-room--science { left: 75%; width: 13%; }
+}
+@media (prefers-reduced-motion: reduce) { .scene-room { transition: none !important; } }

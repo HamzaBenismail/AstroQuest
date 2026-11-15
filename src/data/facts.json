@@ -1,14 +1,32 @@
 [
   {
     "id": "fact-comm-delay",
-    "text": "TODO(VERIFY): fill in with a real NASA-sourced Moon communication delay figure.",
-    "sourceUrl": null,
+    "text": "A radio signal takes about 1.28 seconds to travel one way between Earth and the Moon. The game\u2019s multi-turn delay represents processing time.",
+    "sourceUrl": "https://ntrs.nasa.gov/api/citations/20240007214/downloads/NDE%20Needs%20to%20Enable%20Deep%20Space%20Exploration.pdf",
     "verified": false
   },
   {
-    "id": "fact-lunar-night-length",
-    "text": "TODO(VERIFY): fill in with a real NASA-sourced lunar night length figure.",
-    "sourceUrl": null,
+    "id": "fact-lunar-night",
+    "text": "On much of the Moon, daylight and darkness each last about two Earth weeks. The game\u2019s day-five Energy change is a simplification.",
+    "sourceUrl": "https://science.nasa.gov/moon/moonlight/",
+    "verified": false
+  },
+  {
+    "id": "fact-shielding",
+    "text": "A radiation shelter uses protective materials around the crew. Lunar soil can help shield astronauts.",
+    "sourceUrl": "https://science.nasa.gov/science-research/heliophysics/how-nasa-will-protect-astronauts-from-space-radiation-at-the-moon/",
+    "verified": false
+  },
+  {
+    "id": "fact-sol",
+    "text": "A sol is one day on Mars, about 24 hours and 39 minutes. This game takes place on the Moon.",
+    "sourceUrl": "https://www.giss.nasa.gov/tools/mars24/help/notes.html",
+    "verified": false
+  },
+  {
+    "id": "fact-dose",
+    "text": "Absorbed radiation dose describes how much radiation energy a material receives per unit mass. Our storm levels are not actual doses.",
+    "sourceUrl": "https://srag.jsc.nasa.gov/SpaceRadiation/FAQ/FAQ.cfm",
     "verified": false
   }
 ]

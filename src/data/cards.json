@@ -1,73 +1,73 @@
 [
   {
-    "id": "card-greenhouse-lettuce",
+    "id": "card-mission-start",
+    "trigger": "mission-start",
+    "title": "Keeping muscles strong",
+    "text": "Scientists studied the muscles and bones of mice after spaceflight. They looked for ways to protect muscle strength.",
+    "source": {
+      "type": "OSDR",
+      "studyId": "OSD-654",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-654"
+    },
+    "verified": false
+  },
+  {
+    "id": "card-greenhouse-low",
     "trigger": "greenhouse-low",
-    "title": "Growing lettuce in space",
-    "text": "Astronauts grew lettuce on the Space Station. Scientists checked whether it was safe and healthy to eat.",
+    "title": "Lettuce in space",
+    "text": "NASA grew red lettuce on the space station. Researchers checked whether it was safe to eat.",
     "source": {
       "type": "OSDR",
-      "studyId": "OSD-269",
-      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-269"
+      "studyId": "OSD-267",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-267"
     },
     "verified": false
   },
   {
-    "id": "card-greenhouse-xroots",
-    "trigger": "greenhouse-low",
-    "title": "Plants with roots in the air",
-    "text": "On the Space Station, scientists tested growing plants without soil, using only water and mist on the roots.",
+    "id": "card-greenhouse-active",
+    "trigger": "greenhouse-active",
+    "title": "Plants need light",
+    "text": "Scientists grew mizuna greens on the space station. They studied how different lights affected the crop.",
     "source": {
       "type": "OSDR",
-      "studyId": "OSD-773",
-      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-773"
+      "studyId": "OSD-655",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-655"
     },
     "verified": false
   },
   {
-    "id": "card-storm-radiation-brain",
+    "id": "card-storm-severe",
     "trigger": "storm-severe",
-    "title": "Why radiation is dangerous",
-    "text": "Scientists on Earth studied how space radiation affects the brain cells of mice, to understand the risk to astronauts.",
+    "title": "Studying radiation",
+    "text": "Researchers exposed mice to low radiation in a ground experiment. They examined how radiation and simulated low gravity affected the animals.",
     "source": {
       "type": "OSDR",
-      "studyId": "OSD-611",
-      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-611"
+      "studyId": "OSD-202",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-202"
     },
     "verified": false
   },
   {
-    "id": "card-storm-radiation-cells",
-    "trigger": "storm-severe",
-    "title": "Space radiation and the body",
-    "text": "Using special particle beams on Earth, scientists studied how space radiation can harm the body's cells.",
+    "id": "card-crew-safety-low",
+    "trigger": "crew-safety-low",
+    "title": "Mice and immune health",
+    "text": "Scientists studied mouse brains after a stay on the space station. They measured signals linked to inflammation.",
     "source": {
       "type": "OSDR",
-      "studyId": "OSD-74",
-      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-74"
+      "studyId": "OSD-751",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-751"
     },
     "verified": false
   },
   {
-    "id": "card-night-water",
-    "trigger": "night",
-    "title": "Recycling water in space",
-    "text": "The Space Station cleans and reuses its water. Scientists studied the tiny microbes that can grow in the water system.",
+    "id": "card-energy-limited",
+    "trigger": "energy-limited",
+    "title": "Light helps seedlings",
+    "text": "Scientists studied small plants growing in space. They tested how red light changed the plants’ response to weak gravity.",
     "source": {
       "type": "OSDR",
-      "studyId": "OSD-729",
-      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-729"
-    },
-    "verified": false
-  },
-  {
-    "id": "card-night-microbes",
-    "trigger": "night",
-    "title": "Keeping the station clean",
-    "text": "Scientists regularly check the surfaces and air inside the Space Station for bacteria, to keep the crew healthy.",
-    "source": {
-      "type": "OSDR",
-      "studyId": "OSD-82",
-      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-82"
+      "studyId": "OSD-314",
+      "url": "https://osdr.nasa.gov/bio/repo/data/studies/OSD-314"
     },
     "verified": false
   }

@@ -1,31 +1,26 @@
-import { Meter } from './Meter.jsx'
-import { describeOutcome } from './debriefText.js'
+import { buildDebrief } from '../logic/game.js';
+import Meters from './Meters.jsx';
 
-export function DebriefScreen({ config, debrief, onTryAgain, onOpenDataSources }) {
-  const { title, message } = describeOutcome(debrief, config)
+const REASONS = {
+  air: 'The crew needed more air. Give life support more power next time.',
+  food: 'Food ran out. Power the greenhouse earlier so food arrives tomorrow.',
+  safety: 'The crew needed more protection. Save power for shielding.',
+};
 
+export default function DebriefScreen({ config, game, mission, onRestart }) {
+  const report = buildDebrief(game, mission);
   return (
-    <section className="debrief-screen">
-      <h2>{title}</h2>
-      <p>{message}</p>
-
-      <div className="meters">
-        <Meter icon="💨" label="Air" value={debrief.meters.air} max={config.meterMax} />
-        <Meter icon="🍽️" label="Food" value={debrief.meters.food} max={config.meterMax} />
-        <Meter icon="🛡️" label="Crew Safety" value={debrief.meters.safety} max={config.meterMax} />
-      </div>
-
-      <p className="score-readout">
-        Science score: <strong>{debrief.score}</strong>
-      </p>
-      <p>Days completed: {debrief.daysCompleted}</p>
-
-      <button type="button" className="primary-button" onClick={onTryAgain} autoFocus>
-        Try Again
-      </button>
-      <button type="button" className="link-button" onClick={onOpenDataSources}>
-        Data Sources
-      </button>
+    <section className="panel debrief" aria-labelledby="debrief-title">
+      <p className="eyebrow">Mission debrief</p>
+      <h1 id="debrief-title">{report.status === 'succeeded' ? 'Mission complete!' : 'Mission ended early.'}</h1>
+      <p>{report.status === 'succeeded'
+        ? 'You kept your crew safe for the full mission.'
+        : REASONS[report.reason] ?? 'Review your power choices and try again.'}</p>
+      <p><strong>Days completed:</strong> {report.completedDays} / {config.missionLengthDays}</p>
+      <p><strong>Science score:</strong> {report.score} game points</p>
+      <Meters values={report.meters} config={config}/>
+      <p className="note">Mission events: {report.dataSource}. This is not live data.</p>
+      <button className="primary" type="button" onClick={onRestart}>Try again</button>
     </section>
-  )
+  );
 }

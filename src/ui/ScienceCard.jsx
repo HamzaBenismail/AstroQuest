@@ -1,22 +1,13 @@
-// Renders one "Real NASA Science" card (F6). It assumes the card is already verified —
-// gating is pickCard's job (§6.6) — but defends anyway: an unverified card renders nothing.
-export function ScienceCard({ card }) {
-  if (!card || card.verified !== true) return null
+import { verifiedCards } from './science-content.js';
+import './science.css';
 
-  const { title, text, source } = card
-  return (
-    <aside className="science-card" aria-label="Real NASA Science">
-      <p className="science-card-tag">Real NASA Science</p>
-      <h3 className="science-card-title">{title}</h3>
-      <p className="science-card-text">{text}</p>
-      {source?.url && (
-        <p className="science-card-source">
-          Source:{' '}
-          <a href={source.url} target="_blank" rel="noopener noreferrer">
-            NASA OSDR study {source.studyId}
-          </a>
-        </p>
-      )}
-    </aside>
-  )
+export default function ScienceCard({ card }) {
+  if (!card || !verifiedCards([card]).length) return null;
+  return <aside className="science-card" aria-label="Real NASA Science">
+    <p className="science-card__eyebrow">Real NASA Science</p>
+    <h2>{card.title}</h2>
+    <p>{card.text}</p>
+    <p className="science-card__source">NASA OSDR study <a href={card.source.url} target="_blank" rel="noopener noreferrer">{card.source.studyId}</a></p>
+    <p className="science-card__note">The research describes its actual study subjects. It is not a measurement of this game’s Moon base.</p>
+  </aside>;
 }

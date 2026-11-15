@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest'
-import config from '../src/data/config.json'
+import { describe, it, expect } from 'vitest';
+import config from '../src/data/config.json';
 
-describe('project setup smoke test', () => {
-  it('loads config.json with the mission length set', () => {
-    expect(config.missionLengthDays).toBe(10)
-  })
-})
+describe('Phase 1 configuration smoke test', () => {
+  it('loads the config and sets the mission length to ten days', () => {
+    expect(config.missionLengthDays).toBe(10);
+  });
+});

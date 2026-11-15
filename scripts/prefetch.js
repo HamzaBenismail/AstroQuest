@@ -1,75 +1,92 @@
-// Phase 2 (CLAUDE.md §6.2): the ONLY place the NASA API key is read.
-// Never commit a key; never move this logic into front-end code.
-import { writeFileSync, mkdirSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
-import path from 'node:path'
+// F4: download actual DONKI JSON to local files. Never runs in the browser.
+import { readFile, writeFile, mkdir, rename } from 'node:fs/promises';
+import { resolve, join } from 'node:path';
+import config from '../src/data/config.json' with { type: 'json' };
+import { EVENT_TYPES, missionDates, inspectRecordShape, parseDay } from './donki-utils.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const RAW_DIR = path.join(__dirname, 'raw')
+const root = resolve(import.meta.dirname, '..');
+const rawDir = join(root, 'scripts/raw');
+const defaultStart = '2024-05-08'; // NOAA/CCMC historical storm window; date is not a game unit.
 
-const API_KEY = process.env.NASA_API_KEY
-if (!API_KEY) {
-  console.error('NASA_API_KEY is not set. Create a .env file from .env.example (CLAUDE.md §6.2).')
-  process.exit(1)
+async function loadKey() {
+  if (process.env.NASA_API_KEY) return process.env.NASA_API_KEY;
+  // Read only the one key expected in our root .env; no dotenv package required.
+  let content = '';
+  try { content = await readFile(join(root, '.env'), 'utf8'); } catch (err) {
+    if (err.code !== 'ENOENT') throw err;
+  }
+  const line = content.split(/\r?\n/).find(v => /^\s*NASA_API_KEY\s*=/.test(v));
+  return line?.split('=').slice(1).join('=').trim().replace(/^['"]|['"]$/g, '') || null;
 }
 
-// CLAUDE.md §6.3: prefer windows after June 2020 (Moon-to-Mars Space Weather Analysis Office).
-// A wider window is fetched here; Phase 2 step 3 inspects the raw data before picking the
-// final 10-day mission window in the cleaner.
-const START_DATE = process.argv[2] || '2024-05-01'
-const END_DATE = process.argv[3] || '2024-05-15'
-
-// CLAUDE.md §6.3: DONKI event types.
-const EVENT_TYPES = ['FLR', 'SEP', 'CME', 'GST']
-
-// CLAUDE.md §6.3: migration on 2026-09-30 — test both hosts, use whichever responds.
-const HOSTS = [
-  {
-    name: 'api.nasa.gov',
-    buildUrl: (type) =>
-      `https://api.nasa.gov/DONKI/${type}?startDate=${START_DATE}&endDate=${END_DATE}&api_key=${API_KEY}`,
-  },
-  {
-    name: 'ccmc.gsfc.nasa.gov',
-    buildUrl: (type) =>
-      `https://ccmc.gsfc.nasa.gov/DONKI/WS/get/${type}?startDate=${START_DATE}&endDate=${END_DATE}`,
-  },
-]
-
-async function fetchEventType(type) {
-  for (const host of HOSTS) {
-    const url = host.buildUrl(type)
-    try {
-      const res = await fetch(url)
-      if (!res.ok) {
-        console.warn(`[${type}] ${host.name} responded ${res.status} ${res.statusText}`)
-        continue
-      }
-      const body = await res.json()
-      console.log(`[${type}] ${host.name} OK — ${Array.isArray(body) ? body.length : 'non-array'} record(s)`)
-      return { type, host: host.name, url, body }
-    } catch (err) {
-      console.warn(`[${type}] ${host.name} failed: ${err.message}`)
-    }
-  }
-  console.error(`[${type}] both hosts failed — no raw data saved for this type.`)
-  return null
+async function request(type, url, hostLabel) {
+  const response = await fetch(url, { headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(18000) });
+  if (!response.ok) throw new Error(`HTTP ${response.status} from ${hostLabel} for ${type}`);
+  const data = await response.json();
+  inspectRecordShape(type, data);
+  return data;
 }
 
 async function main() {
-  mkdirSync(RAW_DIR, { recursive: true })
-  console.log(`Fetching DONKI data for ${START_DATE} .. ${END_DATE}`)
-
+  const start = process.env.DONKI_START_DATE || defaultStart;
+  const dates = missionDates(start, config.missionLengthDays);
+  const end = dates.at(-1);
+  parseDay(end);
+  const key = await loadKey();
+  if (!key) throw new Error('Set NASA_API_KEY in a local .env (see .env.example). Do not commit it.');
+  const datasets = {};
+  const sources = {};
   for (const type of EVENT_TYPES) {
-    const result = await fetchEventType(type)
-    if (!result) continue
-    const outPath = path.join(RAW_DIR, `${type}_${START_DATE}_${END_DATE}.json`)
-    writeFileSync(
-      outPath,
-      JSON.stringify({ sourceHost: result.host, sourceUrl: result.url.replace(API_KEY, 'REDACTED'), fetchedAt: new Date().toISOString(), data: result.body }, null, 2),
-    )
-    console.log(`  -> wrote ${outPath}`)
+    const params = new URLSearchParams({ startDate: start, endDate: end });
+    const official = `https://ccmc.gsfc.nasa.gov/DONKI-API/get/${type}?${params}`;
+    const nasa = `https://api.nasa.gov/DONKI/${type}?${params}&api_key=${encodeURIComponent(key)}`;
+    let data = null;
+    let used = null;
+    const errors = [];
+    let secondaryOk = false;
+    // Explicitly exercise both official access paths until one responds per event type.
+    for (const attempt of [
+      { url: nasa, label: 'api.nasa.gov', safeBase: `https://api.nasa.gov/DONKI/${type}` },
+      { url: official, label: 'ccmc.gsfc.nasa.gov', safeBase: `https://ccmc.gsfc.nasa.gov/DONKI-API/get/${type}` },
+    ]) {
+      try {
+        const fetched = await request(type, attempt.url, attempt.label);
+        if (!used) { data = fetched; used = attempt; }
+        else { secondaryOk = true; }
+        process.stdout.write(`${type}: ${fetched.length} records available from ${attempt.label}\n`);
+        // FLR probes BOTH official host routes. Remaining types use failover to save calls.
+        if (type !== 'FLR') break;
+      } catch (error) {
+        // NEVER log request URLs; NASA_API_KEY lives inside one of them.
+        errors.push(`${attempt.label}: ${error instanceof Error ? error.message : String(error)}`);
+      }
+    }
+    if (!used) throw new Error(`${type} failed on both hosts. ${errors.join('; ')}`);
+    datasets[type] = data;
+    sources[type] = {
+      file: `${start}_${end}-${type}.json`,
+      sourceEndpoint: used.safeBase,
+      count: data.length,
+      shape: inspectRecordShape(type, data),
+    };
   }
+  // Only write if all four event types were successfully retrieved.
+  await mkdir(rawDir, { recursive: true });
+  for (const type of EVENT_TYPES) {
+    const target = join(rawDir, sources[type].file);
+    await writeFile(`${target}.tmp`, `${JSON.stringify(datasets[type], null, 2)}\n`, 'utf8');
+    await rename(`${target}.tmp`, target);
+  }
+  const manifest = {
+    dataSource: 'NASA DONKI (archived data)',
+    window: { start, end },
+    fetchedAtUtc: new Date().toISOString(),
+    endpoints: sources,
+    note: 'Original API arrays are preserved; the shape listing is for human inspection. No API key is saved.',
+  };
+  await writeFile(join(rawDir, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`, 'utf8');
+  process.stdout.write(`Saved raw records and field-shape manifest to ${rawDir}\n`);
+  process.stdout.write('Review the raw JSON fields and storm-mapping proposal before generating a shipping mission.\n');
 }
 
-main()
+main().catch(error => { process.stderr.write(`Prefetch failed: ${error.message}\n`); process.exitCode = 1; });

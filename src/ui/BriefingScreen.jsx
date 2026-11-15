@@ -1,36 +1,24 @@
-import { glossary } from './glossary.js'
-import { TermHint } from './TermHint.jsx'
-
-// F1: a 30-second briefing a 7-12 year old can understand without help. Short sentences
-// (<=15 words, §7.4).
-export function BriefingScreen({ config, onStart, onOpenDataSources }) {
+export default function BriefingScreen({ config, mission, onStart }) {
   return (
-    <section className="briefing-screen">
-      <h1>Junior Astronaut Mission Trainer</h1>
-      <p>You command a Moon outpost for {config.missionLengthDays} days.</p>
-      <p>Each day you split your power between four things:</p>
-      <ul>
-        <li>
-          <TermHint term={glossary.lifeSupport}>Life support</TermHint> — keeps the crew's air flowing.
-        </li>
-        <li>
-          <TermHint term={glossary.shielding}>Shield</TermHint> — protects the crew from radiation storms.
-        </li>
-        <li>
-          <TermHint term={glossary.greenhouse}>Greenhouse</TermHint> — grows food for tomorrow.
-        </li>
-        <li>
-          <TermHint term={glossary.science}>Science</TermHint> — earns your mission score.
-        </li>
-      </ul>
-      <p>Space weather is unpredictable. The forecast can be wrong. Choose wisely.</p>
-      <p>Nothing is free — power spent on one thing is power you don't have for another.</p>
-      <button type="button" className="primary-button" onClick={onStart} autoFocus>
-        Start Mission
-      </button>
-      <button type="button" className="link-button" onClick={onOpenDataSources}>
-        Data Sources
-      </button>
+    <section className="panel briefing" aria-labelledby="briefing-title">
+      <p className="eyebrow">Mission briefing · Lunar outpost</p>
+      <h1 id="briefing-title">Keep the crew safe.</h1>
+      <p>Run your outpost for {config.missionLengthDays} days.</p>
+      <p>Keep Air, Food, and Crew Safety above zero.</p>
+      <p>Share a limited power supply between four rooms.</p>
+      <p>The storm forecast may be wrong by one level.</p>
+      <div className="tutorial" aria-label="How to play">
+        <h2>How to play</h2>
+        <ol>
+          <li>Read the storm warning.</li>
+          <li>Give power to the four rooms.</li>
+          <li>Commit your plan and review what happened.</li>
+          <li>Learn from each choice and survive all {config.missionLengthDays} days.</li>
+        </ol>
+      </div>
+      <p className="note">Power and resources use simplified game units.</p>
+      <p className="note">Events use {mission.dataSource}. This is not a live forecast.</p>
+      <button className="primary" onClick={onStart}>Start mission</button>
     </section>
-  )
+  );
 }

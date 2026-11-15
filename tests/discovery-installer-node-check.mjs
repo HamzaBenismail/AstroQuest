@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import { mkdtempSync, mkdirSync, writeFileSync, copyFileSync, readFileSync, existsSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { dirname, join } from 'node:path';
+import { spawnSync } from 'node:child_process';
+const root=mkdtempSync(join(tmpdir(),'smp-discovery-installer-'));
+try {
+  const copy=(a,b)=>{mkdirSync(dirname(b),{recursive:true});copyFileSync(a,b);};
+  for(const f of ['scripts/enable-science-discoveries.mjs','src/data/discoveries.js','src/logic/v4/discoveries.js']) copy(f,join(root,f));
+  writeFileSync(join(root,'package.json'),'{"type":"module"}\n');
+  const src={stormMapping:{status:'approved',source:'original'},reevaluation:{version:3,crewUI:{enabled:true,crewMax:6}}};
+  const config=join(root,'src/data/config.json');
+  writeFileSync(config,JSON.stringify(src));
+  const call=(...args)=>spawnSync(process.execPath,['scripts/enable-science-discoveries.mjs',...args],{cwd:root,encoding:'utf8'});
+  assert.equal(call().status,0);
+  assert.equal(JSON.parse(readFileSync(config)).reevaluation.discovery,undefined);
+  assert.equal(call('--apply').status,0);
+  const first=JSON.parse(readFileSync(config,'utf8'));
+  assert.deepEqual(first.stormMapping,src.stormMapping);
+  assert.equal(first.reevaluation.discovery.enabled,true);
+  assert.equal(first.reevaluation.discovery.specialistRoom,'science');
+  assert.equal(first.reevaluation.discovery.bonusResearchPoints,2);
+  assert.ok(existsSync(join(root,'.env.before-science-discoveries.json.bak')));
+  first.reevaluation.discovery.bonusResearchPoints=3;
+  writeFileSync(config,JSON.stringify(first));
+  assert.equal(call('--apply').status,0);
+  assert.equal(JSON.parse(readFileSync(config)).reevaluation.discovery.bonusResearchPoints,3);
+  first.reevaluation.discovery.enabled=false;
+  writeFileSync(config,JSON.stringify(first));
+  assert.equal(call('--apply').status,0);
+  assert.equal(JSON.parse(readFileSync(config)).reevaluation.discovery.enabled,true);
+  const bad={...src,stormMapping:{status:'pending'}};
+  writeFileSync(config,JSON.stringify(bad));
+  assert.notEqual(call('--apply').status,0);
+  assert.deepEqual(JSON.parse(readFileSync(config)),bad);
+  console.log('D7 installer PASS: dry-run, safe opt-in, backup, idempotence, team-tuned bonus, approved mapping guard');
+} finally {rmSync(root,{recursive:true,force:true});}
